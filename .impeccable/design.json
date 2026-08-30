@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-27T00:00:00Z",
+  "title": "Design System: KSIA Infrastructure Intelligence Hub",
+  "extensions": {
+    "colorMeta": {
+      "ey-yellow": { "role": "primary", "displayName": "EY Signal Yellow", "canonical": "#FFE600", "tonalRamp": ["#4D4500", "#7A6E00", "#A89700", "#D4BF00", "#FFE600", "#FFED4D", "#FFF399", "#FFF9CC"] },
+      "ey-yellow-dim": { "role": "primary", "displayName": "EY Yellow Dim", "canonical": "rgba(255, 230, 0, 0.15)" },
+      "ey-yellow-hover": { "role": "primary", "displayName": "EY Yellow Hover", "canonical": "#FFD000", "tonalRamp": ["#4D3E00", "#7A6300", "#A88800", "#D4AC00", "#FFD000", "#FFDB4D", "#FFE799", "#FFF3CC"] },
+      "dark-void": { "role": "neutral", "displayName": "Void Black", "canonical": "#0D0D14", "tonalRamp": ["#040407", "#0D0D14", "#161621", "#1F1F2E", "#28283B", "#313148", "#3A3A55", "#434362"] },
+      "dark-deep": { "role": "neutral", "displayName": "Deep Charcoal", "canonical": "#13131D", "tonalRamp": ["#06060A", "#13131D", "#1C1C2A", "#252537", "#2E2E44", "#373751", "#40405E", "#49496B"] },
+      "dark-panel": { "role": "neutral", "displayName": "Panel Slate", "canonical": "#181825", "tonalRamp": ["#08080D", "#181825", "#222235", "#2C2C45", "#363655", "#404065", "#4A4A75", "#545485"] },
+      "dark-card": { "role": "neutral", "displayName": "Card Indigo", "canonical": "#1E1E2E", "tonalRamp": ["#0A0A10", "#1E1E2E", "#28283E", "#32324E", "#3C3C5E", "#46466E", "#50507E", "#5A5A8E"] },
+      "dark-card-hover": { "role": "neutral", "displayName": "Hover Indigo", "canonical": "#252538", "tonalRamp": ["#0D0D14", "#252538", "#2F2F48", "#393958", "#434368", "#4D4D78", "#575788", "#616198"] },
+      "light-surface": { "role": "neutral", "displayName": "Cool Surface", "canonical": "#F5F5F8", "tonalRamp": ["#B0B0B8", "#C0C0C8", "#D0D0D8", "#E0E0E8", "#F5F5F8", "#F8F8FA", "#FAFAFC", "#FDFDFE"] },
+      "white": { "role": "neutral", "displayName": "Pure White", "canonical": "#FFFFFF" },
+      "text-primary": { "role": "neutral", "displayName": "White Text", "canonical": "#FFFFFF" },
+      "text-muted": { "role": "neutral", "displayName": "Muted Lavender", "canonical": "#A0A0B8", "tonalRamp": ["#40404E", "#585868", "#707082", "#88889C", "#A0A0B8", "#B4B4C6", "#C8C8D4", "#DCDCE2"] },
+      "text-dim": { "role": "neutral", "displayName": "Dim Grey", "canonical": "#6B6B80", "tonalRamp": ["#2A2A33", "#3E3E4A", "#525261", "#6B6B80", "#808096", "#9595AA", "#AAAABE", "#BFBFD2"] },
+      "text-dark": { "role": "neutral", "displayName": "Ink Navy", "canonical": "#1A1A2E", "tonalRamp": ["#08080F", "#1A1A2E", "#24243E", "#2E2E4E", "#38385E", "#42426E", "#4C4C7E", "#56568E"] },
+      "status-ready": { "role": "neutral", "displayName": "Ready Green", "canonical": "#00C48C", "tonalRamp": ["#003B2A", "#005C42", "#007D5A", "#009E72", "#00C48C", "#33D0A3", "#66DCBA", "#99E8D1"] },
+      "status-conditional": { "role": "neutral", "displayName": "Conditional Amber", "canonical": "#FFAA00", "tonalRamp": ["#4D3300", "#7A5200", "#A87100", "#D49000", "#FFAA00", "#FFBB33", "#FFCC66", "#FFDD99"] },
+      "status-at-risk": { "role": "neutral", "displayName": "At Risk Red", "canonical": "#FF5C5C", "tonalRamp": ["#4D1C1C", "#7A2D2D", "#A83E3E", "#D44F4F", "#FF5C5C", "#FF7D7D", "#FF9E9E", "#FFBFBF"] },
+      "status-blocked": { "role": "neutral", "displayName": "Blocked Crimson", "canonical": "#E63946", "tonalRamp": ["#451115", "#6E1B22", "#972530", "#C0303D", "#E63946", "#EB616B", "#F08990", "#F5B1B5"] },
+      "status-not-assessed": { "role": "neutral", "displayName": "Not Assessed Muted", "canonical": "#5C5C70", "tonalRamp": ["#232330", "#353545", "#47475A", "#5C5C70", "#717186", "#86869C", "#9B9BB2", "#B0B0C8"] },
+      "status-in-progress": { "role": "neutral", "displayName": "In Progress Blue", "canonical": "#4DA6FF", "tonalRamp": ["#17324D", "#254F7A", "#336CA8", "#4189D4", "#4DA6FF", "#71B8FF", "#95CAFF", "#B9DCFF"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Executive card values — large dashboard numbers for scanning." },
+      "headline": { "displayName": "Headline", "purpose": "Hero title and primary section headings. Appears once or twice per screen." },
+      "title": { "displayName": "Title", "purpose": "Module card titles, panel sub-headings, milestone labels. The workhorse heading level." },
+      "body": { "displayName": "Body", "purpose": "Paragraph text and descriptions. Base font size 14px." },
+      "label": { "displayName": "Label", "purpose": "Section titles, panel headers, table headers, tags. Always uppercase with tracked spacing." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 1px 3px rgba(0,0,0,0.04)", "purpose": "Default resting shadow for light cards — barely visible, just enough to separate from the surface." },
+      { "name": "card-hover", "value": "0 8px 24px rgba(0,0,0,0.08)", "purpose": "Module card hover elevation — lifts the card visually with translateY(-2px)." },
+      { "name": "status-glow-critical", "value": "0 0 6px rgba(255,92,92,0.4)", "purpose": "Urgency glow on critical action dots." },
+      { "name": "status-glow-high", "value": "0 0 6px rgba(255,170,0,0.3)", "purpose": "Urgency glow on high-priority action dots." }
+    ],
+    "motion": [
+      { "name": "ease-micro", "value": "all 0.15s ease", "purpose": "Default micro-interaction transition for hover, focus, and state changes." },
+      { "name": "ease-card", "value": "all 0.2s ease", "purpose": "Module card hover transition — slightly longer for the lift effect." },
+      { "name": "ease-data", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Data visualization easing — progress bars (1s) and gauge fills (1.2s). Decelerating finish." }
+    ],
+    "breakpoints": [
+      { "name": "lg", "value": "1200px" },
+      { "name": "md", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "EY yellow CTA button used for hero actions and primary calls to action.",
+      "html": "<button class=\"ds-btn-primary\">Explore Overview</button>",
+      "css": ".ds-btn-primary { background: #FFE600; color: #0D0D14; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; } .ds-btn-primary:hover { background: #FFD000; transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 2px solid #FFE600; outline-offset: 2px; }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "32px square transparent button for header actions (notifications, help, settings).",
+      "html": "<button class=\"ds-btn-icon\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9\"/><path d=\"M13.73 21a2 2 0 0 1-3.46 0\"/></svg></button>",
+      "css": ".ds-btn-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; border-radius: 6px; color: #A0A0B8; cursor: pointer; transition: all 0.15s ease; } .ds-btn-icon:hover { background: rgba(255,255,255,0.06); color: #FFFFFF; } .ds-btn-icon:focus-visible { outline: 2px solid #FFE600; outline-offset: 2px; }"
+    },
+    {
+      "name": "Light Card",
+      "kind": "card",
+      "refersTo": "card-light",
+      "description": "White analysis card on the light surface — used for executive metrics, milestones, and module entries.",
+      "html": "<div class=\"ds-card-light\"><div class=\"ds-card-light__label\">Assets Enabled</div><div class=\"ds-card-light__value\">12</div></div>",
+      "css": ".ds-card-light { background: #FFFFFF; border: 1px solid rgba(0,0,0,0.04); border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.2s ease; } .ds-card-light:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: rgba(255,230,0,0.3); } .ds-card-light__label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #6B6B80; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; } .ds-card-light__value { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; color: #1A1A2E; letter-spacing: -1px; }"
+    },
+    {
+      "name": "Dark Intelligence Panel",
+      "kind": "card",
+      "refersTo": "card-dark",
+      "description": "Dark monitoring panel for infrastructure readiness, committee actions, prerequisites, and entity performance.",
+      "html": "<div class=\"ds-panel-dark\"><div class=\"ds-panel-dark__title\">Infrastructure Readiness by Stream</div><div class=\"ds-panel-dark__content\">Panel content here</div><div class=\"ds-panel-dark__footer\"><a href=\"#\" class=\"ds-panel-dark__link\">View Details <span>&rarr;</span></a></div></div>",
+      "css": ".ds-panel-dark { background: #181825; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 20px; } .ds-panel-dark__title { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: #FFE600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; } .ds-panel-dark__content { color: #A0A0B8; font-size: 12px; } .ds-panel-dark__footer { border-top: 1px solid rgba(255,255,255,0.06); margin-top: 16px; padding-top: 12px; } .ds-panel-dark__link { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #FFE600; text-decoration: none; transition: color 0.15s ease; } .ds-panel-dark__link:hover { color: #FFD000; }"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "status-badge",
+      "description": "Inline status pill showing readiness or project status with color-coded background.",
+      "html": "<span class=\"ds-status ds-status--ready\">Ready</span><span class=\"ds-status ds-status--at-risk\">At Risk</span><span class=\"ds-status ds-status--blocked\">Blocked</span>",
+      "css": ".ds-status { display: inline-block; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 8px; border-radius: 10px; } .ds-status--ready { background: rgba(0,196,140,0.15); color: #00C48C; } .ds-status--at-risk { background: rgba(255,92,92,0.15); color: #FF5C5C; } .ds-status--blocked { background: rgba(230,57,70,0.15); color: #E63946; } .ds-status--conditional { background: rgba(255,170,0,0.15); color: #FFAA00; } .ds-status--in-progress { background: rgba(77,166,255,0.15); color: #4DA6FF; } .ds-status--not-assessed { background: rgba(92,92,112,0.15); color: #5C5C70; }"
+    },
+    {
+      "name": "Suggestion Chip",
+      "kind": "chip",
+      "refersTo": "chip-suggestion",
+      "description": "Pill-shaped suggestion chip for the KSIA Assistant quick actions.",
+      "html": "<button class=\"ds-chip\">What is the Terminal 6 water readiness?</button>",
+      "css": ".ds-chip { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; color: #1A1A2E; background: #F0F0F5; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: all 0.15s ease; } .ds-chip:hover { background: rgba(255,230,0,0.15); } .ds-chip:focus-visible { outline: 2px solid #FFE600; outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Standard text input with EY yellow focus border — used in the assistant chat and filter forms.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Ask about infrastructure readiness...\" />",
+      "css": ".ds-input { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400; color: #1A1A2E; background: #FFFFFF; border: 1px solid #E0E0EA; border-radius: 6px; padding: 10px 14px; width: 100%; transition: border-color 0.15s ease; } .ds-input::placeholder { color: #B0B0C0; } .ds-input:focus { border-color: #FFE600; outline: none; } .ds-input:focus-visible { outline: 2px solid #FFE600; outline-offset: 1px; }"
+    },
+    {
+      "name": "Progress Bar",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Animated progress bar used in dark intelligence panels for infrastructure stream and prerequisite readiness.",
+      "html": "<div class=\"ds-progress\"><div class=\"ds-progress__track\"><div class=\"ds-progress__fill ds-progress__fill--ready\" style=\"width: 72%\"></div></div><span class=\"ds-progress__label\">72%</span></div>",
+      "css": ".ds-progress { display: flex; align-items: center; gap: 8px; } .ds-progress__track { flex: 1; height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; } .ds-progress__fill { height: 100%; border-radius: 3px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); } .ds-progress__fill--ready { background: #00C48C; } .ds-progress__fill--conditional { background: #FFAA00; } .ds-progress__fill--at-risk { background: #FF5C5C; } .ds-progress__fill--blocked { background: #E63946; } .ds-progress__label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #A0A0B8; min-width: 32px; text-align: right; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Infrastructure Observatory",
+    "overview": "This system is an elevated vantage point over a living mega-airport city. The user looks down from a command-level altitude — dark intelligence panels serve as monitoring instruments reading vital signs across infrastructure streams, while crisp white cards on a light surface present prepared analysis and decision dossiers. EY yellow (#FFE600) functions as the observatory's signal lamp: it marks what demands attention, what requires action, and where the critical path runs. It never decorates.\n\nThe dual-context architecture — dark panels for real-time monitoring, light cards for structured analysis — mirrors how infrastructure committee members actually work: scanning for anomalies first, then drilling into specifics. The approved KSIA aerial image grounds every session in the physical reality of the site, serving as both spatial reference and the theater of operations.",
+    "keyCharacteristics": [
+      "Dual-context surfaces: dark panels (monitoring/intelligence) and light cards (analysis/action) coexist on a neutral light-grey canvas",
+      "Signal-driven accent: EY yellow is used sparingly as a functional signal, never as fill or decoration",
+      "Status-first information design: readiness and project statuses are communicated through a consistent six-color vocabulary with both color and text",
+      "Institutional density: compact typography, tight spacing, and data-rich layouts built for committee-room projection",
+      "Restrained motion: transitions exist to confirm interaction (0.15s), not to entertain"
+    ],
+    "rules": [
+      { "name": "The Signal Lamp Rule", "body": "EY yellow appears on no more than 5-10% of any screen's surface area. It marks action points, active states, and panel identifiers — never backgrounds, fills, or decorative borders. Its power comes from scarcity.", "section": "colors" },
+      { "name": "The Six-Status Rule", "body": "Every status in the system maps to exactly one of six colors. No gradients, no opacity variations for status meaning. Status is always communicated through color AND a text label together.", "section": "colors" },
+      { "name": "The Uppercase Authority Rule", "body": "Section-level labels and panel titles are always uppercase with positive letter-spacing (0.5–0.8px). This separates navigational/structural text from content text at a glance.", "section": "typography" },
+      { "name": "The Weight-Not-Size Rule", "body": "Within a single context (a card, a panel), hierarchy is established primarily through weight changes (400 → 600 → 700) before reaching for size changes. This keeps density high without inflating the layout.", "section": "typography" },
+      { "name": "The Tonal Ramp Rule", "body": "On dark surfaces, depth is always conveyed through background-color steps, never shadows. Adding a shadow to a dark panel breaks the observatory instrument aesthetic.", "section": "elevation" },
+      { "name": "The Lift-on-Intent Rule", "body": "Light cards gain elevation only on hover — the user's intent to interact triggers the lift. Cards at rest are nearly flush with the surface.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use EY yellow exclusively for interactive signals: CTA buttons, active states, panel titles, hover accents, and the hero action. It must always mean \"act here\" or \"look here.\"",
+      "Do communicate every status through both color and text label simultaneously. Never rely on color alone.",
+      "Do maintain the tonal ramp on dark surfaces (Void → Deep → Panel → Card). Each step should be perceptibly but subtly lighter.",
+      "Do use uppercase + letter-spacing (0.5–0.8px) for all structural labels and section titles. This is the system's consistent navigational signal.",
+      "Do keep transition durations at 0.15s for micro-interactions (hover, focus) and reserve longer durations (1–1.2s) for data visualizations (bar fills, gauge animations)."
+    ],
+    "donts": [
+      "Don't use EY yellow as a background fill, gradient component, or decorative border. It is a signal, not a surface.",
+      "Don't add box-shadows to dark-context panels or cards. Depth on dark surfaces comes from tonal stepping only.",
+      "Don't introduce a second accent color. The system's authority comes from yellow-against-dark/white contrast. A second hue dilutes the signal.",
+      "Don't exceed --radius-lg (16px) on any element. The system's form language is gently rounded, never bubbly or circular (except designated avatars/dots).",
+      "Don't use font sizes below 9px or above 26px. The density model depends on a compressed but legible range."
+    ]
+  }
+}

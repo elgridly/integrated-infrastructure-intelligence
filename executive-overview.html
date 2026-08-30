@@ -1,0 +1,3315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Overview — Integrated Infrastructure Intelligence Hub</title>
+  <meta name="description" content="Executive command center for KSIA regional infrastructure readiness monitoring.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23FFE600'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='Arial'>EY</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ey-yellow: #FFE600;
+      --ey-yellow-dim: rgba(255, 230, 0, 0.15);
+      --bg-primary: #0D0D14;
+      --bg-secondary: #13131D;
+      --bg-panel: #181825;
+      --bg-card: #1E1E2E;
+      --bg-card-hover: #252538;
+      --bg-surface: #F5F5F8;
+      --border-dark: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.1);
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0B0C4;
+      --text-tertiary: #8585A0;
+      --text-dark: #1A1A2E;
+      --status-ready: #00C48C;
+      --status-on-track: #00C48C;
+      --status-conditional: #FFAA00;
+      --status-at-risk: #FF5C5C;
+      --status-blocked: #E63946;
+      --status-in-progress: #4DA6FF;
+      --status-not-assessed: #7575A0;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+    }
+
+    html { font-size: 14px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    :focus-visible { outline: 2px solid var(--ey-yellow); outline-offset: 2px; }
+    ::selection { background: rgba(255, 230, 0, 0.25); color: var(--text-primary); }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Header ── */
+    .header {
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      height: 52px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .header-back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-dark);
+      color: var(--text-secondary);
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .header-back:hover { border-color: var(--border-light); color: var(--text-primary); }
+
+    .header-logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+    .i3-logo { width: 36px; height: 36px; flex-shrink: 0; }
+
+    .platform-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+    .platform-name span {
+      display: block;
+      font-weight: 400;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.3px;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--border-light);
+      flex-shrink: 0;
+    }
+
+    .header-filters {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .header-filter {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-dark);
+      color: var(--text-secondary);
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-family: inherit;
+      cursor: pointer;
+      appearance: none;
+      min-width: 110px;
+      transition: all 0.15s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238585A0' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 24px;
+    }
+    .header-filter:hover { border-color: var(--border-light); color: var(--text-primary); }
+    .header-filter:focus { outline: none; border-color: var(--ey-yellow); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .header-icon-btn {
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+      position: relative;
+    }
+    .header-icon-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+
+    .notif-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 6px;
+      height: 6px;
+      background: var(--status-at-risk);
+      border-radius: 50%;
+    }
+
+    .user-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--ey-yellow);
+      color: var(--bg-primary);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: -0.5px;
+    }
+
+    /* ── Main ── */
+    .main { padding: 16px 24px 32px; }
+
+    /* ── Row 1: KPIs + Lifecycle ── */
+    .row-top {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      border-color: var(--border-light);
+    }
+    .kpi-card--wide { flex: 1.6; display: flex; flex-direction: row; align-items: center; gap: 16px; }
+
+    .kpi-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+    .kpi-value--red { color: var(--status-at-risk); }
+    .kpi-value--amber { color: var(--status-conditional); }
+    .kpi-value--date {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+    .kpi-value--date strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* Gauge */
+    .gauge-wrap { width: 80px; height: 80px; flex-shrink: 0; }
+    .gauge-text-value { font-size: 18px; font-weight: 800; fill: var(--text-primary); }
+    .gauge-text-pct { font-size: 8px; font-weight: 600; fill: var(--text-secondary); }
+
+    /* ── Phase Chart (Horizontal Pipeline) ── */
+    .phase-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+      min-height: 0;
+    }
+    .phase-row {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .phase-row:hover {
+      background: rgba(0,0,0,0.02);
+    }
+    .phase-row.is-selected {
+      background: rgba(77,166,255,0.06);
+      border-radius: var(--radius-sm);
+      min-height: 0;
+      position: relative;
+    }
+    .phase-row:last-child { border-bottom: none; }
+    .phase-row-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      background: rgba(0,0,0,0.04);
+    }
+    .phase-row-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+    .phase-row-label {
+      width: 80px;
+      flex-shrink: 0;
+      font-size: 9px;
+      font-weight: 600;
+      color: #6B6B80;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+    }
+    .phase-bar-track {
+      flex: 1;
+      height: 100%;
+      max-height: 36px;
+      display: flex;
+      align-items: center;
+    }
+    .phase-bar {
+      height: 70%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 6px;
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+      cursor: default;
+      position: relative;
+    }
+    .phase-bar.phase-bar--empty {
+      width: 28px !important;
+      height: 70%;
+      background: rgba(0,0,0,0.03) !important;
+      border: 1px dashed rgba(0,0,0,0.12);
+      justify-content: center;
+      padding: 0;
+    }
+    .phase-bar-count {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+    .phase-bar--empty .phase-bar-count {
+      color: #B0B0C4;
+      font-size: 10px;
+      text-shadow: none;
+    }
+    .phase-bar-subs {
+      display: flex;
+      gap: 6px;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    .phase-bar-sub {
+      font-size: 7px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      white-space: nowrap;
+    }
+    .phase-summary {
+      display: flex;
+      gap: 16px;
+      justify-content: flex-end;
+      padding-top: 6px;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      margin-top: 2px;
+    }
+    .phase-summary-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 8px;
+      font-weight: 600;
+      color: #6B6B80;
+    }
+    .phase-summary-val {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-left: 2px;
+    }
+    /* Phase tooltip (matches supply-demand style) */
+    .phase-tooltip {
+      position: fixed;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 11px;
+      line-height: 1.5;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .phase-tooltip.visible { opacity: 1; }
+    .phase-tooltip-title { font-weight: 800; margin-bottom: 4px; font-size: 12px; color: var(--ey-yellow); }
+    .phase-tooltip-row { display: flex; align-items: center; gap: 6px; padding: 1px 0; }
+    .phase-tooltip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .phase-tooltip-val { font-weight: 700; margin-left: auto; padding-left: 16px; font-variant-numeric: tabular-nums; }
+    .phase-tooltip-total { font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4px; padding-top: 4px; color: var(--text-primary); display: flex; justify-content: space-between; }
+    .phase-tooltip-health { display: flex; gap: 8px; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .phase-tooltip-health-item { display: flex; align-items: center; gap: 4px; font-size: 10px; }
+    .phase-tooltip-health-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Committee Directions Card ── */
+    .kpi-card--directions {
+      flex: 1.5;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .directions-circles {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .dir-circle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .dir-circle-val {
+      font-size: 16px;
+      font-weight: 800;
+      fill: var(--text-primary);
+    }
+    .dir-circle-label {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .directions-footer {
+      text-align: center;
+    }
+    .directions-title {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-tertiary);
+    }
+
+    /* ── Stream Summary Card ── */
+    .kpi-card--summary {
+      flex: 3;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+    .summary-top {
+      padding: 10px 16px;
+      border-right: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 180px;
+    }
+    .summary-project-count {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .summary-project-count span {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-right: 4px;
+    }
+    .summary-health-row {
+      display: flex;
+      gap: 14px;
+    }
+    .summary-health-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+    .summary-health-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .summary-health-lbl {
+      font-size: 7px;
+      color: var(--text-tertiary);
+      margin-bottom: 2px;
+    }
+    .summary-metrics {
+      display: flex;
+      gap: 0;
+      flex: 1;
+    }
+    .summary-metric {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 8px;
+      border-right: 1px solid var(--border-dark);
+      text-align: center;
+    }
+    .summary-metric:last-child { border-right: none; }
+    .summary-metric {
+      transition: background 0.2s ease;
+      cursor: default;
+    }
+    .summary-metric:hover {
+      background: rgba(255,230,0,0.08);
+    }
+    .summary-metric:hover .summary-metric-val {
+      color: #FFE600;
+    }
+    .summary-metric:hover svg {
+      stroke: #FFE600;
+    }
+    .summary-metric-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      transition: color 0.2s ease;
+    }
+    .summary-metric-lbl {
+      font-size: 7px;
+      color: var(--text-tertiary);
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Map Section ── */
+    .map-section { position: relative; }
+
+    .map-title-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-bottom: none;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .map-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #fff;
+    }
+
+    .map-container {
+      position: relative;
+      aspect-ratio: 1200 / 525;
+      background: radial-gradient(ellipse 80% 70% at 50% 50%, #8a7a5c, #6b5d42 40%, #3d3526 70%, #1a1610 100%);
+      border: 1px solid var(--border-dark);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      overflow: hidden;
+      perspective: 900px;
+    }
+
+    .map-3d-stage {
+      position: absolute;
+      inset: 0;
+      transform: scale(1);
+      transform-origin: 50% 50%;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .map-container:hover .map-3d-stage {
+      transform: scale(1.03);
+    }
+
+    .map-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      filter: brightness(0.82) contrast(1.1) saturate(1.15);
+    }
+
+    .map-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 48%, transparent 20%, rgba(10,10,18,0.75) 100%),
+        linear-gradient(180deg, rgba(10,10,18,0.3) 0%, rgba(10,10,18,0.02) 30%, rgba(10,10,18,0.5) 100%);
+      pointer-events: none;
+    }
+
+    .map-ground-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 45% 35% at 48% 50%, rgba(255,230,0,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Map markers */
+    .map-marker {
+      position: absolute;
+      pointer-events: auto;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .map-marker-pin {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.9);
+      animation: marker-pulse 3s ease-in-out infinite;
+    }
+    .map-marker-label {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+      background: rgba(13,13,20,0.6);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    @keyframes marker-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
+      50% { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+    }
+    @keyframes marker-pulse-ready {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,196,140,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(0,196,140,0); }
+    }
+    @keyframes marker-pulse-conditional {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,170,0,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(255,170,0,0); }
+    }
+    @keyframes marker-pulse-risk {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,92,92,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(255,92,92,0); }
+    }
+    @keyframes marker-pulse-blocked {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(230,57,70,0); }
+    }
+
+    .pin-ready { background: var(--status-ready); animation-name: marker-pulse-ready; }
+    .pin-conditional { background: var(--status-conditional); animation-name: marker-pulse-conditional; }
+    .pin-at-risk { background: var(--status-at-risk); animation-name: marker-pulse-risk; }
+    .pin-blocked { background: var(--status-blocked); animation-name: marker-pulse-blocked; }
+
+    /* ── Infrastructure Route Lines ── */
+    .infra-routes {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .infra-routes svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .infra-route-line {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      opacity: 0;
+      animation: route-draw 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    .infra-route-line--glow {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      opacity: 0;
+      filter: blur(6px);
+      animation: route-glow 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes route-draw {
+      0% { stroke-dashoffset: var(--dash-len); opacity: 0; }
+      15% { opacity: 0.9; }
+      100% { stroke-dashoffset: 0; opacity: 0.9; }
+    }
+    @keyframes route-glow {
+      0% { stroke-dashoffset: var(--dash-len); opacity: 0; }
+      15% { opacity: 0.12; }
+      100% { stroke-dashoffset: 0; opacity: 0.12; }
+    }
+    .infra-route-line:nth-child(3) { animation-delay: 0.1s; }
+    .infra-route-line:nth-child(5) { animation-delay: 0.2s; }
+    .infra-route-line:nth-child(7) { animation-delay: 0.3s; }
+    .infra-route-line:nth-child(9) { animation-delay: 0.4s; }
+    .infra-route-line:nth-child(11) { animation-delay: 0.5s; }
+    .infra-route-line--glow:nth-child(4) { animation-delay: 0.1s; }
+    .infra-route-line--glow:nth-child(6) { animation-delay: 0.2s; }
+    .infra-route-line--glow:nth-child(8) { animation-delay: 0.3s; }
+    .infra-route-line--glow:nth-child(10) { animation-delay: 0.4s; }
+    .infra-route-line--glow:nth-child(12) { animation-delay: 0.5s; }
+
+    /* Infrastructure stream icons */
+    .infra-node {
+      position: absolute;
+      z-index: 12;
+      pointer-events: auto;
+      cursor: default;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: node-appear 0.5s ease-out forwards;
+    }
+    .infra-node:nth-child(2) { animation-delay: 0.6s; }
+    .infra-node:nth-child(3) { animation-delay: 0.7s; }
+    .infra-node:nth-child(4) { animation-delay: 0.8s; }
+    .infra-node:nth-child(5) { animation-delay: 0.9s; }
+    .infra-node:nth-child(6) { animation-delay: 1.0s; }
+    @keyframes node-appear {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .infra-node-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 2px solid;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .infra-node-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+    .infra-node-name {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+      background: rgba(13,13,20,0.65);
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    /* Zone labels */
+    .zone-label {
+      position: absolute;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.12);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Legend panel */
+    .map-legend {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 200px;
+      background: rgba(30,30,46,0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      z-index: 20;
+      pointer-events: auto;
+    }
+    .legend-title {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
+    }
+    .legend-section-title {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-tertiary);
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 2px 0;
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-line {
+      width: 16px;
+      height: 2px;
+      flex-shrink: 0;
+      border-radius: 1px;
+    }
+    .legend-text {
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    /* ── Row 2: Map + Milestones ── */
+    .row-middle {
+      margin-bottom: 12px;
+    }
+
+    /* ── Milestones Strip ── */
+    .milestones-strip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin-bottom: 12px;
+    }
+    .milestones-strip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .milestones-strip-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #fff;
+    }
+    .milestones-strip-subtitle {
+      font-size: 10px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+    .ms-timeline {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      padding-top: 16px;
+    }
+    .ms-timeline-line {
+      position: absolute;
+      top: 22px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      width: auto;
+      background: var(--border-dark);
+    }
+    .ms-timeline-progress {
+      position: absolute;
+      top: 22px;
+      left: 0;
+      height: 2px;
+      width: 14%;
+      background: linear-gradient(90deg, var(--status-ready), var(--status-conditional));
+      border-radius: 1px;
+    }
+    .ms-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      cursor: default;
+      text-align: center;
+    }
+    .ms-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-card);
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    .ms-item:hover .ms-dot { transform: scale(1.3); }
+    .ms-item-info {
+      min-width: 0;
+    }
+    .ms-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .ms-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+    .ms-date {
+      font-size: 9px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+    .ms-badge {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .ms-stream-tag {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      line-height: 1.2;
+    }
+
+    /* Lifecycle donut (Row 1 sidebar) */
+    .lifecycle-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      width: 340px;
+    }
+    .lifecycle-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--ey-yellow);
+      margin-bottom: 12px;
+    }
+    .lifecycle-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+    .lifecycle-donut-wrap {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .lifecycle-donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .lifecycle-donut-total {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .lifecycle-donut-label {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+    .lifecycle-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 12px;
+      flex: 1;
+    }
+    .lifecycle-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lifecycle-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .lifecycle-legend-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .lifecycle-legend-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .lifecycle-legend-count {
+      font-size: 9px;
+      color: var(--text-tertiary);
+    }
+    .lifecycle-legend-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.06);
+      flex-shrink: 0;
+      width: 60px;
+      overflow: hidden;
+    }
+    .lifecycle-legend-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Alerts panel (bottom row) */
+    .alerts-panel {
+      background: #fff;
+      border: none;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+    }
+    .alerts-panel-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      flex-shrink: 0;
+      height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .alerts-panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dark);
+    }
+    .alerts-list {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .alert-card {
+      background: rgba(0,0,0,0.02);
+      border-left: 2px solid;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: background 0.15s;
+      height: 65px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .alert-card:hover {
+      background: rgba(0,0,0,0.04);
+    }
+    .alert-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-severity {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .alert-stream-tag {
+      font-size: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: auto;
+    }
+    .alert-text {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+    .alert-meta {
+      font-size: 9px;
+      color: #6B6B80;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .alert-meta-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #6B6B80;
+    }
+
+    /* ── Bottom Panels ── */
+    .panels-row {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 12px;
+    }
+    .panels-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 0.65fr 1fr;
+    }
+
+    .panel {
+      background: #fff;
+      border: none;
+      border-right: 1px solid rgba(0,0,0,0.10);
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      height: 420px;
+    }
+    .panel:last-child {
+      border-right: none;
+    }
+    .panels-card--equal {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .panel-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      flex-shrink: 0;
+      height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dark);
+    }
+    .panel-body {
+      padding: 16px;
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    /* ── Timeline (milestones) ── */
+    .timeline {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      padding-top: 20px;
+      height: 100%;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 26px;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: rgba(0,0,0,0.08);
+    }
+    .timeline-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      min-width: 0;
+    }
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      flex-shrink: 0;
+      margin-bottom: 10px;
+    }
+    .timeline-asset {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      padding: 0 2px;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+    .timeline-date {
+      font-size: 9px;
+      color: #6B6B80;
+      margin-bottom: 6px;
+    }
+    .timeline-badge {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .badge-ready { background: rgba(0,196,140,0.15); color: var(--status-ready); }
+    .badge-conditional { background: rgba(255,170,0,0.15); color: var(--status-conditional); }
+    .badge-at-risk { background: rgba(255,92,92,0.15); color: var(--status-at-risk); }
+    .badge-blocked { background: rgba(230,57,70,0.15); color: var(--status-blocked); }
+    .badge-in-progress { background: rgba(77,166,255,0.15); color: var(--status-in-progress); }
+    .badge-on-track { background: rgba(0,196,140,0.15); color: var(--status-on-track); }
+    .badge-delayed { background: rgba(255,92,92,0.15); color: var(--status-at-risk); }
+    .badge-not-started { background: rgba(117,117,160,0.15); color: var(--status-not-assessed); }
+
+    /* ── Projects List ── */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+    .projects-list::-webkit-scrollbar { width: 4px; }
+    .projects-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+    .projects-list-wrap {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+    }
+    .projects-list-wrap .projects-list {
+      max-height: 100%;
+      height: 100%;
+    }
+    .projects-scroll-hint {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: linear-gradient(transparent, #fff 70%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 6px;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .projects-scroll-hint.hidden { opacity: 0; }
+    .projects-scroll-hint svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text-tertiary);
+      animation: scrollBounce 1.8s ease-in-out infinite;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(4px); opacity: 1; }
+    }
+    .project-card {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 10px 0;
+      transition: background 0.15s;
+    }
+    .project-card:last-child { border-bottom: none; }
+    .project-card:hover { background: rgba(0,0,0,0.015); }
+    .project-num {
+      width: 28px;
+      flex-shrink: 0;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-dark);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 2px;
+    }
+    .project-info {
+      width: 160px;
+      flex-shrink: 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-right: 8px;
+    }
+    .project-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+    .project-health {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      width: fit-content;
+    }
+    .project-health--unhealthy { background: #E63946; color: #fff; }
+    .project-health--at-risk { background: #FFAA00; color: #1A1A2E; }
+    .project-health--healthy { background: #00C48C; color: #fff; }
+    .project-phase {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+      align-items: flex-start;
+      margin-right: auto;
+    }
+    .project-phase-name {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #fff;
+      background: var(--text-dark);
+      padding: 3px 8px;
+      border-radius: 3px;
+      width: fit-content;
+      line-height: 1.3;
+    }
+    .project-milestone {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .project-milestone-dot {
+      width: 3px;
+      align-self: stretch;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .project-milestone-text {
+      font-size: 9px;
+      color: #6B6B80;
+      line-height: 1.3;
+    }
+    .project-capacity {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 75px;
+      text-align: right;
+      padding-right: 4px;
+      gap: 4px;
+    }
+    .project-capacity-val {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+    .project-capacity-date {
+      font-size: 8px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(77,166,255,0.8);
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+    .project-expand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      flex-shrink: 0;
+      color: #C0C0CC;
+      transition: color 0.15s, transform 0.15s;
+    }
+    .project-card:hover .project-expand {
+      color: var(--text-dark);
+      transform: translateX(2px);
+    }
+    .projects-empty {
+      padding: 24px 16px;
+      text-align: center;
+      color: #8585A0;
+      font-size: 11px;
+    }
+    .projects-table-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 0 8px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 4px;
+    }
+    .projects-table-header span {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #6B6B80;
+    }
+    .projects-table-header .ph-name { width: 188px; flex-shrink: 0; margin-right: 8px; }
+    .projects-table-header .ph-phase { margin-right: auto; text-align: left; }
+    .projects-table-header .ph-cap { width: 75px; flex-shrink: 0; text-align: right; padding-right: 4px; }
+
+    .entity-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(0,0,0,0.05);
+      color: #6B6B80;
+    }
+
+    .status-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    /* ── Decisions List ── */
+    .decision-item {
+      padding: 8px 12px;
+      border-left: 3px solid;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: rgba(0,0,0,0.02);
+      transition: background 0.15s;
+      height: 65px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .decision-item:hover { background: rgba(0,0,0,0.04); }
+    .decision-text {
+      font-size: 10px;
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .decision-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .severity-tag {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .decision-due {
+      font-size: 9px;
+      color: #6B6B80;
+    }
+
+    /* ── Stream selection interaction ── */
+    .infra-node { cursor: pointer; }
+    .infra-node.is-active .infra-node-icon { box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 3px rgba(255,230,0,0.35); }
+    .map-container.has-stream-filter .infra-node:not(.is-active) { opacity: 0.3; }
+    .map-container.has-stream-filter .infra-route-line:not(.is-active),
+    .map-container.has-stream-filter .infra-route-line--glow:not(.is-active) { opacity: 0.08 !important; }
+    .map-container.has-stream-filter .map-marker:not(.is-relevant) { opacity: 0.25; }
+
+    .legend-item[data-stream] { cursor: pointer; padding: 3px 4px; border-radius: 3px; transition: background 0.15s; }
+    .legend-item[data-stream]:hover { background: rgba(255,255,255,0.06); }
+    .map-container.has-stream-filter .legend-item[data-stream]:not(.is-active) { opacity: 0.35; }
+
+    /* ── Clear button ── */
+    .stream-clear-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-dark);
+      color: var(--text-secondary);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .stream-clear-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
+
+    /* ── Asset list (vertical) ── */
+    .asset-list { display: flex; flex-direction: column; gap: 6px; height: 100%; overflow-y: auto; }
+
+    .asset-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      background: rgba(0,0,0,0.02);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid;
+      transition: opacity 0.2s, background 0.15s;
+    }
+    .asset-row:hover { background: rgba(0,0,0,0.04); }
+    .asset-row-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .asset-row-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dark);
+      flex: 1;
+      min-width: 0;
+    }
+    .asset-row-date {
+      font-size: 9px;
+      color: #6B6B80;
+      flex-shrink: 0;
+    }
+    .asset-row-badge {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .asset-row-stream {
+      font-size: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .asset-list-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      font-style: italic;
+    }
+
+    /* ── Project Detail Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .modal-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      width: 820px;
+      max-width: 92vw;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-overlay.visible .modal-panel {
+      transform: translateY(0) scale(1);
+    }
+    .modal-panel::-webkit-scrollbar { width: 4px; }
+    .modal-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .modal-header-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+    .modal-header-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      background: var(--bg-card);
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .modal-header-info { flex: 1; min-width: 0; }
+    .modal-header-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .modal-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .modal-entity {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-secondary);
+    }
+    .modal-stream-tag {
+      font-size: 8px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); }
+
+    /* Top cards row */
+    .modal-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 16px 24px;
+    }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+    }
+    .modal-card-title {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-tertiary);
+    }
+    .modal-card-delay {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--status-at-risk);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* Gauge */
+    .modal-gauge {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+    .modal-gauge-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-gauge-val {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .modal-gauge-unit {
+      font-size: 8px;
+      color: var(--text-tertiary);
+    }
+    .modal-gauge-sub {
+      font-size: 9px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    .modal-gauge-track {
+      transition: stroke-dasharray 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* Timeline card */
+    .modal-timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .modal-timeline-dates {
+      display: flex;
+      gap: 20px;
+    }
+    .modal-timeline-date-group { display: flex; flex-direction: column; gap: 2px; }
+    .modal-timeline-date-label {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .modal-timeline-date-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* Phase timeline section */
+    .modal-phases {
+      padding: 0 24px 20px;
+    }
+    .modal-phases-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--ey-yellow);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-phases-legend {
+      display: flex;
+      gap: 14px;
+      font-size: 8px;
+      color: var(--text-tertiary);
+      font-weight: 600;
+    }
+    .modal-phases-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .modal-phases-track {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 16px 20px 20px;
+      overflow-x: auto;
+    }
+    .modal-phases-row {
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      min-width: 700px;
+      position: relative;
+    }
+    .modal-phases-labels,
+    .modal-phases-icons,
+    .modal-phases-baselines,
+    .modal-phases-forecasts {
+      display: grid;
+      grid-template-columns: repeat(var(--phase-count, 9), 1fr);
+      align-items: center;
+    }
+    .modal-phases-labels { margin-bottom: 8px; }
+    .modal-phases-icons { position: relative; margin-bottom: 8px; }
+    .modal-phases-baselines { margin-bottom: 3px; }
+    .modal-phase-label {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+    }
+    .modal-phase-icon-cell {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+    .modal-phase-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid;
+      background: var(--bg-primary);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+    }
+    .modal-phase-icon.completed {
+      background: #1a3a6a;
+      border-color: #1a3a6a;
+    }
+    .modal-phase-icon.current {
+      border-color: var(--ey-yellow);
+      box-shadow: 0 0 12px rgba(255,230,0,0.3);
+    }
+    .modal-phase-icon.upcoming {
+      border-color: var(--border-light);
+    }
+    .modal-phase-icon svg { width: 14px; height: 14px; }
+    .modal-phases-connector-line {
+      position: absolute;
+      top: 50%;
+      left: calc(100% / (var(--phase-count, 9) * 2));
+      right: calc(100% / (var(--phase-count, 9) * 2));
+      height: 3px;
+      background: var(--border-dark);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .modal-phase-date-cell {
+      text-align: center;
+    }
+    .modal-phase-date {
+      font-size: 7px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+    .modal-phase-date--baseline {
+      background: rgba(77,166,255,0.15);
+      color: #4DA6FF;
+    }
+    .modal-phase-date--forecast {
+      background: rgba(255,92,92,0.15);
+      color: #FF5C5C;
+    }
+    .modal-phase-date--ontrack {
+      background: rgba(0,196,140,0.15);
+      color: #00C48C;
+    }
+    /* Animate phase nodes on open */
+    .modal-overlay.visible .modal-phase-icon-cell .modal-phase-icon {
+      animation: phaseNodePop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    .modal-phase-icon-cell:nth-child(2) .modal-phase-icon { animation-delay: 0.1s; }
+    .modal-phase-icon-cell:nth-child(3) .modal-phase-icon { animation-delay: 0.18s; }
+    .modal-phase-icon-cell:nth-child(4) .modal-phase-icon { animation-delay: 0.26s; }
+    .modal-phase-icon-cell:nth-child(5) .modal-phase-icon { animation-delay: 0.34s; }
+    .modal-phase-icon-cell:nth-child(6) .modal-phase-icon { animation-delay: 0.42s; }
+    .modal-phase-icon-cell:nth-child(7) .modal-phase-icon { animation-delay: 0.50s; }
+    .modal-phase-icon-cell:nth-child(8) .modal-phase-icon { animation-delay: 0.58s; }
+    .modal-phase-icon-cell:nth-child(9) .modal-phase-icon { animation-delay: 0.66s; }
+    .modal-phase-icon-cell:nth-child(10) .modal-phase-icon { animation-delay: 0.74s; }
+
+    @keyframes phaseNodePop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Animate gauge strokes */
+    .modal-overlay.visible .modal-gauge-track {
+      animation: gaugeStroke 1.2s cubic-bezier(0.4,0,0.2,1) both;
+      animation-delay: 0.2s;
+    }
+    @keyframes gaugeStroke {
+      0% { stroke-dasharray: 0 201; }
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="header-back" title="Back to Landing Page" aria-label="Back to Landing Page">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <div class="header-logo">
+      <img class="i3-logo" src="I3-Icon.png" alt="I3 Logo">
+      <div class="platform-name">
+        Integrated Infrastructure Intelligence Hub
+        <span>Enabling today. Ready for tomorrow.</span>
+      </div>
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-filters">
+      <select class="header-filter" aria-label="Major Development">
+        <option>All Developments</option>
+        <option>T1-T4</option>
+        <option>Terminal 5</option>
+        <option>Terminal 6</option>
+        <option>Iconic Terminal</option>
+        <option>Cargo Village</option>
+        <option>Private Aviation</option>
+      </select>
+      <select class="header-filter" aria-label="KSIA Area">
+        <option>All Areas</option>
+        <option>North Zone</option>
+        <option>South Zone</option>
+        <option>East Zone</option>
+        <option>West Zone</option>
+        <option>Central Zone</option>
+      </select>
+      <select class="header-filter" aria-label="Infrastructure Stream">
+        <option>All Streams</option>
+        <option>Potable Water</option>
+        <option>Wastewater</option>
+        <option>Power & Energy</option>
+        <option>District Cooling</option>
+        <option>Mobility & Roads</option>
+        <option>Digital & Telecom</option>
+      </select>
+      <select class="header-filter" aria-label="External Entity">
+        <option>All Entities</option>
+        <option>NWC</option>
+        <option>SEC</option>
+        <option>RCRC</option>
+        <option>SWA</option>
+        <option>MOT</option>
+      </select>
+      <select class="header-filter" aria-label="Time Horizon">
+        <option>All Phases</option>
+        <option>2025-2027</option>
+        <option>2028-2030</option>
+        <option>2031-2035</option>
+      </select>
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-actions">
+      <button class="header-icon-btn" title="Notifications" aria-label="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </button>
+      <button class="header-icon-btn" title="Help" aria-label="Help">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+      </button>
+      <div class="user-avatar">HG</div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Row 1: KPIs + Lifecycle -->
+    <div class="row-top">
+      <!-- Overall Readiness Gauge -->
+      <div class="kpi-card kpi-card--wide">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 80 80" width="80" height="80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6" stroke-dasharray="151 201" stroke-linecap="round" transform="rotate(135 40 40)"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#FFAA00" stroke-width="6" stroke-dasharray="108.7 201" stroke-linecap="round" transform="rotate(135 40 40)" id="readiness-arc"/>
+            <text x="40" y="40" text-anchor="middle" class="gauge-text-value" id="readiness-val">72</text>
+            <text x="40" y="50" text-anchor="middle" class="gauge-text-pct">%</text>
+          </svg>
+        </div>
+        <div>
+          <div class="kpi-label" id="readiness-label">Overall Infrastructure Readiness</div>
+          <div style="font-size:10px; font-weight:600; margin-top:2px;" id="readiness-status">CONDITIONAL</div>
+        </div>
+      </div>
+
+      <!-- Infrastructure by Lifecycle -->
+      <div class="lifecycle-panel">
+        <div class="lifecycle-content">
+          <div class="lifecycle-donut-wrap">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="10"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#00C48C" stroke-width="10" id="lc-arc-0"
+                stroke-dasharray="85.5 251.3" stroke-dashoffset="0"
+                stroke-linecap="round" transform="rotate(-90 50 50)"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#4DA6FF" stroke-width="10" id="lc-arc-1"
+                stroke-dasharray="70.4 251.3" stroke-dashoffset="-85.5"
+                stroke-linecap="round" transform="rotate(-90 50 50)"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#FFAA00" stroke-width="10" id="lc-arc-2"
+                stroke-dasharray="60.3 251.3" stroke-dashoffset="-155.9"
+                stroke-linecap="round" transform="rotate(-90 50 50)"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#8585A0" stroke-width="10" id="lc-arc-3"
+                stroke-dasharray="35.2 251.3" stroke-dashoffset="-216.2"
+                stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="lifecycle-donut-center">
+              <div class="lifecycle-donut-total" id="lc-total">142</div>
+              <div class="lifecycle-donut-label">Assets</div>
+            </div>
+          </div>
+          <div class="lifecycle-legend">
+            <div class="lifecycle-legend-item">
+              <div class="lifecycle-legend-dot" style="background: #00C48C;"></div>
+              <div class="lifecycle-legend-info">
+                <div class="lifecycle-legend-name">Existing</div>
+                <div class="lifecycle-legend-count" id="lc-leg-0">48 · 34%</div>
+              </div>
+            </div>
+            <div class="lifecycle-legend-item">
+              <div class="lifecycle-legend-dot" style="background: #4DA6FF;"></div>
+              <div class="lifecycle-legend-info">
+                <div class="lifecycle-legend-name">Under Dev.</div>
+                <div class="lifecycle-legend-count" id="lc-leg-1">40 · 28%</div>
+              </div>
+            </div>
+            <div class="lifecycle-legend-item">
+              <div class="lifecycle-legend-dot" style="background: #FFAA00;"></div>
+              <div class="lifecycle-legend-info">
+                <div class="lifecycle-legend-name">Planned</div>
+                <div class="lifecycle-legend-count" id="lc-leg-2">34 · 24%</div>
+              </div>
+            </div>
+            <div class="lifecycle-legend-item">
+              <div class="lifecycle-legend-dot" style="background: #8585A0;"></div>
+              <div class="lifecycle-legend-info">
+                <div class="lifecycle-legend-name">Future</div>
+                <div class="lifecycle-legend-count" id="lc-leg-3">20 · 14%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Committee Directions Status -->
+      <div class="kpi-card kpi-card--directions">
+        <div class="directions-circles" id="directions-circles">
+          <div class="dir-circle-item">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+              <circle cx="28" cy="28" r="24" fill="none" stroke="#FFAA00" stroke-width="3" stroke-dasharray="100.5 150.8" stroke-linecap="round" transform="rotate(-90 28 28)"/>
+              <text x="28" y="32" text-anchor="middle" class="dir-circle-val">6</text>
+            </svg>
+            <div class="dir-circle-label">Pending<br>Formalization</div>
+          </div>
+          <div class="dir-circle-item">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+              <circle cx="28" cy="28" r="24" fill="none" stroke="#00C48C" stroke-width="3" stroke-dasharray="75.4 150.8" stroke-linecap="round" transform="rotate(-90 28 28)"/>
+              <text x="28" y="32" text-anchor="middle" class="dir-circle-val">5</text>
+            </svg>
+            <div class="dir-circle-label">Work<br>In Progress</div>
+          </div>
+          <div class="dir-circle-item">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+              <circle cx="28" cy="28" r="24" fill="none" stroke="#4DA6FF" stroke-width="3" stroke-dasharray="150.8 150.8" stroke-linecap="round" transform="rotate(-90 28 28)"/>
+              <text x="28" y="32" text-anchor="middle" class="dir-circle-val">22</text>
+            </svg>
+            <div class="dir-circle-label">Direction<br>Completed</div>
+          </div>
+        </div>
+        <div class="directions-footer">
+          <div class="directions-title">Related Committee Directions Status</div>
+        </div>
+      </div>
+
+      <!-- Stream Summary -->
+      <div class="kpi-card kpi-card--summary" id="stream-summary-card">
+        <div class="summary-top" id="summary-top">
+          <div class="summary-project-count"><span id="summary-total">30</span> Projects</div>
+          <div class="summary-health-row" id="summary-health-row">
+            <div class="summary-health-item">
+              <div class="summary-health-val" id="summary-healthy">8</div>
+              <div class="summary-health-lbl">Projects</div>
+              <span class="project-health project-health--healthy" style="font-size:7px;">Healthy</span>
+            </div>
+            <div class="summary-health-item">
+              <div class="summary-health-val" id="summary-unhealthy">19</div>
+              <div class="summary-health-lbl">Projects</div>
+              <span class="project-health project-health--unhealthy" style="font-size:7px;">Unhealthy</span>
+            </div>
+            <div class="summary-health-item">
+              <div class="summary-health-val" id="summary-onhold">3</div>
+              <div class="summary-health-lbl">Projects</div>
+              <span class="project-health project-health--at-risk" style="font-size:7px;">On-hold</span>
+            </div>
+          </div>
+        </div>
+        <div class="summary-metrics">
+          <div class="summary-metric">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="13" width="6" height="8"/></svg>
+            <div class="summary-metric-val" id="summary-lands">2,439</div>
+            <div class="summary-metric-lbl">Number of<br>Lands<br>Identified</div>
+          </div>
+          <div class="summary-metric">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div class="summary-metric-val" id="summary-budget">27.2B</div>
+            <div class="summary-metric-lbl">Allocated<br>out of<br><span id="summary-budget-total">SAR 29.7 B</span></div>
+          </div>
+          <div class="summary-metric">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <div class="summary-metric-val" id="summary-spent">1.1B</div>
+            <div class="summary-metric-lbl">Spent<br>out of<br><span id="summary-spent-total">SAR 1.1 B</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /row-top -->
+
+    <!-- Row 2: Map + Milestones -->
+    <div class="row-middle">
+
+    <!-- Map Section -->
+    <div class="map-section">
+      <div class="map-title-bar">
+        <div class="map-title">KSIA Master Plan & Regional Infrastructure Connectivity</div>
+      </div>
+      <div class="map-container">
+        <div class="map-3d-stage">
+          <img src="assets/ksia-3d-aerial.png" alt="3D aerial render of King Salman International Airport" class="map-image">
+          <div class="map-overlay"></div>
+          <div class="map-ground-glow"></div>
+        </div>
+
+        <!-- Infrastructure Route Lines (SVG overlay) -->
+        <div class="infra-routes">
+          <svg viewBox="0 0 1000 520" preserveAspectRatio="none">
+            <defs>
+              <filter id="line-glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <!-- Potable Water — from top-left -->
+            <path class="infra-route-line--glow" data-stream="potable-water" d="M80,0 C120,80 180,160 320,200 Q400,220 460,260" stroke="#4DA6FF" style="stroke-dasharray:600;--dash-len:600"/>
+            <path class="infra-route-line" data-stream="potable-water" d="M80,0 C120,80 180,160 320,200 Q400,220 460,260" stroke="#4DA6FF" style="stroke-dasharray:600;--dash-len:600"/>
+            <!-- Power & Energy — from right -->
+            <path class="infra-route-line--glow" data-stream="power-energy" d="M1000,180 C880,190 760,210 640,240 Q560,260 500,280" stroke="#00C48C" style="stroke-dasharray:560;--dash-len:560"/>
+            <path class="infra-route-line" data-stream="power-energy" d="M1000,180 C880,190 760,210 640,240 Q560,260 500,280" stroke="#00C48C" style="stroke-dasharray:560;--dash-len:560"/>
+            <!-- District Cooling — from bottom-right -->
+            <path class="infra-route-line--glow" data-stream="district-cooling" d="M940,520 C860,440 740,360 600,310 Q540,290 490,275" stroke="#FFAA00" style="stroke-dasharray:580;--dash-len:580"/>
+            <path class="infra-route-line" data-stream="district-cooling" d="M940,520 C860,440 740,360 600,310 Q540,290 490,275" stroke="#FFAA00" style="stroke-dasharray:580;--dash-len:580"/>
+            <!-- Mobility & Roads — from bottom-left -->
+            <path class="infra-route-line--glow" data-stream="mobility-roads" d="M0,420 C100,390 220,340 340,300 Q420,275 470,265" stroke="#FF5C5C" style="stroke-dasharray:560;--dash-len:560"/>
+            <path class="infra-route-line" data-stream="mobility-roads" d="M0,420 C100,390 220,340 340,300 Q420,275 470,265" stroke="#FF5C5C" style="stroke-dasharray:560;--dash-len:560"/>
+            <!-- Wastewater — from left -->
+            <path class="infra-route-line--glow" data-stream="wastewater" d="M0,200 C100,210 200,230 320,250 Q400,260 450,270" stroke="#B07CFF" style="stroke-dasharray:520;--dash-len:520"/>
+            <path class="infra-route-line" data-stream="wastewater" d="M0,200 C100,210 200,230 320,250 Q400,260 450,270" stroke="#B07CFF" style="stroke-dasharray:520;--dash-len:520"/>
+            <!-- Digital & Telecom — from top-right -->
+            <path class="infra-route-line--glow" data-stream="digital-telecom" d="M880,0 C820,70 720,150 600,210 Q540,240 500,260" stroke="#FF8C42" style="stroke-dasharray:560;--dash-len:560"/>
+            <path class="infra-route-line" data-stream="digital-telecom" d="M880,0 C820,70 720,150 600,210 Q540,240 500,260" stroke="#FF8C42" style="stroke-dasharray:560;--dash-len:560"/>
+          </svg>
+        </div>
+
+        <!-- Infrastructure Stream Node Icons -->
+        <div class="infra-node" data-stream="potable-water" style="top:2%; left:5%;">
+          <div class="infra-node-icon" style="background: rgba(77,166,255,0.15); border-color: #4DA6FF;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4DA6FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 8 4 12 4 16a8 8 0 0016 0c0-4-4-8-8-14z"/></svg>
+          </div>
+          <span class="infra-node-name">Potable Water</span>
+        </div>
+        <div class="infra-node" data-stream="power-energy" style="top:30%; right:2%;">
+          <div class="infra-node-icon" style="background: rgba(0,196,140,0.15); border-color: #00C48C;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#00C48C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <span class="infra-node-name">Power & Energy</span>
+        </div>
+        <div class="infra-node" data-stream="district-cooling" style="bottom:4%; right:6%;">
+          <div class="infra-node-icon" style="background: rgba(255,170,0,0.15); border-color: #FFAA00;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FFAA00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5c0 2-1 3-2 4l-1 1v2h-4v-2l-1-1c-1-1-2-2-2-4a5 5 0 015-5z"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg>
+          </div>
+          <span class="infra-node-name">District Cooling</span>
+        </div>
+        <div class="infra-node" data-stream="mobility-roads" style="bottom:16%; left:2%;">
+          <div class="infra-node-icon" style="background: rgba(255,92,92,0.15); border-color: #FF5C5C;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF5C5C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <span class="infra-node-name">Mobility & Roads</span>
+        </div>
+        <div class="infra-node" data-stream="wastewater" style="top:34%; left:2%;">
+          <div class="infra-node-icon" style="background: rgba(176,124,255,0.15); border-color: #B07CFF;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#B07CFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V8l4-4h6l4 4v12"/><path d="M9 20v-4h6v4"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/></svg>
+          </div>
+          <span class="infra-node-name">Wastewater</span>
+        </div>
+        <div class="infra-node" data-stream="digital-telecom" style="top:2%; right:8%;">
+          <div class="infra-node-icon" style="background: rgba(255,140,66,0.15); border-color: #FF8C42;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF8C42" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="#FF8C42"/></svg>
+          </div>
+          <span class="infra-node-name">Digital & Telecom</span>
+        </div>
+
+        <!-- Zone labels -->
+        <div class="zone-label" style="top:12%; left:42%;">North</div>
+        <div class="zone-label" style="bottom:10%; left:44%;">South</div>
+        <div class="zone-label" style="top:46%; left:6%;">West</div>
+        <div class="zone-label" style="top:46%; right:8%;">East</div>
+        <div class="zone-label" style="top:44%; left:44%;">Central</div>
+
+        <!-- Markers -->
+        <div class="map-marker" data-streams="potable-water,power-energy,mobility-roads" style="top:11.9%; left:1.6%;">
+          <div class="map-marker-pin pin-conditional" style="animation: marker-pulse-conditional 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">Private Aviation</div>
+        </div>
+        <div class="map-marker" data-streams="power-energy,mobility-roads,digital-telecom" style="top:5.3%; left:60.7%;">
+          <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">Cargo Village</div>
+        </div>
+        <div class="map-marker" data-streams="potable-water,power-energy,district-cooling,wastewater,digital-telecom" style="top:19.6%; left:29.7%;">
+          <div class="map-marker-pin pin-at-risk" style="animation: marker-pulse-risk 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">T1-T4</div>
+        </div>
+        <div class="map-marker" data-streams="potable-water,power-energy,district-cooling,wastewater,mobility-roads,digital-telecom" style="top:67.7%; left:40.4%;">
+          <div class="map-marker-pin pin-at-risk" style="animation: marker-pulse-risk 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">Terminal 6</div>
+        </div>
+        <div class="map-marker" data-streams="power-energy,mobility-roads" style="top:52.8%; left:64.2%;">
+          <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">Terminal 5</div>
+        </div>
+        <div class="map-marker" data-streams="power-energy,district-cooling,mobility-roads,digital-telecom" style="top:43.2%; left:91.5%;">
+          <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">Iconic Terminal</div>
+        </div>
+        <div class="map-marker" data-streams="power-energy,mobility-roads" style="top:6%; left:76.3%;">
+          <div class="map-marker-pin pin-conditional" style="animation: marker-pulse-conditional 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">East Runways</div>
+        </div>
+        <div class="map-marker" data-streams="power-energy,wastewater,mobility-roads" style="top:55.3%; left:19.5%;">
+          <div class="map-marker-pin pin-blocked" style="animation: marker-pulse-blocked 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">West Runways</div>
+        </div>
+        <div class="map-marker" data-streams="power-energy,mobility-roads" style="top:22.5%; left:58.9%;">
+          <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
+          <div class="map-marker-label">Central Runways</div>
+        </div>
+
+        <!-- Legend -->
+        <div class="map-legend">
+          <div class="legend-title">Infrastructure Streams</div>
+          <div class="legend-item" data-stream="potable-water"><div class="legend-line" style="background: #4DA6FF;"></div><span class="legend-text">Potable Water</span></div>
+          <div class="legend-item" data-stream="power-energy"><div class="legend-line" style="background: #00C48C;"></div><span class="legend-text">Power & Energy</span></div>
+          <div class="legend-item" data-stream="district-cooling"><div class="legend-line" style="background: #FFAA00;"></div><span class="legend-text">District Cooling</span></div>
+          <div class="legend-item" data-stream="mobility-roads"><div class="legend-line" style="background: #FF5C5C;"></div><span class="legend-text">Mobility & Roads</span></div>
+          <div class="legend-item" data-stream="wastewater"><div class="legend-line" style="background: #B07CFF;"></div><span class="legend-text">Wastewater</span></div>
+          <div class="legend-item" data-stream="digital-telecom"><div class="legend-line" style="background: #FF8C42;"></div><span class="legend-text">Digital & Telecom</span></div>
+
+          <div class="legend-section-title">Readiness Status</div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--status-ready);"></div><span class="legend-text">Ready</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--status-conditional);"></div><span class="legend-text">Conditional</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--status-at-risk);"></div><span class="legend-text">At Risk</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--status-blocked);"></div><span class="legend-text">Blocked</span></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /row-middle -->
+
+    <!-- Upcoming Milestones (horizontal, full-width) -->
+    <div class="milestones-strip">
+      <div class="milestones-strip-header">
+        <div class="milestones-strip-title">Upcoming Infrastructure Milestones</div>
+        <div class="milestones-strip-subtitle">Key delivery windows</div>
+      </div>
+      <div class="ms-timeline">
+        <div class="ms-timeline-line"></div>
+        <div class="ms-timeline-progress" style="width: 14%;"></div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-ready);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">Cargo Village</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q2 2026</span>
+              <span class="ms-badge badge-ready">Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-on-track);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">Central Runways</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q4 2026</span>
+              <span class="ms-badge badge-on-track">On Track</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-conditional);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">Private Aviation</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q1 2027</span>
+              <span class="ms-badge badge-conditional">Conditional</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-at-risk);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">Terminal 6</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q3 2028</span>
+              <span class="ms-badge badge-at-risk">At Risk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-conditional);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">East Runways</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q2 2027</span>
+              <span class="ms-badge badge-conditional">Conditional</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-blocked);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">West Runways</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q3 2027</span>
+              <span class="ms-badge badge-blocked">Blocked</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-at-risk);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">T1-T4</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q4 2027</span>
+              <span class="ms-badge badge-at-risk">At Risk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-conditional);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">Terminal 5</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q1 2029</span>
+              <span class="ms-badge badge-conditional">Conditional</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ms-item">
+          <div class="ms-dot" style="background: var(--status-at-risk);"></div>
+          <div class="ms-item-info">
+            <div class="ms-name">Iconic Terminal</div>
+            <div class="ms-meta">
+              <span class="ms-date">Q4 2038</span>
+              <span class="ms-badge badge-at-risk">At Risk</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Row 3: Bottom Panels -->
+    <div class="panels-row">
+
+      <!-- Card 1: Phase Chart + Critical Projects -->
+      <div class="panels-card">
+        <div class="panel" id="phase-chart-panel">
+          <div class="panel-header" style="justify-content:space-between;">
+            <div class="panel-title" id="assets-panel-title">Projects Distribution by Phase</div>
+            <button class="stream-clear-btn" id="stream-clear-btn" style="display:none;" title="Clear filter">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>All Streams</span>
+            </button>
+          </div>
+          <div class="panel-body" style="display:flex; flex-direction:column;">
+            <div class="phase-chart" id="phase-chart"></div>
+          </div>
+        </div>
+        <div class="panel" id="projects-panel">
+          <div class="panel-header" style="justify-content:space-between; border-bottom:none;">
+            <div class="panel-title" id="projects-panel-title">Top Critical Projects</div>
+            <span class="panel-count" id="projects-panel-count"></span>
+          </div>
+          <div class="panel-body" style="padding: 0 16px 16px;">
+            <div class="projects-list-wrap">
+              <div class="projects-list" id="projects-list"></div>
+              <div class="projects-scroll-hint" id="projects-scroll-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" onclick="document.getElementById('projects-list').scrollBy({top:80,behavior:'smooth'})"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Watchlist + Decisions -->
+      <div class="panels-card panels-card--equal">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title" id="watchlist-title">Top Infrastructure Watchlist</div>
+          </div>
+          <div class="panel-body" style="gap:8px;" id="watchlist-body"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title" id="decisions-title">Top Decisions Required</div>
+          </div>
+          <div class="panel-body" style="gap:8px;" id="decisions-body"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Project Detail Modal -->
+  <div class="modal-overlay" id="project-modal">
+    <div class="modal-panel" id="project-modal-content"></div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2026 EY. I³ — Integrated Infrastructure Intelligence Hub | KSIA — Illustrative data only.
+    <div style="margin-top:4px; font-size:10px; opacity:0.7;">Designed &amp; Developed by Hesham Gridly</div>
+  </footer>
+
+  <script>
+  (function() {
+    // ── Asset data with stream associations ──
+    var STREAM_COLORS = {
+      'potable-water':    { color: '#4DA6FF', label: 'Potable Water' },
+      'power-energy':     { color: '#00C48C', label: 'Power & Energy' },
+      'district-cooling': { color: '#FFAA00', label: 'District Cooling' },
+      'mobility-roads':   { color: '#FF5C5C', label: 'Mobility & Roads' },
+      'wastewater':       { color: '#B07CFF', label: 'Wastewater' },
+      'digital-telecom':  { color: '#FF8C42', label: 'Digital & Telecom' }
+    };
+
+    var ASSETS = [
+      { name: 'Cargo Village',       date: 'Q2 2026', status: 'ready',       badge: 'Ready',       streams: ['power-energy','mobility-roads','digital-telecom'] },
+      { name: 'Central Runways',      date: 'Q4 2026', status: 'on-track',    badge: 'On Track',    streams: ['power-energy','mobility-roads'] },
+      { name: 'Private Aviation',     date: 'Q1 2027', status: 'conditional', badge: 'Conditional', streams: ['potable-water','power-energy','mobility-roads'] },
+      { name: 'East Runways',         date: 'Q2 2027', status: 'conditional', badge: 'Conditional', streams: ['power-energy','mobility-roads'] },
+      { name: 'West Runways',         date: 'Q3 2027', status: 'blocked',     badge: 'Blocked',     streams: ['power-energy','wastewater','mobility-roads'] },
+      { name: 'T1-T4',                date: 'Q4 2027', status: 'at-risk',     badge: 'At Risk',     streams: ['potable-water','power-energy','district-cooling','wastewater','digital-telecom'] },
+      { name: 'Terminal 6',           date: 'Q3 2028', status: 'at-risk',     badge: 'At Risk',     streams: ['potable-water','power-energy','district-cooling','wastewater','mobility-roads','digital-telecom'] },
+      { name: 'Terminal 5',           date: 'Q1 2029', status: 'conditional', badge: 'Conditional', streams: ['power-energy','mobility-roads','digital-telecom'] },
+      { name: 'Iconic Terminal',      date: 'Q4 2038', status: 'at-risk',     badge: 'At Risk',     streams: ['power-energy','district-cooling','mobility-roads','digital-telecom'] }
+    ];
+
+    var STATUS_VARS = {
+      'ready':       'var(--status-ready)',
+      'on-track':    'var(--status-on-track)',
+      'conditional': 'var(--status-conditional)',
+      'at-risk':     'var(--status-at-risk)',
+      'blocked':     'var(--status-blocked)'
+    };
+
+    // ── Critical Projects data with stream associations ──
+    var PROJECTS = [
+      // Mobility & Roads
+      { num: '01', name: 'Upgrade of Prince Meshal Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design developed', milestoneStatus: 'at-risk', capacity: '640k ppl/hr.', target: 'Q2 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '02', name: 'Link Prince Meshal Road to Al Taif Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design developed', milestoneStatus: 'at-risk', capacity: '898k ppl/hr.', target: 'Q3 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '03', name: 'Upgrade of Al Taif Road', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Tender documents floated', milestoneStatus: 'at-risk', capacity: '520k ppl/hr.', target: 'Q4 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '04', name: 'Link Al Taif Road to Qiddiya', health: 'unhealthy', phase: 'Construction', milestone: 'Mobilization completed', milestoneStatus: 'delayed', capacity: '380k ppl/hr.', target: 'Q3 2027', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '05', name: 'Build 2nd Southern Ring Road', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Construction contract signed', milestoneStatus: 'at-risk', capacity: '342k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '06', name: 'Upgrade of Dirab – Durumah Road', health: 'unhealthy', phase: 'Design Tendering', milestone: 'On-hold', milestoneStatus: 'blocked', capacity: 'TBD ppl/hr.', target: 'Q3 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '07', name: 'Expansion of Jeddah Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design approved', milestoneStatus: 'at-risk', capacity: '720k ppl/hr.', target: 'Q1 2029', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '08', name: 'Upgrade of Wadi Laban Bridge', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Contract signed', milestoneStatus: 'at-risk', capacity: '8.1M ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '09', name: 'Upgrade of Prince Turki AlAwwal Road', health: 'unhealthy', phase: 'Design', milestone: 'Concept design developed', milestoneStatus: 'at-risk', capacity: '3.4M ppl/hr.', target: 'Q4 2027', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '10', name: 'Upgrade of Dirab Road', health: 'healthy', phase: 'Construction Tendering', milestone: 'Bids evaluation completed', milestoneStatus: 'on-track', capacity: '882k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '11', name: 'Upgrade of Najmuddin AlAyoubi Road', health: 'unhealthy', phase: 'Design', milestone: 'Concept design developed', milestoneStatus: 'at-risk', capacity: '450k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      // Potable Water
+      { num: '01', name: 'Potable Water Transmission Line', health: 'unhealthy', phase: 'Construction', milestone: 'Pipe laying 42% complete', milestoneStatus: 'delayed', capacity: '45,000 m³/d', target: 'Q3 2028', streams: ['potable-water'], entity: 'NWC' },
+      { num: '02', name: 'KSIA Water Reservoir Complex', health: 'at-risk', phase: 'Design', milestone: 'Detailed design in review', milestoneStatus: 'at-risk', capacity: '30,000 m³', target: 'Q2 2028', streams: ['potable-water'], entity: 'NWC' },
+      { num: '03', name: 'Water Distribution Network — Airport City', health: 'at-risk', phase: 'Design Tendering', milestone: 'Tender floated', milestoneStatus: 'conditional', capacity: '18,000 m³/d', target: 'Q1 2029', streams: ['potable-water'], entity: 'NWC' },
+      { num: '04', name: 'Interim Water Treatment Facility', health: 'unhealthy', phase: 'Approval', milestone: 'Committee decision pending', milestoneStatus: 'blocked', capacity: '12,000 m³/d', target: 'Q4 2027', streams: ['potable-water'], entity: 'NWC' },
+      { num: '05', name: 'Terminal 6 Internal Water Network', health: 'at-risk', phase: 'Design', milestone: 'Concept approved', milestoneStatus: 'conditional', capacity: '8,500 m³/d', target: 'Q2 2028', streams: ['potable-water'], entity: 'NWC' },
+      // Power & Energy
+      { num: '01', name: '380kV Substation North', health: 'healthy', phase: 'Construction', milestone: 'Foundation works 60%', milestoneStatus: 'on-track', capacity: '1,200 MVA', target: 'Q2 2027', streams: ['power-energy'], entity: 'SEC' },
+      { num: '02', name: '380kV Transmission Line — Southern Route', health: 'unhealthy', phase: 'Approval', milestone: 'Land corridor pending', milestoneStatus: 'blocked', capacity: '800 MVA', target: 'Q4 2027', streams: ['power-energy'], entity: 'SEC' },
+      { num: '03', name: '132kV Ring Distribution Network', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Bids under evaluation', milestoneStatus: 'conditional', capacity: '450 MVA', target: 'Q1 2028', streams: ['power-energy'], entity: 'SEC' },
+      { num: '04', name: 'Emergency Power Generation Facility', health: 'healthy', phase: 'Construction', milestone: 'Equipment installation', milestoneStatus: 'on-track', capacity: '120 MW', target: 'Q3 2027', streams: ['power-energy'], entity: 'SEC' },
+      { num: '05', name: 'Airport City Substation', health: 'at-risk', phase: 'Design', milestone: 'Detailed design 70%', milestoneStatus: 'at-risk', capacity: '300 MVA', target: 'Q2 2028', streams: ['power-energy'], entity: 'SEC' },
+      // District Cooling
+      { num: '01', name: 'District Cooling Plant 1', health: 'unhealthy', phase: 'Construction', milestone: 'Chiller installation delayed', milestoneStatus: 'at-risk', capacity: '50,000 TR', target: 'Q1 2028', streams: ['district-cooling'], entity: 'RCRC' },
+      { num: '02', name: 'Distribution Piping Network — Phase 1', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Contract negotiation', milestoneStatus: 'conditional', capacity: '35,000 TR', target: 'Q3 2028', streams: ['district-cooling'], entity: 'RCRC' },
+      { num: '03', name: 'Temporary Cooling Solution — Terminal 6', health: 'at-risk', phase: 'Design', milestone: 'Feasibility approved', milestoneStatus: 'conditional', capacity: '15,000 TR', target: 'Q2 2028', streams: ['district-cooling'], entity: 'RCRC' },
+      // Wastewater
+      { num: '01', name: 'Wastewater Treatment Expansion', health: 'unhealthy', phase: 'Design', milestone: 'Scope unconfirmed with SWA', milestoneStatus: 'blocked', capacity: '25,000 m³/d', target: 'Q4 2027', streams: ['wastewater'], entity: 'SWA' },
+      { num: '02', name: 'Trunk Sewer Line — KSIA to STP', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Environmental approval pending', milestoneStatus: 'at-risk', capacity: '20,000 m³/d', target: 'Q1 2028', streams: ['wastewater'], entity: 'SWA' },
+      { num: '03', name: 'TSE Reuse Network — Irrigation & Cooling', health: 'healthy', phase: 'Design', milestone: 'Detailed design complete', milestoneStatus: 'on-track', capacity: '10,000 m³/d', target: 'Q3 2028', streams: ['wastewater'], entity: 'SWA' },
+      // Digital & Telecom
+      { num: '01', name: 'Fibre Backbone Ring', health: 'healthy', phase: 'Construction', milestone: 'Duct laying 78% complete', milestoneStatus: 'on-track', capacity: '100 Gbps', target: 'Q4 2026', streams: ['digital-telecom'], entity: 'CST' },
+      { num: '02', name: '5G Small Cell Network — Airside', health: 'at-risk', phase: 'Design', milestone: 'RF planning in progress', milestoneStatus: 'conditional', capacity: '120 cells', target: 'Q2 2028', streams: ['digital-telecom'], entity: 'CST' },
+      { num: '03', name: 'Data Centre — Primary Hub', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Tender evaluation', milestoneStatus: 'at-risk', capacity: '5 MW IT', target: 'Q1 2028', streams: ['digital-telecom'], entity: 'CST' }
+    ];
+
+    var HEALTH_CLASSES = { 'unhealthy': 'project-health--unhealthy', 'at-risk': 'project-health--at-risk', 'healthy': 'project-health--healthy' };
+    var HEALTH_LABELS = { 'unhealthy': 'Unhealthy', 'at-risk': 'At Risk', 'healthy': 'Healthy' };
+    var MILESTONE_COLORS = {
+      'on-track': '#00C48C', 'conditional': '#FFAA00', 'at-risk': '#FF5C5C',
+      'delayed': '#E63946', 'blocked': '#8585A0'
+    };
+    var MILESTONE_SHAPES = {
+      'on-track': 'circle', 'conditional': 'diamond', 'at-risk': 'diamond',
+      'delayed': 'diamond', 'blocked': 'diamond'
+    };
+
+    var mapContainer = document.querySelector('.map-container');
+    var panelTitle = document.getElementById('assets-panel-title');
+    var projectsList = document.getElementById('projects-list');
+    var projectsTitle = document.getElementById('projects-panel-title');
+    var projectsCount = document.getElementById('projects-panel-count');
+    var clearBtn = document.getElementById('stream-clear-btn');
+    var activeStream = null;
+    var activePhase = null;
+
+    function renderProjects(streamFilter, phaseFilter) {
+      var items = streamFilter
+        ? PROJECTS.filter(function(p) { return p.streams.indexOf(streamFilter) !== -1; })
+        : PROJECTS.filter(function(p) { return p.health === 'unhealthy' || p.health === 'at-risk'; }).slice(0, 8);
+
+      if (phaseFilter) {
+        items = items.filter(function(p) { return getPhaseGroup(p.phase) === phaseFilter; });
+      }
+
+      if (items.length === 0) {
+        projectsList.innerHTML = '<div class="projects-empty">No projects' + (phaseFilter ? ' in ' + phaseFilter + ' phase' : ' for this stream') + '</div>';
+        projectsCount.textContent = '';
+        return;
+      }
+      projectsCount.textContent = items.length + ' projects';
+
+      var html = '';
+      items.forEach(function(p, idx) {
+        var hClass = HEALTH_CLASSES[p.health] || '';
+        var hLabel = HEALTH_LABELS[p.health] || p.health;
+        var mColor = MILESTONE_COLORS[p.milestoneStatus] || '#8585A0';
+        var shape = MILESTONE_SHAPES[p.milestoneStatus] || 'diamond';
+        var dotSvg = shape === 'circle'
+          ? '<svg width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" fill="' + mColor + '"/></svg>'
+          : '<svg width="6" height="6" viewBox="0 0 6 6"><rect x="0.9" y="0.9" width="4.2" height="4.2" rx="0.5" fill="' + mColor + '" transform="rotate(45 3 3)"/></svg>';
+
+        html += '<div class="project-card" style="cursor:pointer;" onclick="openProjectModal(' + idx + ')">' +
+          '<div class="project-num">' + p.num + '</div>' +
+          '<div class="project-info">' +
+            '<div class="project-name">' + p.name + '</div>' +
+            '<span class="project-health ' + hClass + '">' + hLabel + '</span>' +
+          '</div>' +
+          '<div class="project-phase">' +
+            '<div class="project-phase-name">' + p.phase + '</div>' +
+            '<div class="project-milestone">' +
+              '<div class="project-milestone-dot" style="background:' + mColor + ';"></div>' +
+              '<div class="project-milestone-text">' + p.milestone + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="project-capacity">' +
+            (p.capacity ? '<div class="project-capacity-val">' + p.capacity + '</div>' : '') +
+            (p.target ? '<div class="project-capacity-date">' + p.target + '</div>' : '') +
+          '</div>' +
+          '<div class="project-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>' +
+          '</div>';
+      });
+      projectsList.innerHTML = html;
+      // Update scroll hint visibility
+      var hint = document.getElementById('projects-scroll-hint');
+      if (hint) {
+        var sl = projectsList;
+        var check = function() {
+          hint.classList.toggle('hidden', sl.scrollTop + sl.clientHeight >= sl.scrollHeight - 4);
+        };
+        sl.onscroll = check;
+        setTimeout(check, 50);
+      }
+    }
+
+    function setStream(stream) {
+      activeStream = stream;
+      var isFiltered = !!stream;
+
+      // Map container class
+      mapContainer.classList.toggle('has-stream-filter', isFiltered);
+
+      // Highlight nodes
+      document.querySelectorAll('.infra-node[data-stream]').forEach(function(n) {
+        n.classList.toggle('is-active', n.dataset.stream === stream);
+      });
+
+      // Highlight route lines
+      document.querySelectorAll('[data-stream].infra-route-line, [data-stream].infra-route-line--glow').forEach(function(p) {
+        p.classList.toggle('is-active', p.dataset.stream === stream);
+      });
+
+      // Highlight legend items
+      document.querySelectorAll('.legend-item[data-stream]').forEach(function(l) {
+        l.classList.toggle('is-active', l.dataset.stream === stream);
+      });
+
+      // Highlight map markers
+      document.querySelectorAll('.map-marker[data-streams]').forEach(function(m) {
+        var relevant = !isFiltered || (m.dataset.streams && m.dataset.streams.split(',').indexOf(stream) !== -1);
+        m.classList.toggle('is-relevant', relevant);
+      });
+
+      // Update panels
+      if (isFiltered) {
+        var sc = STREAM_COLORS[stream];
+        panelTitle.innerHTML = '<span style="color:' + sc.color + ';">&#9679;</span> ' + sc.label + ' — Projects by Phase';
+        projectsTitle.innerHTML = '<span style="color:' + sc.color + ';">&#9679;</span> ' + sc.label + ' — Projects';
+        clearBtn.style.display = 'flex';
+      } else {
+        panelTitle.textContent = 'Projects Distribution by Phase';
+        projectsTitle.textContent = 'Top Critical Projects';
+        clearBtn.style.display = 'none';
+      }
+
+      activePhase = null; // reset phase filter on stream change
+      renderProjects(stream, null);
+      renderPhaseChart(stream);
+      renderSummary(stream);
+      renderReadiness(stream);
+      renderLifecycle(stream);
+      renderDirections(stream);
+      renderWatchlist(stream);
+      renderDecisions(stream);
+    }
+
+    // Click handlers on stream nodes
+    document.querySelectorAll('.infra-node[data-stream]').forEach(function(node) {
+      node.addEventListener('click', function() {
+        setStream(activeStream === node.dataset.stream ? null : node.dataset.stream);
+      });
+    });
+
+    // Click handlers on legend items
+    document.querySelectorAll('.legend-item[data-stream]').forEach(function(item) {
+      item.addEventListener('click', function() {
+        setStream(activeStream === item.dataset.stream ? null : item.dataset.stream);
+      });
+    });
+
+    // Clear button
+    clearBtn.addEventListener('click', function() { setStream(null); });
+
+    // ── Phase chart rendering ──
+    var PHASES_ORDER = [
+      { key: 'Requirements', label: 'Requirements &\nRoadmap',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#6B6B80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+        color: '#6B6B80' },
+      { key: 'Studies', label: 'Studies &\nBudget',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#8585A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+        color: '#8585A0' },
+      { key: 'Design', label: 'Design',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#1a3a6a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
+        color: '#1a3a6a' },
+      { key: 'Construction', label: 'Construction',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#0a2848" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="8" rx="1"/><path d="M17 14v7"/><path d="M7 14v7"/><path d="M17 3v3"/><path d="M7 3v3"/><path d="M10 14v4h4v-4"/></svg>',
+        color: '#0a2848' },
+      { key: 'Transition', label: 'Transition to\nOperations',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#00C48C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+        color: '#00C48C' }
+    ];
+
+    function getPhaseGroup(phase) {
+      if (/requirement|alignment|roadmap|cost/i.test(phase)) return 'Requirements';
+      if (/studies|budget/i.test(phase)) return 'Studies';
+      if (/design|approval/i.test(phase)) return 'Design';
+      if (/construction|tendering/i.test(phase)) return 'Construction';
+      if (/transition|operation/i.test(phase)) return 'Transition';
+      return 'Design';
+    }
+
+    function renderPhaseChart(streamFilter) {
+      var items = streamFilter
+        ? PROJECTS.filter(function(p) { return p.streams.indexOf(streamFilter) !== -1; })
+        : PROJECTS;
+
+      var totalCount = items.length;
+      var groups = {};
+      PHASES_ORDER.forEach(function(ph) { groups[ph.key] = { count: 0, subs: {}, healthy: 0, unhealthy: 0, atRisk: 0, projects: [] }; });
+      items.forEach(function(p) {
+        var g = getPhaseGroup(p.phase);
+        groups[g].count++;
+        var sub = p.phase;
+        if (!groups[g].subs[sub]) groups[g].subs[sub] = 0;
+        groups[g].subs[sub]++;
+        if (p.health === 'healthy') groups[g].healthy++;
+        else if (p.health === 'unhealthy') groups[g].unhealthy++;
+        else groups[g].atRisk++;
+        groups[g].projects.push(p);
+      });
+
+      var maxCount = 1;
+      PHASES_ORDER.forEach(function(ph) { if (groups[ph.key].count > maxCount) maxCount = groups[ph.key].count; });
+
+      var preConst = (groups['Requirements'].count || 0) + (groups['Studies'].count || 0) + (groups['Design'].count || 0);
+      var inConst = groups['Construction'].count || 0;
+      var transition = groups['Transition'].count || 0;
+
+      var html = '';
+      PHASES_ORDER.forEach(function(ph, idx) {
+        var g = groups[ph.key];
+        var pct = totalCount > 0 ? Math.round((g.count / maxCount) * 90) : 0;
+        var isEmpty = g.count === 0;
+        var barColor = ph.color;
+        var labelHtml = ph.label.split('\n').join('<br>');
+
+        // Build tooltip data attribute
+        var tipSubs = [];
+        Object.keys(g.subs).forEach(function(sub) { tipSubs.push(sub + '::' + g.subs[sub]); });
+        var tipData = 'data-tip-phase="' + ph.key + '" data-tip-count="' + g.count + '" data-tip-subs="' + tipSubs.join('|') + '" data-tip-healthy="' + g.healthy + '" data-tip-unhealthy="' + g.unhealthy + '" data-tip-atrisk="' + g.atRisk + '"';
+
+        // Sub-phase inline labels
+        var subsInline = '';
+        if (!isEmpty) {
+          var subParts = [];
+          Object.keys(g.subs).forEach(function(sub) { subParts.push(sub + ' (' + g.subs[sub] + ')'); });
+          subsInline = '<div class="phase-bar-subs"><span class="phase-bar-sub">' + subParts.join(' · ') + '</span></div>';
+        }
+
+        html += '<div class="phase-row" ' + tipData + '>' +
+          '<div class="phase-row-icon" style="' + (isEmpty ? '' : 'background:' + barColor + '12;') + '">' + ph.icon + '</div>' +
+          '<div class="phase-row-label">' + labelHtml + '</div>' +
+          '<div class="phase-bar-track">' +
+            (isEmpty
+              ? '<div class="phase-bar phase-bar--empty"><span class="phase-bar-count">–</span></div>'
+              : '<div class="phase-bar" style="width:' + pct + '%; background: linear-gradient(90deg, ' + barColor + ' 0%, ' + barColor + 'cc 100%);">' +
+                  '<span class="phase-bar-count">' + g.count + '</span>' + subsInline +
+                '</div>'
+            ) +
+          '</div>' +
+          '<div class="phase-tooltip" id="phase-tip-' + idx + '"></div>' +
+          '</div>';
+      });
+
+      // Summary row
+      html += '<div class="phase-summary">' +
+        '<div class="phase-summary-item">Total <span class="phase-summary-val">' + totalCount + '</span></div>' +
+        '<div class="phase-summary-item">Pre-Construction <span class="phase-summary-val">' + preConst + '</span></div>' +
+        '<div class="phase-summary-item">In Construction <span class="phase-summary-val">' + inConst + '</span></div>' +
+        (transition > 0 ? '<div class="phase-summary-item">Transition <span class="phase-summary-val">' + transition + '</span></div>' : '') +
+        '</div>';
+
+      document.getElementById('phase-chart').innerHTML = html;
+
+      // Attach tooltip events
+      document.querySelectorAll('.phase-row[data-tip-phase]').forEach(function(row, idx) {
+        var tip = document.getElementById('phase-tip-' + idx);
+        row.addEventListener('mouseenter', function() {
+          var phase = row.dataset.tipPhase;
+          var count = row.dataset.tipCount;
+          var subs = row.dataset.tipSubs;
+          var healthy = parseInt(row.dataset.tipHealthy);
+          var unhealthy = parseInt(row.dataset.tipUnhealthy);
+          var atRisk = parseInt(row.dataset.tipAtrisk);
+
+          var tipHtml = '<div class="phase-tooltip-title">' + phase + '</div>';
+
+          if (parseInt(count) === 0) {
+            tipHtml += '<div class="phase-tooltip-row" style="color:var(--text-tertiary);">No projects in this phase</div>';
+          } else {
+            // Sub-phases
+            if (subs) {
+              subs.split('|').forEach(function(s) {
+                var parts = s.split('::');
+                tipHtml += '<div class="phase-tooltip-row"><div class="phase-tooltip-dot" style="background:#4DA6FF;"></div>' + parts[0] + '<span class="phase-tooltip-val">' + parts[1] + '</span></div>';
+              });
+            }
+            // Total
+            tipHtml += '<div class="phase-tooltip-total"><span>Total Projects</span><span>' + count + '</span></div>';
+            // Health breakdown
+            tipHtml += '<div class="phase-tooltip-health">';
+            if (healthy > 0) tipHtml += '<div class="phase-tooltip-health-item"><div class="phase-tooltip-health-dot" style="background:#00C48C;"></div>' + healthy + ' Healthy</div>';
+            if (unhealthy > 0) tipHtml += '<div class="phase-tooltip-health-item"><div class="phase-tooltip-health-dot" style="background:#E63946;"></div>' + unhealthy + ' Unhealthy</div>';
+            if (atRisk > 0) tipHtml += '<div class="phase-tooltip-health-item"><div class="phase-tooltip-health-dot" style="background:#FFAA00;"></div>' + atRisk + ' At Risk</div>';
+            tipHtml += '</div>';
+          }
+
+          tip.innerHTML = tipHtml;
+          var rect = row.getBoundingClientRect();
+          tip.style.left = (rect.right + 8) + 'px';
+          tip.style.top = rect.top + 'px';
+          tip.classList.add('visible');
+        });
+        row.addEventListener('mouseleave', function() {
+          tip.classList.remove('visible');
+        });
+        row.addEventListener('click', function() {
+          var phase = row.dataset.tipPhase;
+          if (parseInt(row.dataset.tipCount) === 0) return;
+          activePhase = activePhase === phase ? null : phase;
+          // Update selected state
+          document.querySelectorAll('.phase-row').forEach(function(r) {
+            r.classList.toggle('is-selected', r.dataset.tipPhase === activePhase);
+          });
+          renderProjects(activeStream, activePhase);
+        });
+      });
+    }
+
+    // ── Stream summary rendering ──
+    var STREAM_SUMMARY = {
+      'mobility-roads': { total: 11, healthy: 1, unhealthy: 9, onhold: 1, lands: '2,439', budget: '27.2B', budgetTotal: 'SAR 29.7 B', spent: '0', spentTotal: 'SAR 1.1 B' },
+      'potable-water': { total: 5, healthy: 0, unhealthy: 3, onhold: 2, lands: '812', budget: '4.8B', budgetTotal: 'SAR 5.2 B', spent: '1.2B', spentTotal: 'SAR 1.2 B' },
+      'power-energy': { total: 5, healthy: 2, unhealthy: 1, onhold: 2, lands: '1,640', budget: '8.1B', budgetTotal: 'SAR 9.0 B', spent: '2.4B', spentTotal: 'SAR 2.4 B' },
+      'district-cooling': { total: 3, healthy: 0, unhealthy: 1, onhold: 2, lands: '520', budget: '3.6B', budgetTotal: 'SAR 4.1 B', spent: '0.8B', spentTotal: 'SAR 0.8 B' },
+      'wastewater': { total: 3, healthy: 1, unhealthy: 1, onhold: 1, lands: '380', budget: '2.1B', budgetTotal: 'SAR 2.5 B', spent: '0.3B', spentTotal: 'SAR 0.3 B' },
+      'digital-telecom': { total: 3, healthy: 1, unhealthy: 0, onhold: 2, lands: '210', budget: '1.8B', budgetTotal: 'SAR 2.0 B', spent: '0.6B', spentTotal: 'SAR 0.6 B' }
+    };
+
+    function renderSummary(streamFilter) {
+      var s = streamFilter ? STREAM_SUMMARY[streamFilter] : { total: 30, healthy: 8, unhealthy: 19, onhold: 3, lands: '2,439', budget: '27.2B', budgetTotal: 'SAR 29.7 B', spent: '1.1B', spentTotal: 'SAR 1.1 B' };
+      if (!s) s = { total: 0, healthy: 0, unhealthy: 0, onhold: 0, lands: '–', budget: '–', budgetTotal: '–', spent: '–', spentTotal: '–' };
+      document.getElementById('summary-total').textContent = s.total;
+      document.getElementById('summary-healthy').textContent = s.healthy;
+      document.getElementById('summary-unhealthy').textContent = s.unhealthy;
+      document.getElementById('summary-onhold').textContent = s.onhold;
+      document.getElementById('summary-lands').textContent = s.lands;
+      document.getElementById('summary-budget').textContent = s.budget;
+      document.getElementById('summary-budget-total').textContent = s.budgetTotal;
+      document.getElementById('summary-spent').textContent = s.spent;
+      document.getElementById('summary-spent-total').textContent = s.spentTotal;
+    }
+
+    // ── Committee Directions per stream ──
+    var STREAM_DIRECTIONS = {
+      'mobility-roads':   { pending: 2, wip: 2, completed: 8 },
+      'potable-water':    { pending: 2, wip: 1, completed: 3 },
+      'power-energy':     { pending: 1, wip: 1, completed: 4 },
+      'district-cooling': { pending: 1, wip: 0, completed: 2 },
+      'wastewater':       { pending: 0, wip: 1, completed: 3 },
+      'digital-telecom':  { pending: 0, wip: 0, completed: 2 }
+    };
+
+    function renderDirections(streamFilter) {
+      var d = streamFilter ? STREAM_DIRECTIONS[streamFilter] : null;
+      var pending = d ? d.pending : 6;
+      var wip = d ? d.wip : 5;
+      var completed = d ? d.completed : 22;
+      var total = pending + wip + completed;
+      var C = 2 * Math.PI * 24;
+      var circles = document.querySelectorAll('#directions-circles .dir-circle-item');
+      var vals = [pending, wip, completed];
+      var colors = ['#FFAA00', '#00C48C', '#4DA6FF'];
+      circles.forEach(function(item, i) {
+        var pct = total > 0 ? vals[i] / total : 0;
+        var arc = item.querySelector('circle:nth-child(2)');
+        arc.setAttribute('stroke-dasharray', (pct * C) + ' ' + C);
+        arc.setAttribute('stroke', colors[i]);
+        item.querySelector('.dir-circle-val').textContent = vals[i];
+      });
+    }
+
+    // ── Readiness & Lifecycle per stream ──
+    var STREAM_READINESS = {
+      'mobility-roads':   { pct: 45, status: 'AT RISK',      color: 'var(--status-at-risk)' },
+      'potable-water':    { pct: 38, status: 'AT RISK',      color: 'var(--status-at-risk)' },
+      'power-energy':     { pct: 78, status: 'CONDITIONAL',  color: 'var(--status-conditional)' },
+      'district-cooling': { pct: 52, status: 'AT RISK',      color: 'var(--status-at-risk)' },
+      'wastewater':       { pct: 65, status: 'CONDITIONAL',  color: 'var(--status-conditional)' },
+      'digital-telecom':  { pct: 82, status: 'CONDITIONAL',  color: 'var(--status-conditional)' }
+    };
+    var STREAM_LIFECYCLE = {
+      'mobility-roads':   { total: 42, existing: 12, underDev: 15, planned: 10, future: 5 },
+      'potable-water':    { total: 18, existing: 4,  underDev: 6,  planned: 5,  future: 3 },
+      'power-energy':     { total: 28, existing: 10, underDev: 8,  planned: 6,  future: 4 },
+      'district-cooling': { total: 14, existing: 3,  underDev: 4,  planned: 4,  future: 3 },
+      'wastewater':       { total: 16, existing: 6,  underDev: 4,  planned: 4,  future: 2 },
+      'digital-telecom':  { total: 24, existing: 13, underDev: 3,  planned: 5,  future: 3 }
+    };
+
+    function renderReadiness(streamFilter) {
+      var r = streamFilter ? STREAM_READINESS[streamFilter] : null;
+      var pct = r ? r.pct : 72;
+      var status = r ? r.status : 'CONDITIONAL';
+      var color = r ? r.color : 'var(--status-conditional)';
+      var C = 2 * Math.PI * 32;
+      var dash = (pct / 100) * C * 0.75;
+      document.getElementById('readiness-arc').setAttribute('stroke-dasharray', dash + ' ' + C);
+      var arcColor = status === 'READY' ? '#00C48C' : (status === 'CONDITIONAL' ? '#FFAA00' : '#FF5C5C');
+      document.getElementById('readiness-arc').setAttribute('stroke', arcColor);
+      document.getElementById('readiness-val').textContent = pct;
+      var statusEl = document.getElementById('readiness-status');
+      statusEl.textContent = status;
+      statusEl.style.color = arcColor;
+      var label = streamFilter && STREAM_COLORS[streamFilter] ? STREAM_COLORS[streamFilter].label + ' Readiness' : 'Overall Infrastructure Readiness';
+      document.getElementById('readiness-label').textContent = label;
+    }
+
+    function renderLifecycle(streamFilter) {
+      var lc = streamFilter ? STREAM_LIFECYCLE[streamFilter] : null;
+      var total = lc ? lc.total : 142;
+      var vals = lc ? [lc.existing, lc.underDev, lc.planned, lc.future] : [48, 40, 34, 20];
+      var C = 2 * Math.PI * 40;
+      var offset = 0;
+      for (var i = 0; i < 4; i++) {
+        var arc = document.getElementById('lc-arc-' + i);
+        var pct = total > 0 ? vals[i] / total : 0;
+        arc.setAttribute('stroke-dasharray', (pct * C) + ' ' + C);
+        arc.setAttribute('stroke-dashoffset', -offset);
+        offset += pct * C;
+        var pctLabel = total > 0 ? Math.round((vals[i] / total) * 100) : 0;
+        document.getElementById('lc-leg-' + i).textContent = vals[i] + ' · ' + pctLabel + '%';
+      }
+      document.getElementById('lc-total').textContent = total;
+    }
+
+    // ── Watchlist & Decisions data ──
+    var WATCHLIST_DATA = [
+      { text: 'Terminal 6 potable water gap — 45,000 m³/day shortfall if NWC pipeline delayed beyond Q1 2028', severity: 'CRITICAL', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'potable-water', streamLabel: 'Potable Water' },
+      { text: 'RCRC district cooling capacity 18% below forecast — Airport City Ph.1 at risk', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'district-cooling', streamLabel: 'District Cooling' },
+      { text: '380kV transmission line land corridor approval pending — southern route unconfirmed', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'power-energy', streamLabel: 'Power & Energy' },
+      { text: 'SWA wastewater treatment expansion scope unconfirmed — capacity plan blocked', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'wastewater', streamLabel: 'Wastewater' },
+      { text: 'Mobility network capacity insufficient for projected 2029 passenger volumes', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'mobility-roads', streamLabel: 'Mobility & Roads' },
+      { text: 'Digital backbone fibre route conflicts with planned road widening corridor', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'digital-telecom', streamLabel: 'Digital & Telecom' },
+      { text: 'Stormwater drainage outfall capacity review pending — flood risk unmitigated', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'stormwater', streamLabel: 'Stormwater' }
+    ];
+
+    var DECISIONS_DATA = [
+      { text: 'Approve interim water treatment facility for Terminal 6 gap coverage', severity: 'CRITICAL', severityColor: 'var(--status-blocked)', borderColor: 'var(--status-blocked)', due: 'Due 28 Jan 2026', stream: 'potable-water' },
+      { text: 'Release SAR 420M funding for NWC pipeline acceleration', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 15 Feb 2026', stream: 'potable-water' },
+      { text: 'Approve land corridor for 380kV transmission line — southern route', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 01 Mar 2026', stream: 'power-energy' },
+      { text: 'Escalate district cooling capacity shortfall to RCRC board', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 10 Feb 2026', stream: 'district-cooling' },
+      { text: 'Confirm road widening scope for Prince Meshal Road upgrade', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 15 Apr 2026', stream: 'mobility-roads' },
+      { text: 'Approve emergency power generation facility commissioning timeline', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 20 Mar 2026', stream: 'power-energy' },
+      { text: 'Confirm wastewater treatment expansion scope with SWA', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 20 Mar 2026', stream: 'wastewater' }
+    ];
+
+    function renderWatchlist(streamFilter) {
+      var items = streamFilter
+        ? WATCHLIST_DATA.filter(function(w) { return w.stream === streamFilter; })
+        : WATCHLIST_DATA.slice(0, 4);
+      var html = '';
+      if (items.length === 0) {
+        html = '<div class="projects-empty">No alerts for this stream</div>';
+      } else {
+        items.forEach(function(w) {
+          html += '<div class="alert-card" style="border-left-color:' + w.borderColor + ';">' +
+            '<div class="alert-text">' + w.text + '</div>' +
+            '<div class="alert-meta">' +
+              '<span class="severity-tag" style="background:color-mix(in srgb, ' + w.severityColor + ' 15%, transparent);color:' + w.severityColor + ';">' + w.severity + '</span>' +
+              '<span>' + w.streamLabel + '</span>' +
+            '</div></div>';
+        });
+      }
+      document.getElementById('watchlist-body').innerHTML = html;
+    }
+
+    function renderDecisions(streamFilter) {
+      var items = streamFilter
+        ? DECISIONS_DATA.filter(function(d) { return d.stream === streamFilter; })
+        : DECISIONS_DATA.slice(0, 4);
+      var html = '';
+      if (items.length === 0) {
+        html = '<div class="projects-empty">No decisions for this stream</div>';
+      } else {
+        items.forEach(function(d) {
+          html += '<div class="decision-item" style="border-color:' + d.borderColor + ';">' +
+            '<div class="decision-text">' + d.text + '</div>' +
+            '<div class="decision-meta">' +
+              '<span class="severity-tag" style="background:color-mix(in srgb, ' + d.severityColor + ' 15%, transparent);color:' + d.severityColor + ';">' + d.severity + '</span>' +
+              '<span class="decision-due">' + d.due + '</span>' +
+            '</div></div>';
+        });
+      }
+      document.getElementById('decisions-body').innerHTML = html;
+    }
+
+    // ── Project Detail Modal ──
+    var PROJECT_PHASES_TEMPLATE = [
+      { key: 'req', label: 'Requirements\nAlignment' },
+      { key: 'roadmap', label: 'Roadmap &\nCost Estimate' },
+      { key: 'feasibility', label: 'Feasibility &\nBudget Req.' },
+      { key: 'design-tender', label: 'Design\nTendering' },
+      { key: 'design', label: 'Design' },
+      { key: 'const-tender', label: 'Construction\nTendering' },
+      { key: 'construction', label: 'Construction' },
+      { key: 'testing', label: 'Testing &\nCommissioning' },
+      { key: 'transition', label: 'Transition to\nOperations' }
+    ];
+
+    // Generate plausible detail data for each project based on its phase/health
+    function getProjectDetail(p) {
+      var phaseIndex = { 'Approval': 2, 'Design Tendering': 3, 'Design': 4, 'Construction Tendering': 5, 'Construction': 6 };
+      var currentIdx = phaseIndex[p.phase] !== undefined ? phaseIndex[p.phase] : 4;
+
+      // Generate dates
+      var startYear = 2021 + Math.floor(Math.random() * 2);
+      var startMonth = ['Jan','Apr','Jul','Oct'][Math.floor(Math.random()*4)];
+      var endYear = p.target ? parseInt(p.target.split(' ')[1] || '2028') : 2028;
+      var endMonth = p.target ? ({'Q1':'Mar','Q2':'Jun','Q3':'Sep','Q4':'Dec'}[p.target.split(' ')[0]] || 'Sep') : 'Sep';
+
+      // Phase progress percentages
+      var preProject = currentIdx >= 2 ? 100 : (currentIdx === 1 ? 60 : 0);
+      var preProjectPlan = 100;
+      var designProg = currentIdx > 4 ? 100 : (currentIdx === 4 ? (p.health === 'healthy' ? 85 : 65) : (currentIdx === 3 ? 30 : 0));
+      var designPlan = currentIdx >= 3 ? 100 : 30;
+      var constProg = currentIdx > 6 ? 80 : (currentIdx === 6 ? (p.health === 'healthy' ? 42 : (p.health === 'unhealthy' ? 7 : 18)) : 0);
+      var constPlan = currentIdx >= 5 ? (currentIdx === 6 ? 30 : 10) : 0;
+      var constDelay = p.health === 'unhealthy' && currentIdx >= 5 ? '+' + (6 + Math.floor(Math.random()*18)) + ' Months' : (p.health === 'at-risk' && currentIdx >= 5 ? '+' + (3 + Math.floor(Math.random()*6)) + ' Months' : '');
+
+      // Phase statuses — completed phases before current, current, upcoming after
+      // All phases from current onward get both baseline AND forecast dates
+      var months = ['Jan','Mar','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var phases = PROJECT_PHASES_TEMPLATE.map(function(ph, i) {
+        var status = i < currentIdx ? 'completed' : (i === currentIdx ? 'current' : 'upcoming');
+        var baseline = '';
+        var forecast = '';
+        // Completed phases get baseline only
+        if (i < currentIdx) {
+          var bYear = Math.min(startYear + 1 + i, 2029);
+          baseline = '30-' + months[i % months.length] + '-' + bYear;
+        }
+        // Current and all upcoming phases get both baseline and forecast
+        if (i >= currentIdx) {
+          var bYear = Math.min(startYear + 1 + i, 2029);
+          baseline = '30-' + months[i % months.length] + '-' + bYear;
+          var delayMonths = p.health === 'unhealthy' ? (3 + Math.floor(i * 2)) : (p.health === 'at-risk' ? (1 + i) : 0);
+          var fYear = bYear + (delayMonths >= 6 ? 1 : 0);
+          if (fYear > 2030) fYear = 2030;
+          forecast = (p.health === 'unhealthy' || p.health === 'at-risk')
+            ? '08-' + months[(i + 3) % months.length] + '-' + fYear
+            : baseline;
+        }
+        return { label: ph.label, key: ph.key, status: status, baseline: baseline, forecast: forecast };
+      });
+
+      return {
+        startDate: '01-' + startMonth + '-' + startYear,
+        endDate: '30-' + endMonth + '-' + endYear,
+        preProjectProgress: preProject,
+        preProjectPlan: preProjectPlan,
+        designProgress: designProg,
+        designPlan: designPlan,
+        constructionProgress: constProg,
+        constructionPlan: constPlan,
+        constructionDelay: constDelay,
+        phases: phases
+      };
+    }
+
+    function buildGaugeSvg(pct, planned, color, size) {
+      var r = 28;
+      var C = 2 * Math.PI * r;
+      var dash = (pct / 100) * C * 0.75;
+      var trackDash = 0.75 * C;
+      var plannedColor = 'rgba(255,255,255,0.15)';
+      return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 72 72">' +
+        '<circle cx="36" cy="36" r="' + r + '" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5" stroke-dasharray="' + trackDash + ' ' + C + '" stroke-linecap="round" transform="rotate(135 36 36)"/>' +
+        '<circle cx="36" cy="36" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="5" class="modal-gauge-track" stroke-dasharray="' + dash + ' ' + C + '" stroke-linecap="round" transform="rotate(135 36 36)"/>' +
+        '</svg>';
+    }
+
+    function openProjectModal(projectIndex) {
+      var p = null;
+      // Find the project from currently rendered items
+      var items = activeStream
+        ? PROJECTS.filter(function(pr) { return pr.streams.indexOf(activeStream) !== -1; })
+        : PROJECTS.filter(function(pr) { return pr.health === 'unhealthy' || pr.health === 'at-risk'; }).slice(0, 8);
+      p = items[projectIndex];
+      if (!p) return;
+
+      var d = getProjectDetail(p);
+      var hClass = HEALTH_CLASSES[p.health] || '';
+      var hLabel = HEALTH_LABELS[p.health] || p.health;
+      var streamLabel = p.streams.map(function(s) {
+        var sc = STREAM_COLORS[s];
+        return sc ? '<span class="modal-stream-tag" style="background:' + sc.color + '15;color:' + sc.color + ';">' + sc.label + '</span>' : '';
+      }).join('');
+
+      // Gauge colors
+      var preColor = d.preProjectProgress >= 100 ? '#00C48C' : (d.preProjectProgress >= 50 ? '#FFAA00' : '#FF5C5C');
+      var desColor = d.designProgress >= 100 ? '#00C48C' : (d.designProgress >= 50 ? '#FFAA00' : '#FF5C5C');
+      var conColor = d.constructionProgress >= 30 ? '#FFAA00' : (d.constructionProgress > 0 ? '#FF5C5C' : 'rgba(255,255,255,0.1)');
+
+      var html = '';
+
+      // Header
+      html += '<div class="modal-header">' +
+        '<div class="modal-header-left">' +
+          '<div class="modal-header-num">' + p.num + '</div>' +
+          '<div class="modal-header-info">' +
+            '<div class="modal-header-name">' + p.name + '</div>' +
+            '<div class="modal-header-meta">' +
+              '<span class="modal-entity">' + p.entity + '</span>' +
+              '<span class="project-health ' + hClass + '" style="font-size:8px;">' + hLabel + '</span>' +
+              streamLabel +
+              (p.capacity ? '<span style="font-size:9px;color:var(--text-tertiary);font-weight:600;">' + p.capacity + '</span>' : '') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<button class="modal-close" onclick="closeProjectModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
+        '</div>';
+
+      // Cards row
+      html += '<div class="modal-cards">';
+
+      // Timeline card
+      html += '<div class="modal-card" style="align-items:flex-start; text-align:left;">' +
+        '<div class="modal-card-title">Project Timeline</div>' +
+        '<div class="modal-timeline-dates">' +
+          '<div class="modal-timeline-date-group"><div class="modal-timeline-date-label">Start Date</div><div class="modal-timeline-date-val">' + d.startDate + '</div></div>' +
+          '<div class="modal-timeline-date-group"><div class="modal-timeline-date-label">End Date</div><div class="modal-timeline-date-val">' + d.endDate + '</div></div>' +
+        '</div>' +
+        '<div style="margin-top:6px;"><span class="project-health ' + hClass + '" style="font-size:8px;">Roadmap Health: ' + hLabel + '</span></div>' +
+        (p.health !== 'healthy' ? '<div style="font-size:8px;color:var(--status-conditional);font-weight:600;margin-top:4px;">⚠ Requires Attention</div>' : '<div style="font-size:8px;color:var(--status-ready);font-weight:600;margin-top:4px;">✓ On Schedule</div>') +
+        '</div>';
+
+      // Pre-Project Progress
+      html += '<div class="modal-card">' +
+        '<div class="modal-card-title">Pre-Project Progress</div>' +
+        '<div class="modal-gauge">' + buildGaugeSvg(d.preProjectProgress, d.preProjectPlan, preColor, 80) +
+          '<div class="modal-gauge-center"><div class="modal-gauge-val">' + d.preProjectProgress + '%</div></div>' +
+        '</div>' +
+        '<div class="modal-gauge-sub">Planned ' + d.preProjectPlan + ' %</div>' +
+        '</div>';
+
+      // Design Progress
+      html += '<div class="modal-card">' +
+        '<div class="modal-card-title">Design Progress</div>' +
+        '<div class="modal-gauge">' + buildGaugeSvg(d.designProgress, d.designPlan, desColor, 80) +
+          '<div class="modal-gauge-center"><div class="modal-gauge-val">' + d.designProgress + '%</div></div>' +
+        '</div>' +
+        '<div class="modal-gauge-sub">Planned ' + d.designPlan + ' %</div>' +
+        '</div>';
+
+      // Construction Progress
+      html += '<div class="modal-card">' +
+        '<div style="display:flex;align-items:center;gap:6px;"><div class="modal-card-title">Construction Progress</div>' +
+        (d.constructionDelay ? '<div class="modal-card-delay">' + d.constructionDelay + '</div>' : '') + '</div>' +
+        '<div class="modal-gauge">' + buildGaugeSvg(d.constructionProgress, d.constructionPlan, conColor, 80) +
+          '<div class="modal-gauge-center"><div class="modal-gauge-val">' + d.constructionProgress + '%</div></div>' +
+        '</div>' +
+        '<div class="modal-gauge-sub">Planned ' + d.constructionPlan + ' %</div>' +
+        '</div>';
+
+      html += '</div>';
+
+      // Phase timeline
+      html += '<div class="modal-phases">' +
+        '<div class="modal-phases-title"><span>Project Phases</span>' +
+          '<div class="modal-phases-legend">' +
+            '<div class="modal-phases-legend-item"><div style="width:10px;height:3px;background:#4DA6FF;border-radius:1px;"></div> Baseline</div>' +
+            '<div class="modal-phases-legend-item"><div style="width:10px;height:3px;background:#FF5C5C;border-radius:1px;"></div> Forecasted</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="modal-phases-track"><div class="modal-phases-row" style="--phase-count:' + d.phases.length + ';">';
+
+      // Row 1: Labels
+      html += '<div class="modal-phases-labels">';
+      d.phases.forEach(function(ph) {
+        html += '<div class="modal-phase-label">' + ph.label.replace('\n','<br>') + '</div>';
+      });
+      html += '</div>';
+
+      // Row 2: Icons with connector line behind
+      html += '<div class="modal-phases-icons">';
+      html += '<div class="modal-phases-connector-line"></div>';
+      d.phases.forEach(function(ph) {
+        var iconSvg = '';
+        if (ph.status === 'completed') {
+          iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        } else if (ph.status === 'current') {
+          iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ey-yellow)" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="var(--ey-yellow)"/></svg>';
+        } else {
+          iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/></svg>';
+        }
+        html += '<div class="modal-phase-icon-cell"><div class="modal-phase-icon ' + ph.status + '">' + iconSvg + '</div></div>';
+      });
+      html += '</div>';
+
+      // Row 3: Baseline dates
+      html += '<div class="modal-phases-baselines">';
+      d.phases.forEach(function(ph) {
+        if (ph.baseline) {
+          var dateClass = ph.forecast && ph.forecast !== ph.baseline ? 'modal-phase-date--baseline' : 'modal-phase-date--ontrack';
+          html += '<div class="modal-phase-date-cell"><div class="modal-phase-date ' + dateClass + '">' + ph.baseline + '</div></div>';
+        } else {
+          html += '<div class="modal-phase-date-cell"></div>';
+        }
+      });
+      html += '</div>';
+
+      // Row 4: Forecast dates
+      html += '<div class="modal-phases-forecasts">';
+      d.phases.forEach(function(ph) {
+        if (ph.forecast && ph.forecast !== ph.baseline) {
+          html += '<div class="modal-phase-date-cell"><div class="modal-phase-date modal-phase-date--forecast">' + ph.forecast + '</div></div>';
+        } else {
+          html += '<div class="modal-phase-date-cell"></div>';
+        }
+      });
+      html += '</div>';
+
+      html += '</div></div></div>';
+
+      document.getElementById('project-modal-content').innerHTML = html;
+      var overlay = document.getElementById('project-modal');
+      overlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectModal() {
+      var overlay = document.getElementById('project-modal');
+      overlay.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    // Expose modal functions globally for onclick handlers
+    window.openProjectModal = openProjectModal;
+    window.closeProjectModal = closeProjectModal;
+
+    // Close on overlay click
+    document.getElementById('project-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeProjectModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeProjectModal();
+    });
+
+    // Initial render — all assets, projects, phase chart, summary
+    renderProjects(null, null);
+    renderPhaseChart(null);
+    renderSummary(null);
+    renderReadiness(null);
+    renderLifecycle(null);
+    renderDirections(null);
+    renderWatchlist(null);
+    renderDecisions(null);
+  })();
+
+  </script>
+</body>
+</html>

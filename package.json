@@ -1,0 +1,13 @@
+{
+  "name": "ksia-infrastructure-intelligence",
+  "version": "1.0.0",
+  "description": "KSIA Regional Infrastructure Decision Intelligence Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^25.9.0"
+  }
+}

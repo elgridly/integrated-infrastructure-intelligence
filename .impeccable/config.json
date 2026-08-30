@@ -1,0 +1,257 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-radius",
+        "value": "3px",
+        "createdAt": "2026-08-27T19:57:03.732Z",
+        "reason": "scrollbar thumb radius — browser chrome, not a component"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "8px",
+        "createdAt": "2026-08-27T19:57:03.953Z",
+        "reason": "assistant icon box rounding — established in original implementation"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#e8e8f0",
+        "createdAt": "2026-08-27T19:57:04.175Z",
+        "reason": "gauge track stroke — established neutral for SVG gauge background"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "12px",
+        "createdAt": "2026-08-27T19:57:04.414Z",
+        "reason": "Land acquisition description text, intentional"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "13px",
+        "createdAt": "2026-08-27T19:57:04.699Z",
+        "reason": "compact body text — between title 13.5px and body baseline, used for hero descriptions and assistant"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "14px",
+        "createdAt": "2026-08-27T19:57:04.938Z",
+        "reason": "html base font-size and body ramp step — documented in DESIGN.md typography.body"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#9090a8",
+        "createdAt": "2026-08-27T19:57:05.181Z",
+        "reason": "input placeholder — lighter than text-tertiary for placeholder convention"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#2a2a3a",
+        "createdAt": "2026-08-27T19:57:05.499Z",
+        "reason": "send button hover — dark card-hover range for interactive dark element"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#c0c0d0",
+        "createdAt": "2026-08-27T19:57:05.770Z",
+        "reason": "scrollbar thumb — browser chrome color"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#a0a0b0",
+        "createdAt": "2026-08-27T19:57:06.021Z",
+        "reason": "scrollbar thumb hover — browser chrome color"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#d0d0da",
+        "createdAt": "2026-08-27T19:57:06.269Z",
+        "reason": "milestone scrollbar color — browser chrome"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.06)",
+        "createdAt": "2026-08-27T20:07:16.378Z"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.10)",
+        "createdAt": "2026-08-27T20:07:16.585Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "15px",
+        "createdAt": "2026-08-27T20:07:16.809Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "2px",
+        "createdAt": "2026-08-27T20:07:17.063Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "4px",
+        "createdAt": "2026-08-27T20:13:04.025Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "32px",
+        "createdAt": "2026-08-28T10:18:25.947Z",
+        "reason": "KPI console gauge numeral, intentional display size"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "10px",
+        "createdAt": "2026-08-28T10:18:26.063Z",
+        "reason": "KPI console micro-labels, intentional dense UI"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "20px",
+        "createdAt": "2026-08-28T10:18:26.181Z",
+        "reason": "KPI funding strip value, intentional size"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "20px",
+        "createdAt": "2026-08-28T11:33:34.134Z",
+        "reason": "Delta pill badge, intentional chip shape"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "18px",
+        "createdAt": "2026-08-28T11:33:34.240Z",
+        "reason": "Committee critical count, intentional emphasis"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "9px",
+        "createdAt": "2026-08-28T11:33:34.360Z",
+        "reason": "Micro labels in dense dashboard cards, intentional"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "7px",
+        "createdAt": "2026-08-28T13:24:30.982Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "8px",
+        "createdAt": "2026-08-28T13:24:31.095Z"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "9.5px",
+        "createdAt": "2026-08-28T16:35:23.601Z",
+        "reason": "matches existing landing page label size range"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "16px",
+        "createdAt": "2026-08-28T16:35:23.719Z",
+        "reason": "intermediate summary value size, used in existing dashboard patterns"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.3)",
+        "createdAt": "2026-08-28T16:41:23.195Z",
+        "reason": "text-shadow for prerequisite bar inner label legibility"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "createdAt": "2026-08-28T22:35:24.008Z"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#eeeef2",
+        "createdAt": "2026-08-28T22:35:24.124Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "12px",
+        "createdAt": "2026-08-28T22:35:24.253Z"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.9)",
+        "createdAt": "2026-08-29T09:15:14.800Z",
+        "reason": "text-shadow for legibility over aerial photo background"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#b07cff",
+        "createdAt": "2026-08-29T09:15:14.895Z",
+        "reason": "infrastructure stream identity color for wastewater"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#ff8c42",
+        "createdAt": "2026-08-29T09:15:14.985Z",
+        "reason": "infrastructure stream identity color for digital & telecom"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(176,124,255,0.15)",
+        "createdAt": "2026-08-29T09:15:52.735Z",
+        "reason": "derived 15% opacity tint of wastewater stream color for icon background"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(255,140,66,0.15)",
+        "createdAt": "2026-08-29T09:15:52.834Z",
+        "reason": "derived 15% opacity tint of telecom stream color for icon background"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.4)",
+        "createdAt": "2026-08-29T09:16:02.634Z",
+        "reason": "neutral elevation shadow on icon circles over aerial photo"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.8)",
+        "createdAt": "2026-08-29T09:31:26.905Z",
+        "reason": "pre-existing text-shadow for legibility over aerial photo"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "1px",
+        "createdAt": "2026-08-29T09:31:27.001Z",
+        "reason": "pre-existing legend-line border-radius"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.15)",
+        "createdAt": "2026-08-29T09:36:46.249Z",
+        "reason": "pre-existing scrollbar thumb color"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.25)",
+        "createdAt": "2026-08-29T09:36:46.379Z",
+        "reason": "pre-existing scrollbar thumb hover"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#ededf2",
+        "createdAt": "2026-08-29T09:36:46.506Z",
+        "reason": "pre-existing bar track background in supply-demand"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#d63040",
+        "createdAt": "2026-08-29T09:45:54.248Z",
+        "reason": "darker red gradient stop for gap bar visual emphasis"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.2)",
+        "createdAt": "2026-08-29T09:45:54.348Z",
+        "reason": "tooltip box-shadow depth"
+      }
+    ]
+  }
+}

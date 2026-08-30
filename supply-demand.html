@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supply, Demand & Gap Management — Integrated Infrastructure Intelligence Hub</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23FFE600'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='Arial'>EY</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ey-yellow: #FFE600;
+      --bg-primary: #0D0D14;
+      --bg-secondary: #13131D;
+      --bg-panel: #181825;
+      --bg-card: #1E1E2E;
+      --bg-card-hover: #252538;
+      --bg-surface: #F5F5F8;
+      --border-dark: rgba(255, 255, 255, 0.06);
+      --border-light: rgba(255, 255, 255, 0.1);
+      --border-card: #E0E0EA;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0B0C4;
+      --text-tertiary: #8585A0;
+      --text-dark: #1A1A2E;
+      --text-label: #6B6B80;
+      --status-ready: #00C48C;
+      --status-on-track: #00C48C;
+      --status-conditional: #FFAA00;
+      --status-at-risk: #FF5C5C;
+      --status-blocked: #E63946;
+      --status-in-progress: #4DA6FF;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    html { font-size: 14px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-surface);
+      color: var(--text-dark);
+      line-height: 1.5;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::selection { background: rgba(255, 230, 0, 0.25); color: #000; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 16px;
+      background: var(--bg-primary);
+      padding: 0 24px; height: 52px;
+      border-bottom: 1px solid var(--border-dark);
+      flex-shrink: 0;
+    }
+    .header-back {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border-dark);
+      color: var(--text-secondary); text-decoration: none; flex-shrink: 0; transition: all 0.15s;
+    }
+    .header-back:hover { border-color: var(--border-light); color: var(--text-primary); }
+    .header-logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; text-decoration: none; }
+    .i3-logo { width: 36px; height: 36px; flex-shrink: 0; }
+    .platform-name { color: var(--text-primary); font-size: 13px; font-weight: 600; line-height: 1.3; }
+    .platform-name span { display: block; font-size: 10px; font-weight: 400; color: var(--text-secondary); letter-spacing: 0.3px; }
+    .header-divider { width: 1px; height: 28px; background: var(--border-light); flex-shrink: 0; }
+    .header-filters { display: flex; gap: 8px; flex: 1; overflow-x: auto; }
+    .filter-chip {
+      background: rgba(255,255,255,0.04); color: var(--text-secondary);
+      border: 1px solid var(--border-dark); border-radius: var(--radius-sm);
+      padding: 5px 12px; font-size: 11px; white-space: nowrap; cursor: pointer;
+      display: flex; align-items: center; gap: 5px; transition: all 0.15s;
+      font-family: inherit;
+    }
+    .filter-chip:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+    .filter-chip svg { width: 10px; height: 10px; opacity: 0.5; }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .header-icon-btn {
+      background: none; border: none; color: var(--text-secondary);
+      cursor: pointer; padding: 6px; border-radius: 4px; position: relative; transition: all 0.15s;
+    }
+    .header-icon-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+    .notif-dot { position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; border-radius: 50%; background: var(--status-at-risk); }
+    .user-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--ey-yellow); color: var(--bg-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; letter-spacing: -0.5px;
+    }
+
+    /* Layout */
+    .layout { display: flex; flex: 1; overflow: hidden; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border-dark);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+      padding: 16px 14px;
+      gap: 18px;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: var(--bg-panel); }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+    .sidebar-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+    .sidebar-select {
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      color: var(--text-primary); border-radius: var(--radius-sm);
+      padding: 7px 10px; font-size: 12px; width: 100%;
+      font-family: inherit; cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B0B0C4' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .asset-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      border-left: 3px solid var(--status-at-risk);
+      transition: background 0.15s;
+    }
+    .asset-card:hover { background: var(--bg-card-hover); }
+    .asset-card-name { color: var(--text-primary); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .asset-card-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .asset-card-row .label { font-size: 10px; color: var(--text-tertiary); }
+    .asset-card-row .value { font-size: 10px; color: var(--text-secondary); font-weight: 600; }
+    .readiness-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 3px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.3px; margin-top: 6px;
+    }
+    .readiness-badge.at-risk { background: rgba(255,92,92,0.12); color: var(--status-at-risk); }
+
+    .stream-list { display: flex; flex-direction: column; gap: 1px; }
+    .stream-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 8px; border-radius: 4px;
+      font-size: 11px; color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .stream-item:hover { background: var(--bg-card-hover); }
+    .stream-item.active { background: var(--bg-card); color: var(--text-primary); font-weight: 600; }
+    .stream-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--text-tertiary); flex-shrink: 0;
+    }
+    .stream-item.active .stream-dot { background: var(--ey-yellow); }
+
+    .view-toggle { display: flex; gap: 0; }
+    .view-btn {
+      flex: 1; padding: 6px 0; border: 1px solid var(--border-light);
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: all 0.15s;
+      background: transparent; color: var(--text-secondary);
+    }
+    .view-btn:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .view-btn:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-left: none; }
+    .view-btn.active { background: var(--ey-yellow); color: #000; border-color: var(--ey-yellow); }
+
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
+    .sidebar-action {
+      background: transparent; border: 1px solid var(--border-light);
+      color: var(--text-secondary); border-radius: var(--radius-sm);
+      padding: 6px 10px; font-size: 10px; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: all 0.15s; text-align: center;
+    }
+    .sidebar-action:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.2); }
+
+    /* Main content */
+    .main-content {
+      flex: 1; overflow-y: auto; padding: 20px 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    /* KPI row */
+    .kpi-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+    }
+    .kpi-card {
+      background: #fff; border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-md); padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: box-shadow 0.15s, transform 0.15s;
+      display: flex; flex-direction: column;
+    }
+    .kpi-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+      border-color: rgba(0,0,0,0.08);
+    }
+    .kpi-card--wide { grid-column: span 1; }
+    .kpi-card--split { display: flex; flex-direction: row; gap: 0; padding: 0; overflow: hidden; }
+    .kpi-half {
+      flex: 1; padding: 16px 18px; display: flex; flex-direction: column;
+    }
+    .kpi-half + .kpi-half { border-left: 1px solid rgba(0,0,0,0.06); }
+    .kpi-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--text-label); margin-bottom: 6px;
+    }
+    .kpi-value { font-size: 22px; font-weight: 800; color: var(--text-dark); line-height: 1.1; }
+    .kpi-value.red { color: var(--status-at-risk); }
+    .kpi-value.sm { font-size: 16px; }
+    .kpi-unit { font-size: 11px; font-weight: 400; color: var(--text-label); margin-left: 2px; }
+    .kpi-sub { font-size: 10px; color: var(--text-label); margin-top: 3px; font-weight: 500; }
+    .kpi-inline { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+    .kpi-inline-item { display: flex; flex-direction: column; }
+
+    .gap-badge {
+      display: inline-block; padding: 4px 12px; border-radius: var(--radius-sm);
+      font-size: 11px; font-weight: 700;
+    }
+    .gap-badge.at-risk { background: rgba(255,92,92,0.10); color: var(--status-at-risk); }
+    .gap-badge.blocked { background: rgba(230,57,70,0.10); color: var(--status-blocked); }
+
+    .confidence-wrap { display: flex; align-items: center; gap: 12px; }
+    .confidence-label { font-size: 12px; color: var(--text-label); font-weight: 600; }
+
+    /* Mini table in KPI */
+    .mini-table { width: 100%; border-collapse: collapse; }
+    .mini-table th {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.6px;
+      text-transform: uppercase; color: var(--text-label);
+      text-align: left; padding: 0 0 6px 0; border-bottom: 1px solid var(--border-card);
+    }
+    .mini-table th:nth-child(2), .mini-table th:nth-child(3) { text-align: right; }
+    .mini-table td { font-size: 11px; padding: 5px 0; color: var(--text-dark); }
+    .mini-table td:nth-child(2), .mini-table td:nth-child(3) { text-align: right; font-weight: 600; }
+    .mini-table tr.total td { font-weight: 700; border-top: 1px solid var(--border-card); }
+    .mini-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; }
+
+    /* Chart card */
+    .chart-card {
+      background: #fff; border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-md); padding: 20px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .chart-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+      border-color: rgba(0,0,0,0.08);
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--text-label); margin-bottom: 16px;
+    }
+
+    .chart-legend {
+      display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px;
+      padding-top: 12px; border-top: 1px solid var(--border-card);
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-label); font-weight: 500; }
+    .legend-swatch { width: 16px; height: 3px; border-radius: 1px; }
+    .legend-swatch.dashed { background: repeating-linear-gradient(90deg, currentColor 0 4px, transparent 4px 8px); height: 2px; }
+
+    /* Bottom grid */
+    .bottom-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; }
+
+    /* ── Card 1: Supply Sources & Project Contributions ── */
+    .src-card { display: flex; padding: 0; overflow: hidden; }
+    .src-left { width: 280px; flex-shrink: 0; padding: 16px 0 16px 18px; display: flex; flex-direction: column; }
+    .src-right { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; min-width: 0; }
+    .src-subtitle { font-size: 9px; font-weight: 600; color: var(--text-label); margin-bottom: 10px; }
+
+    /* Source rows — dark hover like landing page */
+    .src-row {
+      display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin-bottom: 2px;
+      border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 0.2s ease;
+      position: relative;
+    }
+    .src-row:hover {
+      background: var(--bg-panel); color: var(--text-primary);
+    }
+    .src-row:hover .src-name { color: var(--text-primary); }
+    .src-row:hover .src-cap-val { color: var(--text-primary); }
+    .src-row:hover .src-pct { color: var(--text-secondary); }
+    .src-row.is-active {
+      background: var(--bg-card); color: var(--text-primary);
+    }
+    .src-row.is-active .src-name { color: var(--text-primary); }
+    .src-row.is-active .src-cap-val { color: var(--text-primary); }
+    .src-row.is-active .src-pct { color: var(--text-secondary); }
+
+    /* Animated arrow on active row */
+    .src-row-arrow {
+      position: absolute; right: -18px; top: 50%; transform: translateY(-50%);
+      opacity: 0; transition: opacity 0.25s, transform 0.25s;
+      color: var(--text-label);
+    }
+    .src-row.is-active .src-row-arrow {
+      opacity: 1;
+      animation: arrow-pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes arrow-pulse {
+      0%, 100% { transform: translateY(-50%) translateX(0); }
+      50% { transform: translateY(-50%) translateX(4px); }
+    }
+
+    .src-icon {
+      width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .src-icon svg { width: 16px; height: 16px; }
+    .src-info { flex: 1; min-width: 0; }
+    .src-name { font-size: 11px; font-weight: 700; color: var(--text-dark); transition: color 0.2s; }
+    .src-type {
+      display: inline-block; padding: 1px 6px; border-radius: 3px;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.3px; margin-top: 2px;
+    }
+    .src-type.existing { background: rgba(0,196,140,0.12); color: var(--status-ready); }
+    .src-type.permanent { background: rgba(77,166,255,0.12); color: var(--status-in-progress); }
+    .src-type.interim { background: rgba(255,170,0,0.12); color: var(--status-conditional); }
+    .src-cap { text-align: right; flex-shrink: 0; }
+    .src-cap-val { font-size: 13px; font-weight: 800; color: var(--text-dark); font-variant-numeric: tabular-nums; transition: color 0.2s; }
+    .src-pct { width: 34px; text-align: right; font-size: 10px; font-weight: 700; color: var(--text-label); flex-shrink: 0; transition: color 0.2s; }
+    .src-total {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 12px 0; margin-top: auto; border-top: 1.5px solid var(--border-card);
+      font-size: 11px; font-weight: 800; color: var(--text-dark);
+    }
+
+    /* Project table (right section) */
+    .prj-table { width: 100%; border-collapse: collapse; }
+    .prj-table th {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--text-label);
+      text-align: left; padding: 0 8px 8px 0; border-bottom: 1px solid var(--border-card);
+    }
+    .prj-table th.right { text-align: right; }
+    .prj-table td {
+      font-size: 11px; padding: 7px 8px 7px 0; color: var(--text-dark);
+      border-bottom: 1px solid rgba(0,0,0,0.04); vertical-align: middle;
+    }
+    .prj-table td.right { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .prj-table .prj-name-cell { display: flex; align-items: center; gap: 8px; }
+    .prj-icon-sm {
+      width: 26px; height: 26px; border-radius: 5px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .prj-icon-sm svg { width: 13px; height: 13px; }
+    .prj-status {
+      display: inline-block; padding: 2px 8px; border-radius: 3px;
+      font-size: 9px; font-weight: 700;
+    }
+    .prj-status.on-track { background: rgba(0,196,140,0.10); color: var(--status-ready); }
+    .prj-status.at-risk { background: rgba(255,92,92,0.10); color: var(--status-at-risk); }
+    .prj-status.watch { background: rgba(255,170,0,0.10); color: var(--status-conditional); }
+    .prj-status.planned { background: rgba(77,166,255,0.10); color: var(--status-in-progress); }
+    .prj-legend { display: flex; gap: 12px; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.04); }
+    .prj-legend-item { display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--text-label); }
+    .prj-legend-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    /* ── Card 2: Demand Build-Up Profile ── */
+    .demand-profile-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .demand-profile-total { font-size: 10px; color: var(--text-label); font-weight: 600; }
+    .demand-profile-total strong { font-size: 12px; color: var(--text-dark); }
+
+    .demand-stack-bar { display: flex; height: 36px; border-radius: 6px; overflow: hidden; margin-bottom: 4px; }
+    .demand-seg {
+      height: 100%; display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 800; color: #fff; position: relative;
+      transition: flex 0.4s ease; min-width: 0;
+    }
+    .demand-seg span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 3px; font-variant-numeric: tabular-nums; }
+    .demand-years {
+      display: flex; justify-content: space-between; margin-bottom: 14px;
+      font-size: 8px; color: var(--text-label); font-weight: 600; padding: 0 2px;
+    }
+    .demand-year-col { text-align: center; display: flex; flex-direction: column; gap: 1px; }
+    .demand-year-col strong { font-size: 9px; color: var(--text-dark); }
+
+    .demand-table { width: 100%; border-collapse: collapse; }
+    .demand-table th {
+      font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--text-label);
+      text-align: left; padding: 0 6px 6px 0; border-bottom: 1px solid var(--border-card);
+    }
+    .demand-table th.right { text-align: right; }
+    .demand-table td { font-size: 10px; padding: 5px 6px 5px 0; color: var(--text-dark); border-bottom: 1px solid rgba(0,0,0,0.04); font-variant-numeric: tabular-nums; }
+    .demand-table td.right { text-align: right; font-weight: 600; }
+    .demand-table td .phase-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+    /* ── New Panels ── */
+
+
+    /* Gap Analysis — Horizontal Swimlane Timeline */
+    .gap-waterfall { position: relative; overflow: visible; }
+    .gw-timeline { display: flex; }
+    .gw-y-spacer { width: 36px; flex-shrink: 0; }
+    .gw-track { flex: 1; position: relative; overflow: visible; }
+    .gw-lane {
+      display: flex; align-items: stretch;
+      min-height: 34px; margin-bottom: 1px; position: relative;
+    }
+    .gw-lane.gw-lane--tall { min-height: 48px; }
+    .gw-lane:last-child { margin-bottom: 0; }
+    .gw-lane-bar-area {
+      flex: 1; position: relative;
+      display: flex; align-items: center;
+      overflow: visible;
+    }
+    .gw-bar {
+      position: absolute; height: 26px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; padding: 2px 6px;
+      font-size: 8px; font-weight: 700; color: #fff;
+      white-space: nowrap; overflow: hidden; line-height: 1.3;
+      z-index: 2; transition: filter 0.2s;
+    }
+    .gw-bar:hover { filter: brightness(1.1); }
+    .gw-bar-label { overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
+    .gw-bar-val { font-weight: 800; font-size: 8px; font-variant-numeric: tabular-nums; white-space: nowrap; width: 100%; text-align: center; }
+    .gw-annotation {
+      position: absolute; z-index: 3;
+      font-size: 9px; color: var(--text-label); line-height: 1.35;
+      background: #fff; border: 1px solid var(--border-card);
+      border-radius: 4px; padding: 4px 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      white-space: normal;
+    }
+    .gw-connector {
+      position: absolute; z-index: 1; pointer-events: none;
+    }
+
+    /* Decision Support cards */
+    .decision-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .decision-card {
+      background: #FAFAFE; border: 1px solid rgba(0,0,0,0.06); border-radius: var(--radius-md);
+      padding: 16px 18px; position: relative; overflow: hidden;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .decision-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: rgba(0,0,0,0.08); }
+    .decision-card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .decision-card-number { font-size: 9px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-label); margin-bottom: 8px; }
+    .decision-card-title { font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; line-height: 1.3; }
+    .decision-flow { display: flex; flex-direction: column; gap: 6px; }
+    .decision-flow-step { display: flex; align-items: flex-start; gap: 8px; font-size: 10px; color: var(--text-dark); line-height: 1.4; }
+    .decision-flow-icon { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800; color: #fff; }
+    .decision-deadline { margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; gap: 6px; }
+    .decision-deadline-label { font-size: 9px; color: var(--text-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+    .decision-deadline-val { font-size: 11px; font-weight: 800; }
+
+
+    /* Footer */
+    .footer {
+      height: 44px; flex-shrink: 0;
+      background: var(--bg-primary);
+      display: flex; align-items: center;
+      padding: 0 24px;
+      border-top: 1px solid var(--border-dark);
+    }
+    .footer-stats { display: flex; align-items: center; height: 100%; flex: 1; }
+    .footer-stat {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 16px; height: 100%;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-stat:first-child { padding-left: 0; }
+    .footer-stat:last-child { border-right: none; }
+    .footer-stat-label { font-size: 9px; color: var(--text-secondary); letter-spacing: 0.3px; line-height: 1; }
+    .footer-stat-value { font-size: 11px; color: var(--text-primary); font-weight: 700; line-height: 1; margin-top: 2px; }
+
+    /* ── Bar Chart ── */
+    .bar-chart {
+      display: flex;
+      gap: 0;
+      height: 340px;
+      position: relative;
+    }
+    .bar-y-axis {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0 10px 24px 0;
+      width: 36px;
+      flex-shrink: 0;
+    }
+    .bar-y-axis span {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-label);
+      text-align: right;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .bar-chart-area {
+      flex: 1;
+      position: relative;
+      overflow: visible;
+    }
+    .bar-grid-line {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: #E8E8F0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .supply-line-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: calc(100% - 24px);
+      z-index: 3;
+      pointer-events: none;
+      overflow: visible;
+      /* Force uniform scaling so circles stay round */
+    }
+    .supply-path {
+      stroke-dasharray: var(--path-len);
+      stroke-dashoffset: var(--path-len);
+      animation: draw-supply 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+    }
+    .supply-area {
+      opacity: 0;
+      animation: fade-area 0.8s ease 1.2s forwards;
+    }
+    @keyframes draw-supply {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes fade-area {
+      to { opacity: 1; }
+    }
+    /* HTML-based dots (avoid SVG oval distortion) */
+    .supply-dot-html {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2.5px solid #1A1A2E;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.15s;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .supply-dot-html.visible { transform: translate(-50%, -50%) scale(1); }
+    .supply-dot-html.is-gap { border-color: var(--status-at-risk); }
+    .supply-dot-html.is-hovered {
+      transform: translate(-50%, -50%) scale(1.5);
+      box-shadow: 0 0 0 4px rgba(77,166,255,0.2);
+    }
+    .supply-dot-html.is-gap.is-hovered {
+      box-shadow: 0 0 0 4px rgba(255,92,92,0.2);
+    }
+
+    /* Permanent value labels on bars every 5 years */
+    .bar-val-permanent {
+      position: absolute;
+      top: -16px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-dark);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .supply-dots-html {
+      position: absolute;
+      inset: 0;
+      bottom: 24px;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .bar-columns {
+      display: flex;
+      align-items: flex-end;
+      height: calc(100% - 24px);
+      position: relative;
+      z-index: 2;
+      gap: 0;
+    }
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      position: relative;
+      cursor: pointer;
+    }
+    .bar-col-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+    }
+    /* The bar itself */
+    .bar-fill {
+      width: 60%;
+      min-width: 14px;
+      max-width: 36px;
+      border-radius: 3px 3px 0 0;
+      position: relative;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), filter 0.2s;
+      transform-origin: bottom center;
+    }
+    .bar-fill--normal { background: var(--text-dark); }
+    .bar-fill--gap {
+      background: linear-gradient(180deg, var(--status-at-risk) 0%, #D63040 100%);
+    }
+    .bar-fill--surplus { background: var(--text-dark); }
+
+    /* Gap portion overlay on bar */
+    .bar-gap-portion {
+      position: absolute;
+      top: 0;
+      left: 0; right: 0;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, rgba(255,92,92,0.9) 0%, rgba(255,92,92,0.7) 100%);
+      pointer-events: none;
+    }
+
+    /* Value label on top of bar */
+    .bar-val {
+      position: absolute;
+      top: -18px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-dark);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.15s;
+      font-variant-numeric: tabular-nums;
+    }
+    .bar-col:hover .bar-val { opacity: 1; }
+    .bar-col:hover .bar-fill {
+      transform: scaleY(1.04) scaleX(1.15);
+      filter: brightness(1.1);
+    }
+
+    /* Year label below */
+    .bar-year {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-label);
+      margin-top: 6px;
+      text-align: center;
+      line-height: 1;
+      position: absolute;
+      bottom: -22px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Gap period background band */
+    .bar-gap-band {
+      position: absolute;
+      top: 0;
+      bottom: 24px;
+      background: rgba(255,92,92,0.04);
+      border-left: 1px dashed rgba(255,92,92,0.3);
+      border-right: 1px dashed rgba(255,92,92,0.3);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .bar-gap-label {
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 7.5px;
+      font-weight: 700;
+      color: var(--status-at-risk);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* Tooltip */
+    .bar-tooltip {
+      position: absolute;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 11px;
+      line-height: 1.5;
+      pointer-events: none;
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .bar-tooltip.visible { opacity: 1; }
+    .bar-tooltip-year { font-weight: 800; margin-bottom: 4px; font-size: 12px; }
+    .bar-tooltip-row { display: flex; align-items: center; gap: 6px; }
+    .bar-tooltip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .bar-tooltip-val { font-weight: 700; margin-left: auto; padding-left: 12px; font-variant-numeric: tabular-nums; }
+    .bar-tooltip-gap { color: var(--status-at-risk); font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4px; padding-top: 4px; }
+    .bar-tooltip-surplus { color: var(--status-ready); font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4px; padding-top: 4px; }
+
+    /* Focus */
+    *:focus-visible { outline: 2px solid var(--ey-yellow); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="header-back" title="Back to Landing Page" aria-label="Back to Landing Page">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <a href="index.html" class="header-logo" style="text-decoration:none">
+      <img class="i3-logo" src="I3-Icon.png" alt="I3 Logo">
+      <div class="platform-name">
+        Integrated Infrastructure Intelligence Hub
+        <span>Supply, Demand &amp; Gap Management</span>
+      </div>
+    </a>
+    <div class="header-divider"></div>
+    <div class="header-filters">
+      <button class="filter-chip">Major Development <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+      <button class="filter-chip">KSIA Area <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+      <button class="filter-chip">Infrastructure Stream <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+      <button class="filter-chip">External Entity <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+      <button class="filter-chip">Time Horizon <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-actions">
+      <button class="header-icon-btn" title="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </button>
+      <button class="header-icon-btn" title="Help">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+      </button>
+      <div class="user-avatar">HG</div>
+    </div>
+  </header>
+
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-label">Select Development / Asset</div>
+        <select class="sidebar-select">
+          <option>T1-T4</option>
+          <option>Terminal 5</option>
+          <option>Terminal 6</option>
+          <option>Private Aviation</option>
+          <option>Iconic Terminal</option>
+          <option>Cargo Village</option>
+        </select>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-card-name">Terminal 6</div>
+        <div class="asset-card-row"><span class="label">Required Date</span><span class="value">Q3 2028</span></div>
+        <div class="asset-card-row"><span class="label">Operational Date</span><span class="value">Q3 2028</span></div>
+        <div class="readiness-badge at-risk">At Risk</div>
+      </div>
+
+      <div>
+        <div class="sidebar-label">Infrastructure Stream</div>
+        <div class="stream-list">
+          <div class="stream-item"><div class="stream-dot"></div>All Infrastructure</div>
+          <div class="stream-item"><div class="stream-dot"></div>Mobility &amp; Roads</div>
+          <div class="stream-item"><div class="stream-dot"></div>Public Transport</div>
+          <div class="stream-item active"><div class="stream-dot"></div>Potable Water</div>
+          <div class="stream-item"><div class="stream-dot"></div>Wastewater</div>
+          <div class="stream-item"><div class="stream-dot"></div>Power &amp; Energy</div>
+          <div class="stream-item"><div class="stream-dot"></div>District Cooling</div>
+          <div class="stream-item"><div class="stream-dot"></div>Digital &amp; Telecom</div>
+          <div class="stream-item"><div class="stream-dot"></div>Stormwater</div>
+          <div class="stream-item"><div class="stream-dot"></div>Waste &amp; Env.</div>
+          <div class="stream-item"><div class="stream-dot"></div>Natural Gas</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-label">View By</div>
+        <div class="view-toggle">
+          <button class="view-btn active">By Asset</button>
+          <button class="view-btn">By Zone</button>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="sidebar-action">Clear All Filters</button>
+        <button class="sidebar-action">Reset</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+      <!-- KPI Row -->
+      <div class="kpi-row">
+        <!-- Card 1: Demand vs Supply snapshot -->
+        <div class="kpi-card kpi-card--split">
+          <div class="kpi-half">
+            <div class="kpi-label">Peak Demand (2029)</div>
+            <div class="kpi-value">39,200 <span class="kpi-unit">m³/day</span></div>
+            <div class="kpi-sub">Before NWC online</div>
+          </div>
+          <div class="kpi-half">
+            <div class="kpi-label">Available Supply</div>
+            <div class="kpi-value">30,000 <span class="kpi-unit">m³/day</span></div>
+            <div class="kpi-sub">Self-supply only until 2030</div>
+          </div>
+        </div>
+        <!-- Card 2: Two gaps -->
+        <div class="kpi-card kpi-card--split">
+          <div class="kpi-half">
+            <div class="kpi-label">Gap 1 — Bridge Crisis</div>
+            <div class="kpi-value red">−9,200 <span class="kpi-unit">m³/d</span></div>
+            <div class="kpi-inline">
+              <span class="gap-badge at-risk">At Risk</span>
+              <span class="kpi-sub" style="margin:0">2028 – 2029</span>
+            </div>
+          </div>
+          <div class="kpi-half">
+            <div class="kpi-label">Gap 2 — Allocation Ceiling</div>
+            <div class="kpi-value red">−5,323 <span class="kpi-unit">m³/day</span></div>
+            <div class="kpi-inline">
+              <span class="gap-badge blocked">Forecast</span>
+              <span class="kpi-sub" style="margin:0">2045 – 2050+</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3: Confidence + Coverage summary -->
+        <div class="kpi-card kpi-card--split">
+          <div class="kpi-half" style="flex:0.4; align-items:center; justify-content:center;">
+            <div class="kpi-label" style="text-align:center">Confidence</div>
+            <svg width="64" height="64" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="25" fill="none" stroke="#E8E8F0" stroke-width="5"/>
+              <circle cx="32" cy="32" r="25" fill="none" stroke="#FFAA00" stroke-width="5"
+                stroke-dasharray="157.08" stroke-dashoffset="59.69"
+                stroke-linecap="round" transform="rotate(-90 32 32)"/>
+              <text x="32" y="35" text-anchor="middle" font-size="14" font-weight="800" fill="#1A1A2E">62%</text>
+            </svg>
+            <div class="kpi-sub" style="text-align:center; margin-top:2px">Moderate</div>
+          </div>
+          <div class="kpi-half" style="flex:0.6">
+            <div class="kpi-label">Supply Composition</div>
+            <table class="mini-table" style="margin-top: 2px">
+              <tbody>
+                <tr><td><span class="mini-dot" style="background:var(--status-ready)"></span>Self-Supply</td><td>30,000</td></tr>
+                <tr><td><span class="mini-dot" style="background:var(--status-in-progress)"></span>NWC Allocation</td><td>50,000</td></tr>
+                <tr class="total"><td>Total Capacity</td><td>80,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-card" id="demand-chart-card">
+        <div class="card-title">Supply vs Demand Over Time (m³/day)</div>
+        <div class="bar-chart" id="bar-chart">
+          <!-- Y axis -->
+          <div class="bar-y-axis">
+            <span>100k</span><span>75k</span><span>50k</span><span>25k</span><span>0</span>
+          </div>
+          <!-- Chart area -->
+          <div class="bar-chart-area" id="bar-chart-area">
+            <!-- Grid lines -->
+            <div class="bar-grid-line" style="bottom:100%"></div>
+            <div class="bar-grid-line" style="bottom:75%"></div>
+            <div class="bar-grid-line" style="bottom:50%"></div>
+            <div class="bar-grid-line" style="bottom:25%"></div>
+            <div class="bar-grid-line" style="bottom:0"></div>
+            <!-- Supply line (SVG overlay) -->
+            <svg class="supply-line-svg" viewBox="0 0 1000 400" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="supplyFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4DA6FF" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#4DA6FF" stop-opacity="0.01"/>
+                </linearGradient>
+                <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4DA6FF"/>
+                  <stop offset="40%" stop-color="#1A1A2E"/>
+                  <stop offset="100%" stop-color="#1A1A2E"/>
+                </linearGradient>
+                <filter id="lineShadow">
+                  <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1A1A2E" flood-opacity="0.15"/>
+                </filter>
+              </defs>
+              <polygon class="supply-area" points="" fill="url(#supplyFill)"/>
+              <polyline class="supply-path" points="" fill="none" stroke="url(#lineGrad)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" filter="url(#lineShadow)"/>
+            </svg>
+            <!-- HTML dots layer (stays circular) -->
+            <div class="supply-dots-html" id="supply-dots-html"></div>
+            <!-- Bars container -->
+            <div class="bar-columns" id="bar-columns"></div>
+          </div>
+        </div>
+        <!-- Tooltip -->
+        <div class="bar-tooltip" id="bar-tooltip"></div>
+        <!-- Legend -->
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-swatch" style="background:#1A1A2E; height:10px; width:10px; border-radius:2px;"></div>Demand (m³/day)</div>
+          <div class="legend-item"><svg width="20" height="10"><line x1="0" y1="5" x2="20" y2="5" stroke="#1A1A2E" stroke-width="2.5"/></svg>Total Supply</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:rgba(255,92,92,0.15); height:10px; width:10px; border-radius:2px; border: 1px solid rgba(255,92,92,0.4);"></div>Gap (Demand &gt; Supply)</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:rgba(0,196,140,0.15); height:10px; width:10px; border-radius:2px; border: 1px solid rgba(0,196,140,0.4);"></div>Surplus (Supply &gt; Demand)</div>
+        </div>
+      </div>
+
+      <!-- Gap Analysis Waterfall — aligned with chart above -->
+      <div class="chart-card" id="gap-profile-card" style="position:relative;">
+        <div class="card-title">Forecast Gap Profile — Timing, Magnitude &amp; Duration</div>
+        <div class="gap-waterfall" id="gap-waterfall"></div>
+        <div class="bar-tooltip" id="gw-tooltip"></div>
+      </div>
+
+      <!-- Bottom grid: Supply Sources | Demand Build-Up -->
+      <div class="bottom-grid">
+
+        <!-- Card 1: Supply Sources & Project Contributions -->
+        <div class="chart-card src-card">
+          <!-- Left: Supply categories -->
+          <div class="src-left">
+            <div class="card-title" style="display:flex; align-items:center; gap:6px">
+              Supply Sources &amp; Project Contributions
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-label)" stroke-width="2" style="opacity:0.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </div>
+            <div class="src-subtitle">Ultimate capacity by source</div>
+            <div id="src-rows"></div>
+            <div class="src-total">
+              <span>Total</span>
+              <span>80,000 <span style="font-weight:400; font-size:9px; color:var(--text-label)">m³/day</span></span>
+            </div>
+          </div>
+          <!-- Right: Solutions/Projects drillthrough -->
+          <div class="src-right" id="src-right">
+            <div class="src-subtitle">Solutions &amp; projects contributing to supply capacity</div>
+            <table class="prj-table" id="prj-table">
+              <thead>
+                <tr>
+                  <th>Project / Initiative</th>
+                  <th>Source Contribution (m³/day)</th>
+                  <th>Required by</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="prj-tbody"></tbody>
+            </table>
+            <div class="prj-legend">
+              <div class="prj-legend-item"><div class="prj-legend-dot" style="background:var(--status-ready)"></div>On Track</div>
+              <div class="prj-legend-item"><div class="prj-legend-dot" style="background:var(--status-conditional)"></div>Watch</div>
+              <div class="prj-legend-item"><div class="prj-legend-dot" style="background:var(--status-at-risk)"></div>At Risk</div>
+              <div class="prj-legend-item"><div class="prj-legend-dot" style="background:var(--status-in-progress)"></div>Planned</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Demand Build-Up Profile -->
+        <div class="chart-card">
+          <div class="demand-profile-header">
+            <div class="card-title" style="margin-bottom:0">Demand Build-Up Profile <span style="font-weight:400; letter-spacing:0">(m³/day)</span></div>
+            <div class="demand-profile-total">Total Ultimate Demand: <strong>80,000 m³/day</strong></div>
+          </div>
+          <div id="demand-profile"></div>
+        </div>
+
+      </div>
+
+      <!-- Decision Support -->
+      <div class="chart-card">
+        <div class="card-title">Required Capacity Decisions</div>
+        <div class="decision-cards" id="decision-cards"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-stats">
+      <div class="footer-stat">
+        <span class="footer-stat-label">Total Projects</span>
+        <span class="footer-stat-value">36</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">On Track</span>
+        <span class="footer-stat-value">22 (61%)</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">At Risk</span>
+        <span class="footer-stat-value">8 (22%)</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">Delayed</span>
+        <span class="footer-stat-value">6 (17%)</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">Total Cost</span>
+        <span class="footer-stat-value">SAR 12.8B</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">Committed</span>
+        <span class="footer-stat-value">SAR 7.6B (59%)</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">Spent</span>
+        <span class="footer-stat-value">SAR 1.9B (15%)</span>
+      </div>
+      <div class="footer-stat">
+        <span class="footer-stat-label">Next Committee</span>
+        <span class="footer-stat-value">15 JAN 2026</span>
+      </div>
+    </div>
+    <div style="text-align:center; font-size:10px; color:var(--text-tertiary); opacity:0.7; padding:6px 24px 0;">Designed &amp; Developed by Hesham Gridly</div>
+  </footer>
+
+  <script>
+    var DATA = [
+      { year: '2025', demand: 18100,  supply: 30000 },
+      { year: '2026', demand: 20739,  supply: 30000 },
+      { year: '2027', demand: 26000,  supply: 30000 },
+      { year: '2028', demand: 31300,  supply: 30000 },
+      { year: '2029', demand: 39200,  supply: 30000 },
+      { year: '2030', demand: 47088,  supply: 80000 },
+      { year: '2031', demand: 50000,  supply: 80000 },
+      { year: '2032', demand: 53000,  supply: 80000 },
+      { year: '2033', demand: 56000,  supply: 80000 },
+      { year: '2034', demand: 59000,  supply: 80000 },
+      { year: '2035', demand: 62000,  supply: 80000 },
+      { year: '2036', demand: 65000,  supply: 80000 },
+      { year: '2037', demand: 68000,  supply: 80000 },
+      { year: '2038', demand: 71000,  supply: 80000 },
+      { year: '2039', demand: 74000,  supply: 80000 },
+      { year: '2040', demand: 76548,  supply: 80000 },
+      { year: '2041', demand: 77400,  supply: 80000 },
+      { year: '2042', demand: 78300,  supply: 80000 },
+      { year: '2043', demand: 79200,  supply: 80000 },
+      { year: '2044', demand: 80000,  supply: 80000 },
+      { year: '2045', demand: 80900,  supply: 80000 },
+      { year: '2046', demand: 81700,  supply: 80000 },
+      { year: '2047', demand: 82600,  supply: 80000 },
+      { year: '2048', demand: 83500,  supply: 80000 },
+      { year: '2049', demand: 84400,  supply: 80000 },
+      { year: '2050', demand: 85323,  supply: 80000 }
+    ];
+
+    var MAX = 100000;
+    function fmt(n) { return n.toLocaleString(); }
+
+  (function() {
+    var chartArea = document.getElementById('bar-chart-area');
+    var cols = document.getElementById('bar-columns');
+    var tooltip = document.getElementById('bar-tooltip');
+
+    // Find gap periods (multiple distinct ranges)
+    var gaps = [];
+    var currentGap = null;
+    DATA.forEach(function(d, i) {
+      if (d.demand > d.supply) {
+        if (!currentGap) currentGap = { start: i, end: i };
+        else currentGap.end = i;
+      } else {
+        if (currentGap) { gaps.push(currentGap); currentGap = null; }
+      }
+    });
+    if (currentGap) gaps.push(currentGap);
+
+    // Build bars
+    DATA.forEach(function(d, i) {
+      var pct = (d.demand / MAX) * 100;
+      var supplyPct = (d.supply / MAX) * 100;
+      var hasGap = d.demand > d.supply;
+      var gapAmt = hasGap ? d.demand - d.supply : 0;
+      var gapPortion = hasGap ? (gapAmt / d.demand) * 100 : 0;
+
+      var col = document.createElement('div');
+      col.className = 'bar-col';
+      col.dataset.index = i;
+
+      var inner = document.createElement('div');
+      inner.className = 'bar-col-inner';
+
+      var bar = document.createElement('div');
+      bar.className = 'bar-fill ' + (hasGap ? 'bar-fill--gap' : 'bar-fill--surplus');
+      bar.style.height = '0%';
+
+      // Value label
+      var val = document.createElement('div');
+      val.className = 'bar-val';
+      val.textContent = fmt(d.demand);
+      bar.appendChild(val);
+
+      // If gap, show the gap portion on top
+      if (hasGap) {
+        var gapOverlay = document.createElement('div');
+        gapOverlay.className = 'bar-gap-portion';
+        gapOverlay.style.height = gapPortion + '%';
+        bar.appendChild(gapOverlay);
+      }
+
+      inner.appendChild(bar);
+
+      // Year label
+      var yearLabel = document.createElement('div');
+      yearLabel.className = 'bar-year';
+      yearLabel.textContent = d.year;
+      inner.appendChild(yearLabel);
+
+      col.appendChild(inner);
+      cols.appendChild(col);
+
+      // Animate bar in with staggered delay
+      setTimeout(function() {
+        bar.style.height = pct + '%';
+      }, 80 + i * 40);
+
+      // Hover tooltip
+      col.addEventListener('mouseenter', function(e) {
+        var hasG = d.demand > d.supply;
+        var diff = Math.abs(d.demand - d.supply);
+        var html = '<div class="bar-tooltip-year">' + d.year + '</div>';
+        html += '<div class="bar-tooltip-row"><div class="bar-tooltip-dot" style="background:var(--text-dark)"></div>Demand<span class="bar-tooltip-val">' + fmt(d.demand) + ' m³/day</span></div>';
+        html += '<div class="bar-tooltip-row"><div class="bar-tooltip-dot" style="background:#4DA6FF"></div>Supply<span class="bar-tooltip-val">' + fmt(d.supply) + ' m³/day</span></div>';
+        if (hasG) {
+          html += '<div class="bar-tooltip-gap">Gap: ' + fmt(diff) + ' m³/day shortfall</div>';
+        } else if (d.supply > d.demand) {
+          html += '<div class="bar-tooltip-surplus">Surplus: +' + fmt(diff) + ' m³/day</div>';
+        }
+        tooltip.innerHTML = html;
+        tooltip.classList.add('visible');
+      });
+
+      col.addEventListener('mousemove', function(e) {
+        var card = document.getElementById('demand-chart-card');
+        var rect = card.getBoundingClientRect();
+        tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
+        tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+      });
+
+      col.addEventListener('mouseleave', function() {
+        tooltip.classList.remove('visible');
+      });
+    });
+
+    // Gap period bands (two distinct gaps)
+    var gapLabels = [
+      'GAP 1 — Bridge Crisis (2028–29)',
+      'GAP 2 — Allocation Ceiling (2045+)'
+    ];
+    if (gaps.length > 0) {
+      var allCols = cols.querySelectorAll('.bar-col');
+      requestAnimationFrame(function() {
+        var areaRect = chartArea.getBoundingClientRect();
+        gaps.forEach(function(g, gi) {
+          var band = document.createElement('div');
+          band.className = 'bar-gap-band';
+          var firstGap = allCols[g.start];
+          var lastGap = allCols[g.end];
+          var fRect = firstGap.getBoundingClientRect();
+          var lRect = lastGap.getBoundingClientRect();
+          band.style.left = (fRect.left - areaRect.left) + 'px';
+          band.style.width = (lRect.right - fRect.left) + 'px';
+
+          var label = document.createElement('div');
+          label.className = 'bar-gap-label';
+          label.textContent = gapLabels[gi] || 'GAP PERIOD';
+          band.appendChild(label);
+          chartArea.appendChild(band);
+        });
+      });
+    }
+
+    // Supply line (SVG polyline)
+    var svgArea = chartArea.querySelector('.supply-line-svg');
+    var supplyPath = svgArea.querySelector('.supply-path');
+    var supplyAreaPoly = svgArea.querySelector('.supply-area');
+    var dotsContainer = document.getElementById('supply-dots-html');
+    var n = DATA.length;
+
+    var coords = DATA.map(function(d, i) {
+      return { x: ((i + 0.5) / n) * 1000, y: 400 - (d.supply / MAX) * 400 };
+    });
+
+    var pointStr = coords.map(function(c) { return c.x + ',' + c.y; }).join(' ');
+    supplyPath.setAttribute('points', pointStr);
+
+    // Measure path length for draw animation
+    requestAnimationFrame(function() {
+      var len = supplyPath.getTotalLength();
+      supplyPath.style.setProperty('--path-len', len);
+    });
+
+    // Fill area under supply line
+    var areaPoints = pointStr + ' ' + coords[coords.length-1].x + ',400 ' + coords[0].x + ',400';
+    supplyAreaPoly.setAttribute('points', areaPoints);
+
+    // HTML dots — perfectly circular
+    var dotEls = [];
+    coords.forEach(function(c, i) {
+      var dot = document.createElement('div');
+      dot.className = 'supply-dot-html' + (DATA[i].demand > DATA[i].supply ? ' is-gap' : '');
+      dot.style.left = (c.x / 10) + '%';
+      dot.style.top = (c.y / 4) + '%';
+      dot.dataset.index = i;
+      dotsContainer.appendChild(dot);
+      dotEls.push(dot);
+
+      // Staggered fade-in
+      setTimeout(function() { dot.classList.add('visible'); }, 600 + i * 50);
+    });
+
+    // Show permanent value labels on milestone years
+    var LABEL_YEARS = ['2025','2029','2030','2035','2040','2044','2050'];
+    cols.querySelectorAll('.bar-col').forEach(function(col, i) {
+      if (LABEL_YEARS.indexOf(DATA[i].year) !== -1) {
+        var bar = col.querySelector('.bar-fill');
+        var permLabel = document.createElement('div');
+        permLabel.className = 'bar-val-permanent';
+        permLabel.textContent = fmt(DATA[i].demand);
+        bar.appendChild(permLabel);
+      }
+    });
+
+    // Wire hover on bar columns to highlight corresponding supply dot
+    cols.querySelectorAll('.bar-col').forEach(function(col) {
+      col.addEventListener('mouseenter', function() {
+        var idx = parseInt(col.dataset.index);
+        if (dotEls[idx]) dotEls[idx].classList.add('is-hovered');
+      });
+      col.addEventListener('mouseleave', function() {
+        var idx = parseInt(col.dataset.index);
+        if (dotEls[idx]) dotEls[idx].classList.remove('is-hovered');
+      });
+    });
+  })();
+
+  // ═══ Card 1: Supply Sources & Project Contributions ═══
+  (function() {
+    // SVG icon templates
+    var ICONS = {
+      well: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M7 7l5-5 5 5"/><circle cx="12" cy="17" r="3"/></svg>',
+      pipe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h16M4 10h16"/><circle cx="12" cy="12" r="9"/></svg>',
+      plant: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V5a2 2 0 012-2h6a2 2 0 012 2v3"/><path d="M12 12v4"/></svg>',
+      tanker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="8" width="15" height="8" rx="3"/><path d="M16 12h4l3 3v1h-7v-4z"/><circle cx="6" cy="18" r="2"/><circle cx="20" cy="18" r="2"/></svg>',
+      clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+      warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>',
+      link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>'
+    };
+
+    var categories = [
+      {
+        id: 'existing', name: 'Existing Supply', type: 'Existing', typeCls: 'existing',
+        cap: 30000, pct: 38,
+        color: 'var(--status-ready)', iconBg: 'rgba(0,196,140,0.10)',
+        icon: ICONS.well,
+        projects: [
+          { name: 'Self-Supply Wells (KSIA)', contrib: '+30,000', required: 'Operational', status: 'On Track', statusCls: 'on-track', iconBg: 'rgba(0,196,140,0.08)', color: 'var(--status-ready)', icon: ICONS.well }
+        ]
+      },
+      {
+        id: 'permanent', name: 'Permanent Solutions', type: 'Permanent', typeCls: 'permanent',
+        cap: 50000, pct: 62,
+        color: 'var(--status-in-progress)', iconBg: 'rgba(77,166,255,0.10)',
+        icon: ICONS.pipe,
+        projects: [
+          { name: 'RAK Production Plant', contrib: '+120,000', required: '2029', status: 'On Track', statusCls: 'on-track', iconBg: 'rgba(0,196,140,0.08)', color: 'var(--status-ready)', icon: ICONS.plant },
+          { name: 'Transmission Pipeline RAK–Riyadh HTP', contrib: '+120,000', required: '2030', status: 'At Risk', statusCls: 'at-risk', iconBg: 'rgba(255,92,92,0.08)', color: 'var(--status-at-risk)', icon: ICONS.pipe },
+          { name: 'NWC Transmission Line (KSIA Allocation)', contrib: '+50,000', required: 'Ultimate', status: 'At Risk', statusCls: 'at-risk', iconBg: 'rgba(77,166,255,0.08)', color: 'var(--status-in-progress)', icon: ICONS.pipe },
+          { name: 'Gap 2 Closure / Capacity Expansion', contrib: '+5,323', required: '2045+', status: 'Planned', statusCls: 'planned', iconBg: 'rgba(77,166,255,0.06)', color: 'rgba(77,166,255,0.7)', icon: ICONS.clock }
+        ]
+      },
+      {
+        id: 'interim', name: 'Interim Solutions', type: 'Interim', typeCls: 'interim',
+        cap: 9200, pct: null,
+        color: 'var(--status-conditional)', iconBg: 'rgba(255,170,0,0.10)',
+        icon: ICONS.warn,
+        projects: [
+          { name: 'Groundwater Wells (Exception Permit)', contrib: '+6,146', required: '2028–29', status: 'Watch', statusCls: 'watch', iconBg: 'rgba(255,170,0,0.08)', color: 'var(--status-conditional)', icon: ICONS.well },
+          { name: 'Interim Supply from NWC Neighbour Lines', contrib: '+2,000', required: '2028–29', status: 'Watch', statusCls: 'watch', iconBg: 'rgba(255,170,0,0.06)', color: 'var(--status-conditional)', icon: ICONS.link },
+          { name: 'Water Tanker Supply (Emergency)', contrib: '+1,054', required: '2028', status: 'On Track', statusCls: 'on-track', iconBg: 'rgba(0,196,140,0.06)', color: 'var(--status-ready)', icon: ICONS.tanker }
+        ]
+      }
+    ];
+
+    var srcContainer = document.getElementById('src-rows');
+    var prjTbody = document.getElementById('prj-tbody');
+
+    function renderProjects(cat) {
+      prjTbody.innerHTML = '';
+      cat.projects.forEach(function(p) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td><div class="prj-name-cell"><div class="prj-icon-sm" style="background:' + p.iconBg + '; color:' + p.color + '">' + p.icon + '</div><span style="font-weight:600">' + p.name + '</span></div></td>' +
+          '<td class="right">' + p.contrib + '</td>' +
+          '<td>' + p.required + '</td>' +
+          '<td><span class="prj-status ' + p.statusCls + '">' + p.status + '</span></td>';
+        prjTbody.appendChild(tr);
+      });
+    }
+
+    categories.forEach(function(cat, i) {
+      var row = document.createElement('div');
+      row.className = 'src-row' + (i === 0 ? ' is-active' : '');
+      row.innerHTML =
+        '<div class="src-icon" style="background:' + cat.iconBg + '; color:' + cat.color + '">' + cat.icon + '</div>' +
+        '<div class="src-info"><div class="src-name">' + cat.name + '</div><div class="src-type ' + cat.typeCls + '">' + cat.type + '</div></div>' +
+        '<div class="src-cap"><div class="src-cap-val">' + cat.cap.toLocaleString() + '</div></div>' +
+        '<div class="src-pct">' + (cat.pct ? cat.pct + '%' : '—') + '</div>' +
+        '<div class="src-row-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,6 15,12 9,18"/></svg></div>';
+
+      row.addEventListener('click', function() {
+        srcContainer.querySelectorAll('.src-row').forEach(function(r) { r.classList.remove('is-active'); });
+        row.classList.add('is-active');
+        renderProjects(cat);
+      });
+      srcContainer.appendChild(row);
+
+      // Show first category's projects by default
+      if (i === 0) renderProjects(cat);
+    });
+  })();
+
+  // ═══ Card 2: Demand Build-Up Profile ═══
+  (function() {
+    var phases = [
+      { label: 'Early Construction', year: '2025', incr: 18100, color: '#2D5BFF' },
+      { label: 'Testing', year: '2026', incr: 2639, color: '#4DA6FF' },
+      { label: 'Ramp-up', year: '2028', incr: 10561, color: '#FFAA00' },
+      { label: 'Growth', year: '2030', incr: 15788, color: '#FF8C42' },
+      { label: 'Mature Ops', year: '2040', incr: 29460, color: '#FF5C5C' },
+      { label: 'Build-out', year: '2050', incr: 8775, color: '#E63946' },
+    ];
+    var total = 85323;
+    var container = document.getElementById('demand-profile');
+
+    // Stacked bar
+    var bar = document.createElement('div');
+    bar.className = 'demand-stack-bar';
+    phases.forEach(function(p) {
+      var pct = (p.incr / total * 100);
+      var seg = document.createElement('div');
+      seg.className = 'demand-seg';
+      seg.style.flex = pct;
+      seg.style.background = p.color;
+      seg.innerHTML = '<span>' + p.incr.toLocaleString() + '</span>';
+      bar.appendChild(seg);
+    });
+    container.appendChild(bar);
+
+    // Year labels below bar
+    var years = document.createElement('div');
+    years.className = 'demand-years';
+    phases.forEach(function(p) {
+      years.innerHTML += '<div class="demand-year-col" style="flex:' + (p.incr / total * 100) + '"><strong>' + p.year + '</strong>' + p.label + '</div>';
+    });
+    container.appendChild(years);
+
+    // Phase breakdown table
+    var table = document.createElement('table');
+    table.className = 'demand-table';
+    table.innerHTML =
+      '<thead><tr><th>Phase</th><th>Year</th><th class="right">Incremental Demand (m³/day)</th><th class="right">Cumulative Demand (m³/day)</th></tr></thead>';
+    var tbody = document.createElement('tbody');
+    var cumulative = 0;
+    phases.forEach(function(p) {
+      cumulative += p.incr;
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><span class="phase-dot" style="background:' + p.color + '"></span>' + p.label + ' (' + p.year + ')</td>' +
+        '<td>' + p.year + '</td>' +
+        '<td class="right">' + p.incr.toLocaleString() + '</td>' +
+        '<td class="right">' + cumulative.toLocaleString() + '</td>';
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    container.appendChild(table);
+  })();
+
+
+  // ═══ Panel 4: Gap Analysis — Horizontal Swimlane Timeline (aligned to bar chart) ═══
+  (function() {
+    var container = document.getElementById('gap-waterfall');
+    var N = DATA.length; // 26 bars (2025–2050)
+    var START_YEAR = 2025;
+    var GAP = 1.2; // small horizontal gap between bars in %
+
+    // Convert year to % position matching bar chart columns
+    function yearToLeft(y) { return ((y - START_YEAR) / N * 100); }
+    function yearToRight(y) { return ((y - START_YEAR + 1) / N * 100); }
+    function yearSpan(s, e) {
+      var l = yearToLeft(s) + GAP / 2;
+      var r = yearToRight(e) - GAP / 2;
+      return { left: l, width: r - l };
+    }
+
+    var periods = [
+      {
+        label: 'Gap 1 — Bridge Crisis',
+        detail: 'Demand exceeds 30k m³/day self-supply before NWC online — peak shortfall 9,200 m³/day',
+        startYear: 2028, endYear: 2029,
+        color: 'var(--status-at-risk)', peak: 9200
+      },
+      {
+        label: 'Comfortable Headroom',
+        detail: 'NWC allocation online — surplus narrows from +33k to +800 m³/day',
+        startYear: 2030, endYear: 2044,
+        color: 'var(--status-ready)', peak: 0
+      },
+      {
+        label: 'Gap 2 — Allocation Ceiling',
+        detail: 'Demand outgrows 80k combined allocation — shortfall reaches 5,323 m³/day by 2050',
+        startYear: 2045, endYear: 2050,
+        color: 'var(--status-blocked)', peak: 5323
+      }
+    ];
+
+    var timeline = document.createElement('div');
+    timeline.className = 'gw-timeline';
+
+    var spacer = document.createElement('div');
+    spacer.className = 'gw-y-spacer';
+    timeline.appendChild(spacer);
+
+    var track = document.createElement('div');
+    track.className = 'gw-track';
+
+    // Build three horizontal swimlanes
+    periods.forEach(function(p, i) {
+      var lane = document.createElement('div');
+      lane.className = 'gw-lane' + (i === 1 ? ' gw-lane--tall' : '');
+
+      var area = document.createElement('div');
+      area.className = 'gw-lane-bar-area';
+
+      // Grid lines within each lane
+      DATA.forEach(function(d, di) {
+        var y = parseInt(d.year);
+        if (y % 5 === 0 || y === 2025) {
+          var line = document.createElement('div');
+          line.style.cssText = 'position:absolute;top:0;bottom:0;width:1px;background:#F0F0F4;pointer-events:none;z-index:0;';
+          line.style.left = ((di + 0.5) / N * 100) + '%';
+          area.appendChild(line);
+        }
+      });
+
+      var span = yearSpan(p.startYear, p.endYear);
+
+      // Bar
+      var bar = document.createElement('div');
+      bar.className = 'gw-bar';
+      bar.style.left = span.left + '%';
+      bar.style.width = span.width + '%';
+      bar.style.background = p.color;
+      if (p.peak === 0) bar.style.opacity = '0.6';
+
+      var valText = p.peak > 0 ? '−' + p.peak.toLocaleString() + (i === 0 ? ' m³/d' : ' m³/day') : '✓ Covered';
+      bar.dataset.tipTitle = p.label;
+      bar.dataset.tipVal = valText;
+      bar.dataset.tipYears = p.startYear + '–' + p.endYear;
+      bar.dataset.tipDetail = p.detail;
+      bar.dataset.tipColor = p.color;
+      bar.innerHTML = '<span class="gw-bar-label">' + p.label + '</span><span class="gw-bar-val">' + valText + '</span>';
+      bar.style.cursor = 'default';
+      area.appendChild(bar);
+
+      // Annotation — placed in free space
+      var ann = document.createElement('div');
+      ann.className = 'gw-annotation';
+      ann.textContent = p.detail;
+
+      if (i === 0) {
+        // Desc 1: LEFT of bar (bar starts at ~11.5%, plenty of space on left)
+        ann.style.right = (100 - span.left + 1.5) + '%';
+        ann.style.top = '50%';
+        ann.style.transform = 'translateY(-50%)';
+        ann.style.textAlign = 'right';
+        ann.style.maxWidth = (span.left - 2) + '%';
+        // Connector line
+        var conn = document.createElement('div');
+        conn.className = 'gw-connector';
+        conn.style.cssText = 'right:' + (100 - span.left) + '%;top:50%;width:1.5%;height:1px;background:' + p.color + ';opacity:0.4;';
+        area.appendChild(conn);
+      } else if (i === 1) {
+        // Desc 2: BELOW bar (within the lane height)
+        ann.style.left = span.left + '%';
+        ann.style.top = 'calc(50% + 16px)';
+        ann.style.maxWidth = span.width + '%';
+        var conn2 = document.createElement('div');
+        conn2.className = 'gw-connector';
+        conn2.style.cssText = 'left:' + (span.left + 1) + '%;top:calc(50% + 15px);width:1px;height:4px;background:' + p.color + ';opacity:0.4;';
+        area.appendChild(conn2);
+      } else {
+        // Desc 3: LEFT of bar (bar starts at ~77%, plenty of space on left)
+        ann.style.right = (100 - span.left + 1.5) + '%';
+        ann.style.top = '50%';
+        ann.style.transform = 'translateY(-50%)';
+        ann.style.textAlign = 'right';
+        ann.style.maxWidth = (span.left - 2) + '%';
+        var conn3 = document.createElement('div');
+        conn3.className = 'gw-connector';
+        conn3.style.cssText = 'right:' + (100 - span.left) + '%;top:50%;width:1.5%;height:1px;background:' + p.color + ';opacity:0.4;';
+        area.appendChild(conn3);
+      }
+      area.appendChild(ann);
+
+      lane.appendChild(area);
+      track.appendChild(lane);
+    });
+
+    timeline.appendChild(track);
+    container.appendChild(timeline);
+
+    // Tooltip on gap bars — same style as chart tooltip
+    var gwTip = document.getElementById('gw-tooltip');
+    var card = document.getElementById('gap-profile-card');
+    container.querySelectorAll('.gw-bar').forEach(function(bar) {
+      bar.addEventListener('mouseenter', function() {
+        var html = '<div class="bar-tooltip-year">' + bar.dataset.tipTitle + '</div>';
+        html += '<div class="bar-tooltip-row"><div class="bar-tooltip-dot" style="background:' + bar.dataset.tipColor + '"></div>Period<span class="bar-tooltip-val">' + bar.dataset.tipYears + '</span></div>';
+        html += '<div class="bar-tooltip-row"><div class="bar-tooltip-dot" style="background:' + bar.dataset.tipColor + '"></div>Magnitude<span class="bar-tooltip-val">' + bar.dataset.tipVal + '</span></div>';
+        html += '<div style="border-top:1px solid rgba(255,255,255,0.1);margin-top:4px;padding-top:4px;font-size:10px;color:var(--text-secondary);max-width:220px;white-space:normal;line-height:1.4;">' + bar.dataset.tipDetail + '</div>';
+        gwTip.innerHTML = html;
+        gwTip.classList.add('visible');
+      });
+      bar.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        gwTip.style.left = (e.clientX - rect.left + 12) + 'px';
+        gwTip.style.top = (e.clientY - rect.top - 10) + 'px';
+      });
+      bar.addEventListener('mouseleave', function() {
+        gwTip.classList.remove('visible');
+      });
+    });
+  })();
+
+  // ═══ Decision Support Cards (includes key drivers + closure plan) ═══
+  (function() {
+    var container = document.getElementById('decision-cards');
+    var decisions = [
+      {
+        num: 'Decision 1',
+        title: 'Bridge Gap 1: Deploy Temporary Wells',
+        accent: 'var(--status-at-risk)',
+        steps: [
+          { icon: '!', bg: 'var(--status-at-risk)', text: '<strong>Gap:</strong> Demand exceeds 30,000 m³/day self-supply from 2028 — peak shortfall ~9,200 in 2029' },
+          { icon: '◉', bg: 'var(--status-conditional)', text: '<strong>Driver:</strong> 6,146 m³/day well exception only partly covers Gap 1 — ~3,000 m³/day still short in 2029' },
+          { icon: '→', bg: 'var(--status-in-progress)', text: '<strong>Action 1:</strong> Deploy temporary wells (bridge supply) — Q1 2028 to Q4 2029' },
+          { icon: '→', bg: 'var(--status-in-progress)', text: '<strong>Action 2:</strong> Commission NWC shared line (50,000 m³/day) — target Q1 2030' },
+          { icon: '✓', bg: 'var(--status-ready)', text: '<strong>Outcome:</strong> Full demand coverage once NWC online; comfortable headroom through 2043' },
+        ],
+        deadline: 'Q3 2027',
+        deadlineColor: 'var(--status-at-risk)',
+        deadlineNote: 'Lead time for well procurement & environmental approval'
+      },
+      {
+        num: 'Decision 2',
+        title: 'Close Gap 2: Renegotiate NWC Allocation',
+        accent: 'var(--status-blocked)',
+        steps: [
+          { icon: '!', bg: 'var(--status-blocked)', text: '<strong>Gap:</strong> Demand outgrows 80,000 m³/day combined allocation from ~2045; −5,323 m³/day by 2050' },
+          { icon: '◉', bg: 'var(--status-conditional)', text: '<strong>Driver:</strong> Headroom narrows steadily from +33k (2030) to +800 (2043) then turns negative' },
+          { icon: '→', bg: 'var(--status-in-progress)', text: '<strong>Action 1:</strong> Monitor headroom narrowing post-2037 — trigger formal review at +5,000 threshold' },
+          { icon: '→', bg: 'var(--status-in-progress)', text: '<strong>Action 2:</strong> Negotiate increased NWC share beyond 50,000 m³/day or identify alternative sources' },
+          { icon: '✓', bg: 'var(--status-ready)', text: '<strong>Outcome:</strong> Sustained capacity through ultimate build-out (85,323 m³/day)' },
+        ],
+        deadline: 'By 2042',
+        deadlineColor: 'var(--status-conditional)',
+        deadlineNote: '2-year lead time before allocation ceiling is reached'
+      }
+    ];
+
+    decisions.forEach(function(dec) {
+      var card = document.createElement('div');
+      card.className = 'decision-card';
+      var stepsHtml = dec.steps.map(function(s) {
+        return '<div class="decision-flow-step"><div class="decision-flow-icon" style="background:' + s.bg + '">' + s.icon + '</div><div>' + s.text + '</div></div>';
+      }).join('');
+
+      card.innerHTML =
+        '<div class="decision-card-accent" style="background:' + dec.accent + '"></div>' +
+        '<div class="decision-card-number">' + dec.num + '</div>' +
+        '<div class="decision-card-title">' + dec.title + '</div>' +
+        '<div class="decision-flow">' + stepsHtml + '</div>' +
+        '<div class="decision-deadline">' +
+          '<div class="decision-deadline-label">Decide by</div>' +
+          '<div class="decision-deadline-val" style="color:' + dec.deadlineColor + '">' + dec.deadline + '</div>' +
+          '<div style="font-size:9px; color:var(--text-label); margin-left:6px">' + dec.deadlineNote + '</div>' +
+        '</div>';
+      container.appendChild(card);
+    });
+  })();
+  </script>
+</body>
+</html>

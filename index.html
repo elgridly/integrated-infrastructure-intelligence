@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrated Infrastructure Intelligence Hub</title>
+  <meta name="description" content="Committee decision intelligence for King Salman International Airport integrated infrastructure readiness.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23FFE600'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='Arial'>EY</text></svg>">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-logo">
+      <img class="i3-logo" src="I3-Icon.png" alt="I3 Logo">
+      <div class="platform-name">
+        Integrated Infrastructure Intelligence Hub
+        <span>Enabling today. Ready for tomorrow.</span>
+      </div>
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-filters" id="header-filters"></div>
+    <div class="header-divider"></div>
+    <div class="header-actions">
+      <button class="header-icon-btn" title="Notifications" aria-label="Notifications — 3 new alerts">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="notif-dot" aria-hidden="true"></span>
+      </button>
+      <button class="header-icon-btn" title="Help" aria-label="Help & documentation">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+      </button>
+      <div class="user-avatar">HG</div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Hero — image left, 6-card intelligence grid right -->
+    <section class="hero" id="section-overview">
+      <div class="hero-image-wrap">
+        <img src="assets/ksia-aerial.png" alt="Aerial view of King Salman International Airport city — terminal buildings, runways, and surrounding infrastructure zones" class="hero-image">
+        <div class="hero-image-overlay">
+          <div class="hero-title-block">
+            <h1>KSIA Infrastructure Enablement Overview</h1>
+            <p>Integrated infrastructure decision intelligence for King Salman International Airport — connecting assets, milestones, and committee actions.</p>
+          </div>
+          <button class="hero-exec-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+            Executive Overview
+          </button>
+        </div>
+      </div>
+      <div class="hero-dashboard" id="exec-dashboard"></div>
+    </section>
+
+    <!-- Milestones -->
+    <section id="section-intelligence">
+      <div class="section-header">
+        <div class="section-title">Upcoming Key Developments</div>
+        <a class="section-link" href="#">View all milestones →</a>
+      </div>
+      <div class="tl-track" id="milestones-track" role="list" aria-label="Upcoming key milestones">
+        <div class="tl-line"></div>
+      </div>
+    </section>
+
+    <!-- Intelligence Panels -->
+    <section class="intel-grid">
+
+      <!-- Infrastructure Readiness by Stream -->
+      <div class="intel-col">
+        <div class="intel-label">Infrastructure Readiness by Stream</div>
+        <div class="intel-panel">
+          <div class="panel-body" id="stream-readiness"></div>
+          <div class="panel-footer">
+            <a class="panel-link" href="#">View readiness dashboard →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Committee Action Center -->
+      <div class="intel-col">
+        <div class="intel-label">Committee Action Center <span class="panel-count" id="committee-count">6 pending</span></div>
+        <div class="intel-panel">
+          <div class="panel-body" id="committee-actions"></div>
+          <div class="panel-footer">
+            <a class="panel-link" href="#">View all actions →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prerequisite Readiness -->
+      <div class="intel-col">
+        <div class="intel-label">Prerequisite Readiness Overview</div>
+        <div class="intel-panel">
+          <div class="panel-body" id="prereq-readiness"></div>
+          <div class="panel-footer">
+            <a class="panel-link" href="#">View all prerequisites →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- External Entity Performance -->
+      <div class="intel-col">
+        <div class="intel-label">External Entity Performance</div>
+        <div class="intel-panel">
+          <div class="panel-body">
+            <div class="entity-bars" id="entity-bars"></div>
+            <div class="entity-legend">
+              <div class="entity-legend-item"><div class="entity-legend-dot" style="background: var(--status-on-track);"></div>On Track</div>
+              <div class="entity-legend-item"><div class="entity-legend-dot" style="background: var(--status-conditional);"></div>At Risk</div>
+              <div class="entity-legend-item"><div class="entity-legend-dot" style="background: var(--status-at-risk);"></div>Delayed</div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a class="panel-link" href="#">View entity dashboard →</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Module Cards -->
+    <section id="section-modules">
+      <div class="section-header">
+        <div class="section-title">Explore Modules</div>
+      </div>
+      <div class="modules-grid" id="modules-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      &copy; 2026 EY. Integrated Infrastructure Intelligence Hub | KSIA — Illustrative data only.
+      <div style="margin-top:4px; font-size:10px; opacity:0.7;">Designed &amp; Developed by Hesham Gridly</div>
+    </div>
+  </footer>
+
+  <!-- Quick Nav — Right-side expandable drawer -->
+  <div class="qnav-trigger" id="qnav-trigger" aria-label="Toggle section navigation">
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="8,2 4,6 8,10"/></svg>
+  </div>
+  <nav class="qnav-drawer" id="qnav-drawer" aria-label="Section navigation">
+    <button class="qnav-btn active" data-section="section-overview" aria-label="Overview section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <span class="qnav-label">Overview</span>
+    </button>
+    <button class="qnav-btn" data-section="section-intelligence" aria-label="Intelligence section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      <span class="qnav-label">Intelligence</span>
+    </button>
+    <button class="qnav-btn" data-section="section-modules" aria-label="Modules section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg>
+      <span class="qnav-label">Modules</span>
+    </button>
+  </nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

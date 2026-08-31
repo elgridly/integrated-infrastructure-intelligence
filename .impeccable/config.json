@@ -275,6 +275,12 @@
         "value": "#888",
         "createdAt": "2026-08-31T20:49:20.217Z",
         "reason": "Standalone video player page, not part of platform design system"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0, 0, 0, 0.35)",
+        "createdAt": "2026-08-31T20:58:53.663Z",
+        "reason": "Standalone video player page overlay, not part of platform design system"
       }
     ]
   }

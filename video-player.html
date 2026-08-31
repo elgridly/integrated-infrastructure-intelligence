@@ -44,6 +44,25 @@
             border: none;
         }
 
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .video-overlay svg {
+            width: 80px;
+            height: 80px;
+            fill: #fff;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+        }
+
         .actions {
             display: flex;
             gap: 16px;
@@ -110,6 +129,9 @@
 
     <div class="container">
         <div class="video-wrapper" id="videoWrapper">
+            <div class="video-overlay" id="videoOverlay">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
             <iframe
                 src="https://drive.google.com/file/d/1axqEOwBywlDbnP_Hxgm-MiCeF6Epk5sY/preview"
                 allow="autoplay; fullscreen"
@@ -145,10 +167,10 @@
             (iframe.requestFullscreen || iframe.webkitRequestFullscreen || iframe.msRequestFullscreen).call(iframe);
         }
 
-        // Enter fullscreen on first click/tap anywhere on the page
-        document.addEventListener('click', function once() {
+        // Click overlay: go fullscreen then remove overlay so iframe is interactive
+        document.getElementById('videoOverlay').addEventListener('click', function () {
             goFullscreen();
-            document.removeEventListener('click', once);
+            this.remove();
         });
     </script>
 </body>

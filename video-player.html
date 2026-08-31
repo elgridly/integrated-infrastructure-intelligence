@@ -141,12 +141,15 @@
 
     <script>
         function goFullscreen() {
-            const wrapper = document.getElementById('videoWrapper');
-            const iframe = wrapper.querySelector('iframe');
-            if (iframe.requestFullscreen) iframe.requestFullscreen();
-            else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-            else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+            const iframe = document.querySelector('#videoWrapper iframe');
+            (iframe.requestFullscreen || iframe.webkitRequestFullscreen || iframe.msRequestFullscreen).call(iframe);
         }
+
+        // Enter fullscreen on first click/tap anywhere on the page
+        document.addEventListener('click', function once() {
+            goFullscreen();
+            document.removeEventListener('click', once);
+        });
     </script>
 </body>
 </html>

@@ -251,6 +251,30 @@
         "value": "rgba(0,0,0,0.2)",
         "createdAt": "2026-08-29T09:45:54.348Z",
         "reason": "tooltip box-shadow depth"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0, 0, 0, 0.5)",
+        "createdAt": "2026-08-31T20:49:19.963Z",
+        "reason": "Standalone video player page, not part of platform design system"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1rem",
+        "createdAt": "2026-08-31T20:49:20.046Z",
+        "reason": "Standalone video player page, not part of platform design system"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#0f3460",
+        "createdAt": "2026-08-31T20:49:20.127Z",
+        "reason": "Standalone video player page, not part of platform design system"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#888",
+        "createdAt": "2026-08-31T20:49:20.217Z",
+        "reason": "Standalone video player page, not part of platform design system"
       }
     ]
   }

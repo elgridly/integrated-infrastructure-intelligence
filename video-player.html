@@ -167,9 +167,15 @@
             (iframe.requestFullscreen || iframe.webkitRequestFullscreen || iframe.msRequestFullscreen).call(iframe);
         }
 
-        // Click/tap overlay: remove it so the iframe becomes interactive
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
         document.getElementById('videoOverlay').addEventListener('click', function () {
-            this.remove();
+            if (isMobile) {
+                // Google Drive embed doesn't work on mobile — open directly
+                window.open('https://drive.google.com/file/d/1axqEOwBywlDbnP_Hxgm-MiCeF6Epk5sY/view', '_blank');
+            } else {
+                this.remove();
+            }
         });
     </script>
 </body>

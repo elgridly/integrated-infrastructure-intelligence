@@ -1958,15 +1958,22 @@
       border-top: 1px solid var(--border-dark);
     }
   </style>
+  <style id="auth-gate">body{display:none}</style>
+  <script>
+    (function(){
+      if (!sessionStorage.getItem('i3-auth')) {
+        var k = prompt('Enter passkey to continue:');
+        if (k === null || k !== 'I-Cubed') {
+          document.documentElement.innerHTML = '<body style="display:block;background:#0D0D14;color:#888;font-family:sans-serif;text-align:center;padding-top:40vh">Access denied.</body>';
+          return;
+        }
+        sessionStorage.setItem('i3-auth', '1');
+      }
+      document.getElementById('auth-gate').remove();
+    })();
+  </script>
 </head>
 <body>
-  <script>
-    if (!sessionStorage.getItem('i3-auth')) {
-      var k = prompt('Enter passkey to continue:');
-      if (k === null || k !== 'I-Cubed') { document.write('<html><body style="background:#0D0D14;color:#888;font-family:sans-serif;text-align:center;padding-top:40vh">Access denied.</body></html>'); document.close(); throw new Error('denied'); }
-      sessionStorage.setItem('i3-auth', '1');
-    }
-  </script>
 
   <!-- Header -->
   <header class="header">

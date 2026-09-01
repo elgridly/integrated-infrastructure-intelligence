@@ -167,9 +167,8 @@
             (iframe.requestFullscreen || iframe.webkitRequestFullscreen || iframe.msRequestFullscreen).call(iframe);
         }
 
-        // Click overlay: go fullscreen then remove overlay so iframe is interactive
+        // Click/tap overlay: remove it so the iframe becomes interactive
         document.getElementById('videoOverlay').addEventListener('click', function () {
-            goFullscreen();
             this.remove();
         });
     </script>

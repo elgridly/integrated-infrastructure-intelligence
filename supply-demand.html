@@ -719,6 +719,13 @@
   </style>
 </head>
 <body>
+  <script>
+    if (!sessionStorage.getItem('i3-auth')) {
+      var k = prompt('Enter passkey to continue:');
+      if (k !== 'I-Cubed') { document.body.innerHTML = '<p style="color:#888;font-family:sans-serif;text-align:center;margin-top:40vh">Access denied.</p>'; throw new Error('denied'); }
+      sessionStorage.setItem('i3-auth', '1');
+    }
+  </script>
 
   <!-- Header -->
   <header class="header">

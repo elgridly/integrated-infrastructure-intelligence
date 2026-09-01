@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supply, Demand & Gap Management — Integrated Infrastructure Intelligence Hub</title>
+  <script>
+    (function(){
+      if (!sessionStorage.getItem('i3-auth')) {
+        var k = prompt('Enter passkey to continue:');
+        if (k === null || k !== 'I-Cubed') {
+          window.stop();
+          document.documentElement.innerHTML = '<head></head><body style="background:#0D0D14;color:#888;font-family:sans-serif;text-align:center;padding-top:40vh">Access denied.</body>';
+          return;
+        }
+        sessionStorage.setItem('i3-auth', '1');
+      }
+    })();
+  </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23FFE600'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='Arial'>EY</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -717,20 +730,6 @@
     /* Focus */
     *:focus-visible { outline: 2px solid var(--ey-yellow); outline-offset: 2px; }
   </style>
-  <style id="auth-gate">body{display:none}</style>
-  <script>
-    (function(){
-      if (!sessionStorage.getItem('i3-auth')) {
-        var k = prompt('Enter passkey to continue:');
-        if (k === null || k !== 'I-Cubed') {
-          document.documentElement.innerHTML = '<body style="display:block;background:#0D0D14;color:#888;font-family:sans-serif;text-align:center;padding-top:40vh">Access denied.</body>';
-          return;
-        }
-        sessionStorage.setItem('i3-auth', '1');
-      }
-      document.getElementById('auth-gate').remove();
-    })();
-  </script>
 </head>
 <body>
 

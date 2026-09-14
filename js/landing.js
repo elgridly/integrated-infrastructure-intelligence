@@ -54,7 +54,7 @@ function renderFilters() {
   const el = document.getElementById('header-filters');
   const defs = [
     { key: 'majorDevelopment', label: 'Major Development' },
-    { key: 'ksiaArea', label: 'KSIA Area' },
+    { key: 'projectArea', label: 'Project Area' },
     { key: 'infrastructureStream', label: 'Infrastructure Stream' },
     { key: 'externalEntity', label: 'External Entity' },
     { key: 'timePeriod', label: 'Time Horizon' }
@@ -64,7 +64,7 @@ function renderFilters() {
     sel.className = 'header-filter';
     sel.title = d.label;
     sel.setAttribute('aria-label', d.label);
-    KSIA_DATA.filters[d.key].forEach(o => {
+    PLATFORM_DATA.filters[d.key].forEach(o => {
       const opt = document.createElement('option');
       opt.textContent = o;
       sel.appendChild(opt);
@@ -83,7 +83,7 @@ function renderDataFreshness() {
 }
 
 function renderExecutiveIndicators() {
-  const d = KSIA_DATA.executive;
+  const d = PLATFORM_DATA.executive;
   const el = document.getElementById('exec-dashboard');
   const circ = 2 * Math.PI * 34;
   const gc = d.overallReadiness >= 80 ? 'var(--status-ready)' : d.overallReadiness >= 60 ? 'var(--status-conditional)' : 'var(--status-at-risk)';
@@ -302,11 +302,11 @@ function renderExecutiveIndicators() {
         <div class="ed-comm-next">Next Committee: <strong>${d.nextCommitteeDate}</strong></div>
       </div>
 
-      <!-- 6. Ask KSIA Assistant -->
+      <!-- 6. Ask Assistant -->
       <div class="ed-card ed-assistant">
         <div class="ed-card-head">
           <span class="ed-card-icon" aria-hidden="true">${icons.assistant}</span>
-          <span class="ed-card-title">Ask KSIA Assistant</span>
+          <span class="ed-card-title">Ask Assistant</span>
         </div>
         <div class="ed-asst-chat" id="assistant-chat">
           <div class="ed-asst-msg ed-asst-ai">
@@ -314,7 +314,7 @@ function renderExecutiveIndicators() {
           </div>
         </div>
         <div class="ed-asst-input-row">
-          <input class="ed-asst-input" type="text" placeholder="Ask about readiness, funding..." aria-label="Ask KSIA Assistant a question">
+          <input class="ed-asst-input" type="text" placeholder="Ask about readiness, funding..." aria-label="Ask Assistant a question">
           <button class="ed-asst-send" aria-label="Send question">
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
           </button>
@@ -324,15 +324,15 @@ function renderExecutiveIndicators() {
 }
 
 const MILESTONE_ICONS = {
-  'Cargo Village': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3M12 11v6M9 14h6"/></svg>',
+  'Cargo Hub': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3M12 11v6M9 14h6"/></svg>',
   'Central Runways': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M4 20V10l8-6 8 6v10"/><path d="M9 20v-5h6v5"/></svg>',
   'Private Aviation': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L2 9l7 3 4 7 9-17z"/></svg>',
   'East Runways': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20L20 4M8 20l8-12M12 20l4-6"/></svg>',
   'West Runways': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20L20 4M8 20l8-12M12 20l4-6"/></svg>',
-  'T1-T4': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M8 6V2M16 6V2"/></svg>',
-  'Terminal 6': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M8 6V2M16 6V2"/></svg>',
-  'Terminal 5': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h4"/><circle cx="17" cy="17" r="3"/></svg>',
-  'Iconic Terminal': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 22,20 2,20"/><path d="M12 8v6M12 17h.01"/></svg>'
+  'Legacy Terminals': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M8 6V2M16 6V2"/></svg>',
+  'Terminal Alpha': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M8 6V2M16 6V2"/></svg>',
+  'Terminal Beta': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h4"/><circle cx="17" cy="17" r="3"/></svg>',
+  'Gateway Terminal': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 22,20 2,20"/><path d="M12 8v6M12 17h.01"/></svg>'
 };
 
 // Per-milestone intel panel data — filters the 4 dark panels when a milestone is clicked
@@ -357,9 +357,9 @@ const MILESTONE_INTEL = {
       { category: 'Procurement', secured: 78, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'SEC', projects: 2, onTrack: 2, atRisk: 0, delayed: 0 },
-      { entity: 'RCRC', projects: 1, onTrack: 1, atRisk: 0, delayed: 0 },
-      { entity: 'NWC', projects: 1, onTrack: 1, atRisk: 0, delayed: 0 },
+      { entity: 'NPC', projects: 2, onTrack: 2, atRisk: 0, delayed: 0 },
+      { entity: 'MDA', projects: 1, onTrack: 1, atRisk: 0, delayed: 0 },
+      { entity: 'RWA', projects: 1, onTrack: 1, atRisk: 0, delayed: 0 },
     ]
   },
   'Central Runways': {
@@ -381,12 +381,12 @@ const MILESTONE_INTEL = {
       { category: 'Procurement', secured: 80, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'RCRC', projects: 3, onTrack: 2, atRisk: 1, delayed: 0 },
-      { entity: 'SEC', projects: 2, onTrack: 2, atRisk: 0, delayed: 0 },
-      { entity: 'MOT', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
+      { entity: 'MDA', projects: 3, onTrack: 2, atRisk: 1, delayed: 0 },
+      { entity: 'NPC', projects: 2, onTrack: 2, atRisk: 0, delayed: 0 },
+      { entity: 'MoT', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
     ]
   },
-  'Terminal 6': {
+  'Terminal Alpha': {
     streamReadiness: [
       { stream: 'Potable Water', readiness: 38, status: 'At Risk' },
       { stream: 'Wastewater', readiness: 52, status: 'At Risk' },
@@ -397,8 +397,8 @@ const MILESTONE_INTEL = {
       { stream: 'Stormwater & Drainage', readiness: 55, status: 'At Risk' },
     ],
     committeeActions: [
-      { action: 'Approve interim water treatment solution for Terminal 6', severity: 'Critical', due: '15 Jan 2026', status: 'Pending' },
-      { action: 'Expedite NWC pipeline W-07 acceleration', severity: 'Critical', due: '28 Jan 2026', status: 'Overdue' },
+      { action: 'Approve interim water treatment solution for Terminal Alpha', severity: 'Critical', due: '15 Jan 2026', status: 'Pending' },
+      { action: 'Expedite RWA pipeline W-07 acceleration', severity: 'Critical', due: '28 Jan 2026', status: 'Overdue' },
       { action: 'Review district cooling capacity shortfall', severity: 'High', due: '10 Feb 2026', status: 'Pending' },
       { action: 'Approve power substation P-07 funding', severity: 'High', due: '15 Feb 2026', status: 'Pending' },
     ],
@@ -411,13 +411,13 @@ const MILESTONE_INTEL = {
       { category: 'Entity Commitments', secured: 50, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'NWC', projects: 4, onTrack: 1, atRisk: 2, delayed: 1 },
-      { entity: 'SEC', projects: 3, onTrack: 1, atRisk: 1, delayed: 1 },
-      { entity: 'RCRC', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
-      { entity: 'SWA', projects: 2, onTrack: 0, atRisk: 1, delayed: 1 },
+      { entity: 'RWA', projects: 4, onTrack: 1, atRisk: 2, delayed: 1 },
+      { entity: 'NPC', projects: 3, onTrack: 1, atRisk: 1, delayed: 1 },
+      { entity: 'MDA', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
+      { entity: 'WSA', projects: 2, onTrack: 0, atRisk: 1, delayed: 1 },
     ]
   },
-  'Terminal 5': {
+  'Terminal Beta': {
     streamReadiness: [
       { stream: 'Mobility & Roads', readiness: 72, status: 'Conditional' },
       { stream: 'District Cooling', readiness: 48, status: 'At Risk' },
@@ -426,8 +426,8 @@ const MILESTONE_INTEL = {
       { stream: 'Digital & Telecom', readiness: 78, status: 'Conditional' },
     ],
     committeeActions: [
-      { action: 'Review district cooling capacity for Airport City', severity: 'High', due: '15 Feb 2026', status: 'Pending' },
-      { action: 'Confirm SEC power allocation for AC Phase 1', severity: 'Medium', due: '01 Mar 2026', status: 'Pending' },
+      { action: 'Review district cooling capacity for Aviation District', severity: 'High', due: '15 Feb 2026', status: 'Pending' },
+      { action: 'Confirm NPC power allocation for AC Phase 1', severity: 'Medium', due: '01 Mar 2026', status: 'Pending' },
     ],
     prerequisiteReadiness: [
       { category: 'Funding', secured: 60, total: 100 },
@@ -436,9 +436,9 @@ const MILESTONE_INTEL = {
       { category: 'Procurement', secured: 45, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'RCRC', projects: 3, onTrack: 2, atRisk: 1, delayed: 0 },
-      { entity: 'SEC', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
-      { entity: 'NWC', projects: 2, onTrack: 1, atRisk: 0, delayed: 1 },
+      { entity: 'MDA', projects: 3, onTrack: 2, atRisk: 1, delayed: 0 },
+      { entity: 'NPC', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
+      { entity: 'RWA', projects: 2, onTrack: 1, atRisk: 0, delayed: 1 },
     ]
   },
   'West Runways': {
@@ -458,11 +458,11 @@ const MILESTONE_INTEL = {
       { category: 'Procurement', secured: 60, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'RCRC', projects: 2, onTrack: 2, atRisk: 0, delayed: 0 },
-      { entity: 'SEC', projects: 1, onTrack: 1, atRisk: 0, delayed: 0 },
+      { entity: 'MDA', projects: 2, onTrack: 2, atRisk: 0, delayed: 0 },
+      { entity: 'NPC', projects: 1, onTrack: 1, atRisk: 0, delayed: 0 },
     ]
   },
-  'Cargo Village': {
+  'Cargo Hub': {
     streamReadiness: [
       { stream: 'Mobility & Roads', readiness: 68, status: 'Conditional' },
       { stream: 'Power & Energy', readiness: 58, status: 'At Risk' },
@@ -480,11 +480,11 @@ const MILESTONE_INTEL = {
       { category: 'Procurement', secured: 40, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'RCRC', projects: 3, onTrack: 1, atRisk: 1, delayed: 1 },
-      { entity: 'MOT', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
+      { entity: 'MDA', projects: 3, onTrack: 1, atRisk: 1, delayed: 1 },
+      { entity: 'MoT', projects: 2, onTrack: 1, atRisk: 1, delayed: 0 },
     ]
   },
-  'Iconic Terminal': {
+  'Gateway Terminal': {
     streamReadiness: [
       { stream: 'Mobility & Roads', readiness: 35, status: 'At Risk' },
       { stream: 'Public Transport', readiness: 20, status: 'Blocked' },
@@ -507,20 +507,20 @@ const MILESTONE_INTEL = {
       { category: 'Entity Commitments', secured: 25, total: 100 },
     ],
     entityPerformance: [
-      { entity: 'RCRC', projects: 5, onTrack: 1, atRisk: 2, delayed: 2 },
-      { entity: 'NWC', projects: 3, onTrack: 0, atRisk: 2, delayed: 1 },
-      { entity: 'SEC', projects: 3, onTrack: 0, atRisk: 1, delayed: 2 },
-      { entity: 'CST', projects: 2, onTrack: 0, atRisk: 1, delayed: 1 },
+      { entity: 'MDA', projects: 5, onTrack: 1, atRisk: 2, delayed: 2 },
+      { entity: 'RWA', projects: 3, onTrack: 0, atRisk: 2, delayed: 1 },
+      { entity: 'NPC', projects: 3, onTrack: 0, atRisk: 1, delayed: 2 },
+      { entity: 'CTA', projects: 2, onTrack: 0, atRisk: 1, delayed: 1 },
     ]
   }
 };
 
 // Store original intel panel data for "all" reset
 const ORIGINAL_INTEL = {
-  streamReadiness: KSIA_DATA.streamReadiness,
-  committeeActions: KSIA_DATA.committeeActions,
-  prerequisiteReadiness: KSIA_DATA.prerequisiteReadiness,
-  entityPerformance: KSIA_DATA.entityPerformance
+  streamReadiness: PLATFORM_DATA.streamReadiness,
+  committeeActions: PLATFORM_DATA.committeeActions,
+  prerequisiteReadiness: PLATFORM_DATA.prerequisiteReadiness,
+  entityPerformance: PLATFORM_DATA.entityPerformance
 };
 
 let activeMilestone = null;
@@ -532,19 +532,19 @@ function selectMilestone(assetName, btn) {
   if (activeMilestone === assetName) {
     // Deselect — back to all
     activeMilestone = null;
-    KSIA_DATA.streamReadiness = ORIGINAL_INTEL.streamReadiness;
-    KSIA_DATA.committeeActions = ORIGINAL_INTEL.committeeActions;
-    KSIA_DATA.prerequisiteReadiness = ORIGINAL_INTEL.prerequisiteReadiness;
-    KSIA_DATA.entityPerformance = ORIGINAL_INTEL.entityPerformance;
+    PLATFORM_DATA.streamReadiness = ORIGINAL_INTEL.streamReadiness;
+    PLATFORM_DATA.committeeActions = ORIGINAL_INTEL.committeeActions;
+    PLATFORM_DATA.prerequisiteReadiness = ORIGINAL_INTEL.prerequisiteReadiness;
+    PLATFORM_DATA.entityPerformance = ORIGINAL_INTEL.entityPerformance;
   } else {
     activeMilestone = assetName;
     btn.classList.add('tl-active');
     const data = MILESTONE_INTEL[assetName];
     if (data) {
-      KSIA_DATA.streamReadiness = data.streamReadiness;
-      KSIA_DATA.committeeActions = data.committeeActions;
-      KSIA_DATA.prerequisiteReadiness = data.prerequisiteReadiness;
-      KSIA_DATA.entityPerformance = data.entityPerformance;
+      PLATFORM_DATA.streamReadiness = data.streamReadiness;
+      PLATFORM_DATA.committeeActions = data.committeeActions;
+      PLATFORM_DATA.prerequisiteReadiness = data.prerequisiteReadiness;
+      PLATFORM_DATA.entityPerformance = data.entityPerformance;
     }
   }
 
@@ -565,7 +565,7 @@ function selectMilestone(assetName, btn) {
     renderEntityPerformance();
     // Update committee count badge
     const countEl = document.getElementById('committee-count');
-    if (countEl) countEl.textContent = KSIA_DATA.committeeActions.length + ' pending';
+    if (countEl) countEl.textContent = PLATFORM_DATA.committeeActions.length + ' pending';
 
     intelGrid.style.transition = 'opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1)';
     intelGrid.style.opacity = '1';
@@ -637,8 +637,8 @@ function animateNumber(el, from, to, suffix) {
 function renderMilestones() {
   const el = document.getElementById('milestones-track');
   const maxVisible = 7;
-  const visible = KSIA_DATA.milestones.slice(0, maxVisible);
-  const remaining = KSIA_DATA.milestones.length - maxVisible;
+  const visible = PLATFORM_DATA.milestones.slice(0, maxVisible);
+  const remaining = PLATFORM_DATA.milestones.length - maxVisible;
 
   visible.forEach(m => {
     const icon = MILESTONE_ICONS[m.asset] || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg>';
@@ -680,7 +680,7 @@ function renderStreamReadiness() {
   el.innerHTML = '';
   const grid = document.createElement('div');
   grid.className = 'sr-grid';
-  KSIA_DATA.streamReadiness.forEach(s => {
+  PLATFORM_DATA.streamReadiness.forEach(s => {
     const c = color(s.status);
     const bg = STATUS_BG[s.status] || 'rgba(92,92,112,0.12)';
     const icon = STREAM_ICONS[s.stream] || '';
@@ -709,7 +709,7 @@ function renderStreamReadiness() {
 
 function renderCommitteeActions() {
   const el = document.getElementById('committee-actions');
-  KSIA_DATA.committeeActions.slice(0, 4).forEach(a => {
+  PLATFORM_DATA.committeeActions.slice(0, 4).forEach(a => {
     const div = document.createElement('div');
     div.className = 'action-item';
     div.innerHTML = `
@@ -737,7 +737,7 @@ const PREREQ_ICONS = {
 function renderPrerequisiteReadiness() {
   const el = document.getElementById('prereq-readiness');
   el.innerHTML = '';
-  KSIA_DATA.prerequisiteReadiness.forEach(p => {
+  PLATFORM_DATA.prerequisiteReadiness.forEach(p => {
     const c = p.secured >= 70 ? 'var(--status-ready)' : p.secured >= 50 ? 'var(--status-conditional)' : 'var(--status-at-risk)';
     const cHex = p.secured >= 70 ? '#00C48C' : p.secured >= 50 ? '#FFAA00' : '#FF5C5C';
     const bg = p.secured >= 70 ? 'rgba(0,196,140,0.12)' : p.secured >= 50 ? 'rgba(255,170,0,0.12)' : 'rgba(255,92,92,0.12)';
@@ -763,7 +763,7 @@ function renderPrerequisiteReadiness() {
 
 function renderEntityPerformance() {
   const container = document.getElementById('entity-bars');
-  KSIA_DATA.entityPerformance.forEach(e => {
+  PLATFORM_DATA.entityPerformance.forEach(e => {
     const total = e.projects || 1;
     const onPct = (e.onTrack / total * 100).toFixed(1);
     const arPct = (e.atRisk / total * 100).toFixed(1);
@@ -940,7 +940,7 @@ function selectCluster(cluster, btn) {
   btn.setAttribute('aria-selected', 'true');
 
   // Swap data
-  const d = KSIA_DATA.executive;
+  const d = PLATFORM_DATA.executive;
   const src = cluster.data || d; // 'all' uses original data
 
   if (cluster.id === 'all') {
@@ -965,6 +965,7 @@ function selectCluster(cluster, btn) {
   dashboard.style.transform = 'translateY(8px)';
   setTimeout(() => {
     renderExecutiveIndicators();
+    initAssistantChat();
     dashboard.style.transition = 'opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1)';
     dashboard.style.opacity = '1';
     dashboard.style.transform = 'translateY(0)';
@@ -1011,7 +1012,7 @@ function selectCluster(cluster, btn) {
 
 function renderModuleCards() {
   const el = document.getElementById('modules-grid');
-  KSIA_DATA.modules.forEach((m, i) => {
+  PLATFORM_DATA.modules.forEach((m, i) => {
     const div = document.createElement('div');
     div.className = 'module-card';
     div.setAttribute('role', 'link');
@@ -1201,7 +1202,7 @@ function initQuickNav() {
 const ASSISTANT_RESPONSES = [
   {
     match: /terminal.?6.*(?:potable|water|ready|readiness|supply)/i,
-    answer: '<strong>At Risk.</strong> NWC W-07 is delayed to <strong>Q1 2029</strong>, after the <strong>Q3 2028</strong> Terminal 6 opening date.'
+    answer: '<strong>At Risk.</strong> RWA W-07 is delayed to <strong>Q1 2029</strong>, after the <strong>Q3 2028</strong> Terminal Alpha opening date.'
   },
   {
     match: /(?:potable.*water|water).*(?:demand|gap)/i,
@@ -1240,7 +1241,7 @@ function initAssistantChat() {
       if (match) {
         addMessage(match.answer, 'ai');
       } else {
-        addMessage('I can answer questions about Terminal 6 potable water readiness, demand and supply gaps, and gap closure solutions. Try asking about those topics.', 'ai');
+        addMessage('I can answer questions about Terminal Alpha potable water readiness, demand and supply gaps, and gap closure solutions. Try asking about those topics.', 'ai');
       }
     }, 400);
   }

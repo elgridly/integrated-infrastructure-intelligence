@@ -6,5 +6,5 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname)));
 
 app.listen(PORT, () => {
-  console.log(`KSIA Platform running at http://localhost:${PORT}`);
+  console.log(`Platform running at http://localhost:${PORT}`);
 });

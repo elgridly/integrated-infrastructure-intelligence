@@ -17,7 +17,7 @@
       }
     })();
   </script>
-  <meta name="description" content="Executive command center for KSIA regional infrastructure readiness monitoring.">
+  <meta name="description" content="Executive command center for Airport City regional infrastructure readiness monitoring.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23FFE600'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='Arial'>EY</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -1990,14 +1990,14 @@
     <div class="header-filters">
       <select class="header-filter" aria-label="Major Development">
         <option>All Developments</option>
-        <option>T1-T4</option>
-        <option>Terminal 5</option>
-        <option>Terminal 6</option>
-        <option>Iconic Terminal</option>
-        <option>Cargo Village</option>
+        <option>Legacy Terminals</option>
+        <option>Terminal Beta</option>
+        <option>Terminal Alpha</option>
+        <option>Gateway Terminal</option>
+        <option>Cargo Hub</option>
         <option>Private Aviation</option>
       </select>
-      <select class="header-filter" aria-label="KSIA Area">
+      <select class="header-filter" aria-label="Project Area">
         <option>All Areas</option>
         <option>North Zone</option>
         <option>South Zone</option>
@@ -2016,11 +2016,11 @@
       </select>
       <select class="header-filter" aria-label="External Entity">
         <option>All Entities</option>
-        <option>NWC</option>
-        <option>SEC</option>
-        <option>RCRC</option>
-        <option>SWA</option>
-        <option>MOT</option>
+        <option>RWA</option>
+        <option>NPC</option>
+        <option>MDA</option>
+        <option>WSA</option>
+        <option>MoT</option>
       </select>
       <select class="header-filter" aria-label="Time Horizon">
         <option>All Phases</option>
@@ -2201,11 +2201,11 @@
     <!-- Map Section -->
     <div class="map-section">
       <div class="map-title-bar">
-        <div class="map-title">KSIA Master Plan & Regional Infrastructure Connectivity</div>
+        <div class="map-title">Airport City Master Plan & Regional Infrastructure Connectivity</div>
       </div>
       <div class="map-container">
         <div class="map-3d-stage">
-          <img src="assets/ksia-3d-aerial.png" alt="3D aerial render of King Salman International Airport" class="map-image">
+          <img src="assets/ksia-3d-aerial.png" alt="3D aerial render of Airport City development" class="map-image">
           <div class="map-overlay"></div>
           <div class="map-ground-glow"></div>
         </div>
@@ -2289,23 +2289,23 @@
         </div>
         <div class="map-marker" data-streams="power-energy,mobility-roads,digital-telecom" style="top:5.3%; left:60.7%;">
           <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
-          <div class="map-marker-label">Cargo Village</div>
+          <div class="map-marker-label">Cargo Hub</div>
         </div>
         <div class="map-marker" data-streams="potable-water,power-energy,district-cooling,wastewater,digital-telecom" style="top:19.6%; left:29.7%;">
           <div class="map-marker-pin pin-at-risk" style="animation: marker-pulse-risk 3s ease-in-out infinite;"></div>
-          <div class="map-marker-label">T1-T4</div>
+          <div class="map-marker-label">Legacy Terminals</div>
         </div>
         <div class="map-marker" data-streams="potable-water,power-energy,district-cooling,wastewater,mobility-roads,digital-telecom" style="top:67.7%; left:40.4%;">
           <div class="map-marker-pin pin-at-risk" style="animation: marker-pulse-risk 3s ease-in-out infinite;"></div>
-          <div class="map-marker-label">Terminal 6</div>
+          <div class="map-marker-label">Terminal Alpha</div>
         </div>
         <div class="map-marker" data-streams="power-energy,mobility-roads" style="top:52.8%; left:64.2%;">
           <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
-          <div class="map-marker-label">Terminal 5</div>
+          <div class="map-marker-label">Terminal Beta</div>
         </div>
         <div class="map-marker" data-streams="power-energy,district-cooling,mobility-roads,digital-telecom" style="top:43.2%; left:91.5%;">
           <div class="map-marker-pin pin-ready" style="animation: marker-pulse-ready 3s ease-in-out infinite;"></div>
-          <div class="map-marker-label">Iconic Terminal</div>
+          <div class="map-marker-label">Gateway Terminal</div>
         </div>
         <div class="map-marker" data-streams="power-energy,mobility-roads" style="top:6%; left:76.3%;">
           <div class="map-marker-pin pin-conditional" style="animation: marker-pulse-conditional 3s ease-in-out infinite;"></div>
@@ -2354,7 +2354,7 @@
         <div class="ms-item">
           <div class="ms-dot" style="background: var(--status-ready);"></div>
           <div class="ms-item-info">
-            <div class="ms-name">Cargo Village</div>
+            <div class="ms-name">Cargo Hub</div>
             <div class="ms-meta">
               <span class="ms-date">Q2 2026</span>
               <span class="ms-badge badge-ready">Ready</span>
@@ -2387,7 +2387,7 @@
         <div class="ms-item">
           <div class="ms-dot" style="background: var(--status-at-risk);"></div>
           <div class="ms-item-info">
-            <div class="ms-name">Terminal 6</div>
+            <div class="ms-name">Terminal Alpha</div>
             <div class="ms-meta">
               <span class="ms-date">Q3 2028</span>
               <span class="ms-badge badge-at-risk">At Risk</span>
@@ -2420,7 +2420,7 @@
         <div class="ms-item">
           <div class="ms-dot" style="background: var(--status-at-risk);"></div>
           <div class="ms-item-info">
-            <div class="ms-name">T1-T4</div>
+            <div class="ms-name">Legacy Terminals</div>
             <div class="ms-meta">
               <span class="ms-date">Q4 2027</span>
               <span class="ms-badge badge-at-risk">At Risk</span>
@@ -2431,7 +2431,7 @@
         <div class="ms-item">
           <div class="ms-dot" style="background: var(--status-conditional);"></div>
           <div class="ms-item-info">
-            <div class="ms-name">Terminal 5</div>
+            <div class="ms-name">Terminal Beta</div>
             <div class="ms-meta">
               <span class="ms-date">Q1 2029</span>
               <span class="ms-badge badge-conditional">Conditional</span>
@@ -2442,7 +2442,7 @@
         <div class="ms-item">
           <div class="ms-dot" style="background: var(--status-at-risk);"></div>
           <div class="ms-item-info">
-            <div class="ms-name">Iconic Terminal</div>
+            <div class="ms-name">Gateway Terminal</div>
             <div class="ms-meta">
               <span class="ms-date">Q4 2038</span>
               <span class="ms-badge badge-at-risk">At Risk</span>
@@ -2511,7 +2511,7 @@
   </div>
 
   <footer class="footer">
-    &copy; 2026 EY. I³ — Integrated Infrastructure Intelligence Hub | KSIA — Illustrative data only.
+    &copy; 2026 EY. I³ — Integrated Infrastructure Intelligence Hub | Airport City — Illustrative data only.
     <div style="margin-top:4px; font-size:10px; opacity:0.7;">Designed &amp; Developed by Hesham Gridly</div>
   </footer>
 
@@ -2528,15 +2528,15 @@
     };
 
     var ASSETS = [
-      { name: 'Cargo Village',       date: 'Q2 2026', status: 'ready',       badge: 'Ready',       streams: ['power-energy','mobility-roads','digital-telecom'] },
+      { name: 'Cargo Hub',       date: 'Q2 2026', status: 'ready',       badge: 'Ready',       streams: ['power-energy','mobility-roads','digital-telecom'] },
       { name: 'Central Runways',      date: 'Q4 2026', status: 'on-track',    badge: 'On Track',    streams: ['power-energy','mobility-roads'] },
       { name: 'Private Aviation',     date: 'Q1 2027', status: 'conditional', badge: 'Conditional', streams: ['potable-water','power-energy','mobility-roads'] },
       { name: 'East Runways',         date: 'Q2 2027', status: 'conditional', badge: 'Conditional', streams: ['power-energy','mobility-roads'] },
       { name: 'West Runways',         date: 'Q3 2027', status: 'blocked',     badge: 'Blocked',     streams: ['power-energy','wastewater','mobility-roads'] },
-      { name: 'T1-T4',                date: 'Q4 2027', status: 'at-risk',     badge: 'At Risk',     streams: ['potable-water','power-energy','district-cooling','wastewater','digital-telecom'] },
-      { name: 'Terminal 6',           date: 'Q3 2028', status: 'at-risk',     badge: 'At Risk',     streams: ['potable-water','power-energy','district-cooling','wastewater','mobility-roads','digital-telecom'] },
-      { name: 'Terminal 5',           date: 'Q1 2029', status: 'conditional', badge: 'Conditional', streams: ['power-energy','mobility-roads','digital-telecom'] },
-      { name: 'Iconic Terminal',      date: 'Q4 2038', status: 'at-risk',     badge: 'At Risk',     streams: ['power-energy','district-cooling','mobility-roads','digital-telecom'] }
+      { name: 'Legacy Terminals',                date: 'Q4 2027', status: 'at-risk',     badge: 'At Risk',     streams: ['potable-water','power-energy','district-cooling','wastewater','digital-telecom'] },
+      { name: 'Terminal Alpha',           date: 'Q3 2028', status: 'at-risk',     badge: 'At Risk',     streams: ['potable-water','power-energy','district-cooling','wastewater','mobility-roads','digital-telecom'] },
+      { name: 'Terminal Beta',           date: 'Q1 2029', status: 'conditional', badge: 'Conditional', streams: ['power-energy','mobility-roads','digital-telecom'] },
+      { name: 'Gateway Terminal',      date: 'Q4 2038', status: 'at-risk',     badge: 'At Risk',     streams: ['power-energy','district-cooling','mobility-roads','digital-telecom'] }
     ];
 
     var STATUS_VARS = {
@@ -2550,41 +2550,41 @@
     // ── Critical Projects data with stream associations ──
     var PROJECTS = [
       // Mobility & Roads
-      { num: '01', name: 'Upgrade of Prince Meshal Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design developed', milestoneStatus: 'at-risk', capacity: '640k ppl/hr.', target: 'Q2 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '02', name: 'Link Prince Meshal Road to Al Taif Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design developed', milestoneStatus: 'at-risk', capacity: '898k ppl/hr.', target: 'Q3 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '03', name: 'Upgrade of Al Taif Road', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Tender documents floated', milestoneStatus: 'at-risk', capacity: '520k ppl/hr.', target: 'Q4 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '04', name: 'Link Al Taif Road to Qiddiya', health: 'unhealthy', phase: 'Construction', milestone: 'Mobilization completed', milestoneStatus: 'delayed', capacity: '380k ppl/hr.', target: 'Q3 2027', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '05', name: 'Build 2nd Southern Ring Road', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Construction contract signed', milestoneStatus: 'at-risk', capacity: '342k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '06', name: 'Upgrade of Dirab – Durumah Road', health: 'unhealthy', phase: 'Design Tendering', milestone: 'On-hold', milestoneStatus: 'blocked', capacity: 'TBD ppl/hr.', target: 'Q3 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '07', name: 'Expansion of Jeddah Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design approved', milestoneStatus: 'at-risk', capacity: '720k ppl/hr.', target: 'Q1 2029', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '08', name: 'Upgrade of Wadi Laban Bridge', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Contract signed', milestoneStatus: 'at-risk', capacity: '8.1M ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '09', name: 'Upgrade of Prince Turki AlAwwal Road', health: 'unhealthy', phase: 'Design', milestone: 'Concept design developed', milestoneStatus: 'at-risk', capacity: '3.4M ppl/hr.', target: 'Q4 2027', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '10', name: 'Upgrade of Dirab Road', health: 'healthy', phase: 'Construction Tendering', milestone: 'Bids evaluation completed', milestoneStatus: 'on-track', capacity: '882k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
-      { num: '11', name: 'Upgrade of Najmuddin AlAyoubi Road', health: 'unhealthy', phase: 'Design', milestone: 'Concept design developed', milestoneStatus: 'at-risk', capacity: '450k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MOT' },
+      { num: '01', name: 'Upgrade of North Connector Road', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design developed', milestoneStatus: 'at-risk', capacity: '640k ppl/hr.', target: 'Q2 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '02', name: 'Link North Connector Road to East Boulevard', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design developed', milestoneStatus: 'at-risk', capacity: '898k ppl/hr.', target: 'Q3 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '03', name: 'Upgrade of East Boulevard', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Tender documents floated', milestoneStatus: 'at-risk', capacity: '520k ppl/hr.', target: 'Q4 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '04', name: 'Link East Boulevard to Southern District', health: 'unhealthy', phase: 'Construction', milestone: 'Mobilization completed', milestoneStatus: 'delayed', capacity: '380k ppl/hr.', target: 'Q3 2027', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '05', name: 'Build 2nd Southern Ring Road', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Construction contract signed', milestoneStatus: 'at-risk', capacity: '342k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '06', name: 'Upgrade of West Link Road', health: 'unhealthy', phase: 'Design Tendering', milestone: 'On-hold', milestoneStatus: 'blocked', capacity: 'TBD ppl/hr.', target: 'Q3 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '07', name: 'Expansion of Central Expressway', health: 'unhealthy', phase: 'Design', milestone: 'Detailed design approved', milestoneStatus: 'at-risk', capacity: '720k ppl/hr.', target: 'Q1 2029', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '08', name: 'Upgrade of Valley Crossing Bridge', health: 'unhealthy', phase: 'Construction Tendering', milestone: 'Contract signed', milestoneStatus: 'at-risk', capacity: '8.1M ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '09', name: 'Upgrade of Heritage Avenue', health: 'unhealthy', phase: 'Design', milestone: 'Concept design developed', milestoneStatus: 'at-risk', capacity: '3.4M ppl/hr.', target: 'Q4 2027', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '10', name: 'Upgrade of Southwest Corridor', health: 'healthy', phase: 'Construction Tendering', milestone: 'Bids evaluation completed', milestoneStatus: 'on-track', capacity: '882k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MoT' },
+      { num: '11', name: 'Upgrade of Commerce Boulevard', health: 'unhealthy', phase: 'Design', milestone: 'Concept design developed', milestoneStatus: 'at-risk', capacity: '450k ppl/hr.', target: 'Q1 2028', streams: ['mobility-roads'], entity: 'MoT' },
       // Potable Water
-      { num: '01', name: 'Potable Water Transmission Line', health: 'unhealthy', phase: 'Construction', milestone: 'Pipe laying 42% complete', milestoneStatus: 'delayed', capacity: '45,000 m³/d', target: 'Q3 2028', streams: ['potable-water'], entity: 'NWC' },
-      { num: '02', name: 'KSIA Water Reservoir Complex', health: 'at-risk', phase: 'Design', milestone: 'Detailed design in review', milestoneStatus: 'at-risk', capacity: '30,000 m³', target: 'Q2 2028', streams: ['potable-water'], entity: 'NWC' },
-      { num: '03', name: 'Water Distribution Network — Airport City', health: 'at-risk', phase: 'Design Tendering', milestone: 'Tender floated', milestoneStatus: 'conditional', capacity: '18,000 m³/d', target: 'Q1 2029', streams: ['potable-water'], entity: 'NWC' },
-      { num: '04', name: 'Interim Water Treatment Facility', health: 'unhealthy', phase: 'Approval', milestone: 'Committee decision pending', milestoneStatus: 'blocked', capacity: '12,000 m³/d', target: 'Q4 2027', streams: ['potable-water'], entity: 'NWC' },
-      { num: '05', name: 'Terminal 6 Internal Water Network', health: 'at-risk', phase: 'Design', milestone: 'Concept approved', milestoneStatus: 'conditional', capacity: '8,500 m³/d', target: 'Q2 2028', streams: ['potable-water'], entity: 'NWC' },
+      { num: '01', name: 'Potable Water Transmission Line', health: 'unhealthy', phase: 'Construction', milestone: 'Pipe laying 42% complete', milestoneStatus: 'delayed', capacity: '45,000 m³/d', target: 'Q3 2028', streams: ['potable-water'], entity: 'RWA' },
+      { num: '02', name: 'Airport City Water Reservoir Complex', health: 'at-risk', phase: 'Design', milestone: 'Detailed design in review', milestoneStatus: 'at-risk', capacity: '30,000 m³', target: 'Q2 2028', streams: ['potable-water'], entity: 'RWA' },
+      { num: '03', name: 'Water Distribution Network — Aviation District', health: 'at-risk', phase: 'Design Tendering', milestone: 'Tender floated', milestoneStatus: 'conditional', capacity: '18,000 m³/d', target: 'Q1 2029', streams: ['potable-water'], entity: 'RWA' },
+      { num: '04', name: 'Interim Water Treatment Facility', health: 'unhealthy', phase: 'Approval', milestone: 'Committee decision pending', milestoneStatus: 'blocked', capacity: '12,000 m³/d', target: 'Q4 2027', streams: ['potable-water'], entity: 'RWA' },
+      { num: '05', name: 'Terminal Alpha Internal Water Network', health: 'at-risk', phase: 'Design', milestone: 'Concept approved', milestoneStatus: 'conditional', capacity: '8,500 m³/d', target: 'Q2 2028', streams: ['potable-water'], entity: 'RWA' },
       // Power & Energy
-      { num: '01', name: '380kV Substation North', health: 'healthy', phase: 'Construction', milestone: 'Foundation works 60%', milestoneStatus: 'on-track', capacity: '1,200 MVA', target: 'Q2 2027', streams: ['power-energy'], entity: 'SEC' },
-      { num: '02', name: '380kV Transmission Line — Southern Route', health: 'unhealthy', phase: 'Approval', milestone: 'Land corridor pending', milestoneStatus: 'blocked', capacity: '800 MVA', target: 'Q4 2027', streams: ['power-energy'], entity: 'SEC' },
-      { num: '03', name: '132kV Ring Distribution Network', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Bids under evaluation', milestoneStatus: 'conditional', capacity: '450 MVA', target: 'Q1 2028', streams: ['power-energy'], entity: 'SEC' },
-      { num: '04', name: 'Emergency Power Generation Facility', health: 'healthy', phase: 'Construction', milestone: 'Equipment installation', milestoneStatus: 'on-track', capacity: '120 MW', target: 'Q3 2027', streams: ['power-energy'], entity: 'SEC' },
-      { num: '05', name: 'Airport City Substation', health: 'at-risk', phase: 'Design', milestone: 'Detailed design 70%', milestoneStatus: 'at-risk', capacity: '300 MVA', target: 'Q2 2028', streams: ['power-energy'], entity: 'SEC' },
+      { num: '01', name: '380kV Substation North', health: 'healthy', phase: 'Construction', milestone: 'Foundation works 60%', milestoneStatus: 'on-track', capacity: '1,200 MVA', target: 'Q2 2027', streams: ['power-energy'], entity: 'NPC' },
+      { num: '02', name: '380kV Transmission Line — Southern Route', health: 'unhealthy', phase: 'Approval', milestone: 'Land corridor pending', milestoneStatus: 'blocked', capacity: '800 MVA', target: 'Q4 2027', streams: ['power-energy'], entity: 'NPC' },
+      { num: '03', name: '132kV Ring Distribution Network', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Bids under evaluation', milestoneStatus: 'conditional', capacity: '450 MVA', target: 'Q1 2028', streams: ['power-energy'], entity: 'NPC' },
+      { num: '04', name: 'Emergency Power Generation Facility', health: 'healthy', phase: 'Construction', milestone: 'Equipment installation', milestoneStatus: 'on-track', capacity: '120 MW', target: 'Q3 2027', streams: ['power-energy'], entity: 'NPC' },
+      { num: '05', name: 'Aviation District Substation', health: 'at-risk', phase: 'Design', milestone: 'Detailed design 70%', milestoneStatus: 'at-risk', capacity: '300 MVA', target: 'Q2 2028', streams: ['power-energy'], entity: 'NPC' },
       // District Cooling
-      { num: '01', name: 'District Cooling Plant 1', health: 'unhealthy', phase: 'Construction', milestone: 'Chiller installation delayed', milestoneStatus: 'at-risk', capacity: '50,000 TR', target: 'Q1 2028', streams: ['district-cooling'], entity: 'RCRC' },
-      { num: '02', name: 'Distribution Piping Network — Phase 1', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Contract negotiation', milestoneStatus: 'conditional', capacity: '35,000 TR', target: 'Q3 2028', streams: ['district-cooling'], entity: 'RCRC' },
-      { num: '03', name: 'Temporary Cooling Solution — Terminal 6', health: 'at-risk', phase: 'Design', milestone: 'Feasibility approved', milestoneStatus: 'conditional', capacity: '15,000 TR', target: 'Q2 2028', streams: ['district-cooling'], entity: 'RCRC' },
+      { num: '01', name: 'District Cooling Plant 1', health: 'unhealthy', phase: 'Construction', milestone: 'Chiller installation delayed', milestoneStatus: 'at-risk', capacity: '50,000 TR', target: 'Q1 2028', streams: ['district-cooling'], entity: 'MDA' },
+      { num: '02', name: 'Distribution Piping Network — Phase 1', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Contract negotiation', milestoneStatus: 'conditional', capacity: '35,000 TR', target: 'Q3 2028', streams: ['district-cooling'], entity: 'MDA' },
+      { num: '03', name: 'Temporary Cooling Solution — Terminal Alpha', health: 'at-risk', phase: 'Design', milestone: 'Feasibility approved', milestoneStatus: 'conditional', capacity: '15,000 TR', target: 'Q2 2028', streams: ['district-cooling'], entity: 'MDA' },
       // Wastewater
-      { num: '01', name: 'Wastewater Treatment Expansion', health: 'unhealthy', phase: 'Design', milestone: 'Scope unconfirmed with SWA', milestoneStatus: 'blocked', capacity: '25,000 m³/d', target: 'Q4 2027', streams: ['wastewater'], entity: 'SWA' },
-      { num: '02', name: 'Trunk Sewer Line — KSIA to STP', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Environmental approval pending', milestoneStatus: 'at-risk', capacity: '20,000 m³/d', target: 'Q1 2028', streams: ['wastewater'], entity: 'SWA' },
-      { num: '03', name: 'TSE Reuse Network — Irrigation & Cooling', health: 'healthy', phase: 'Design', milestone: 'Detailed design complete', milestoneStatus: 'on-track', capacity: '10,000 m³/d', target: 'Q3 2028', streams: ['wastewater'], entity: 'SWA' },
+      { num: '01', name: 'Wastewater Treatment Expansion', health: 'unhealthy', phase: 'Design', milestone: 'Scope unconfirmed with WSA', milestoneStatus: 'blocked', capacity: '25,000 m³/d', target: 'Q4 2027', streams: ['wastewater'], entity: 'WSA' },
+      { num: '02', name: 'Trunk Sewer Line — Airport City to STP', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Environmental approval pending', milestoneStatus: 'at-risk', capacity: '20,000 m³/d', target: 'Q1 2028', streams: ['wastewater'], entity: 'WSA' },
+      { num: '03', name: 'TSE Reuse Network — Irrigation & Cooling', health: 'healthy', phase: 'Design', milestone: 'Detailed design complete', milestoneStatus: 'on-track', capacity: '10,000 m³/d', target: 'Q3 2028', streams: ['wastewater'], entity: 'WSA' },
       // Digital & Telecom
-      { num: '01', name: 'Fibre Backbone Ring', health: 'healthy', phase: 'Construction', milestone: 'Duct laying 78% complete', milestoneStatus: 'on-track', capacity: '100 Gbps', target: 'Q4 2026', streams: ['digital-telecom'], entity: 'CST' },
-      { num: '02', name: '5G Small Cell Network — Airside', health: 'at-risk', phase: 'Design', milestone: 'RF planning in progress', milestoneStatus: 'conditional', capacity: '120 cells', target: 'Q2 2028', streams: ['digital-telecom'], entity: 'CST' },
-      { num: '03', name: 'Data Centre — Primary Hub', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Tender evaluation', milestoneStatus: 'at-risk', capacity: '5 MW IT', target: 'Q1 2028', streams: ['digital-telecom'], entity: 'CST' }
+      { num: '01', name: 'Fibre Backbone Ring', health: 'healthy', phase: 'Construction', milestone: 'Duct laying 78% complete', milestoneStatus: 'on-track', capacity: '100 Gbps', target: 'Q4 2026', streams: ['digital-telecom'], entity: 'CTA' },
+      { num: '02', name: '5G Small Cell Network — Airside', health: 'at-risk', phase: 'Design', milestone: 'RF planning in progress', milestoneStatus: 'conditional', capacity: '120 cells', target: 'Q2 2028', streams: ['digital-telecom'], entity: 'CTA' },
+      { num: '03', name: 'Data Centre — Primary Hub', health: 'at-risk', phase: 'Construction Tendering', milestone: 'Tender evaluation', milestoneStatus: 'at-risk', capacity: '5 MW IT', target: 'Q1 2028', streams: ['digital-telecom'], entity: 'CTA' }
     ];
 
     var HEALTH_CLASSES = { 'unhealthy': 'project-health--unhealthy', 'at-risk': 'project-health--at-risk', 'healthy': 'project-health--healthy' };
@@ -2999,23 +2999,23 @@
 
     // ── Watchlist & Decisions data ──
     var WATCHLIST_DATA = [
-      { text: 'Terminal 6 potable water gap — 45,000 m³/day shortfall if NWC pipeline delayed beyond Q1 2028', severity: 'CRITICAL', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'potable-water', streamLabel: 'Potable Water' },
-      { text: 'RCRC district cooling capacity 18% below forecast — Airport City Ph.1 at risk', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'district-cooling', streamLabel: 'District Cooling' },
+      { text: 'Terminal Alpha potable water gap — 45,000 m³/day shortfall if RWA pipeline delayed beyond Q1 2028', severity: 'CRITICAL', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'potable-water', streamLabel: 'Potable Water' },
+      { text: 'MDA district cooling capacity 18% below forecast — Aviation District Ph.1 at risk', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'district-cooling', streamLabel: 'District Cooling' },
       { text: '380kV transmission line land corridor approval pending — southern route unconfirmed', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'power-energy', streamLabel: 'Power & Energy' },
-      { text: 'SWA wastewater treatment expansion scope unconfirmed — capacity plan blocked', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'wastewater', streamLabel: 'Wastewater' },
+      { text: 'WSA wastewater treatment expansion scope unconfirmed — capacity plan blocked', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'wastewater', streamLabel: 'Wastewater' },
       { text: 'Mobility network capacity insufficient for projected 2029 passenger volumes', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'mobility-roads', streamLabel: 'Mobility & Roads' },
       { text: 'Digital backbone fibre route conflicts with planned road widening corridor', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', stream: 'digital-telecom', streamLabel: 'Digital & Telecom' },
       { text: 'Stormwater drainage outfall capacity review pending — flood risk unmitigated', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', stream: 'stormwater', streamLabel: 'Stormwater' }
     ];
 
     var DECISIONS_DATA = [
-      { text: 'Approve interim water treatment facility for Terminal 6 gap coverage', severity: 'CRITICAL', severityColor: 'var(--status-blocked)', borderColor: 'var(--status-blocked)', due: 'Due 28 Jan 2026', stream: 'potable-water' },
-      { text: 'Release SAR 420M funding for NWC pipeline acceleration', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 15 Feb 2026', stream: 'potable-water' },
+      { text: 'Approve interim water treatment facility for Terminal Alpha gap coverage', severity: 'CRITICAL', severityColor: 'var(--status-blocked)', borderColor: 'var(--status-blocked)', due: 'Due 28 Jan 2026', stream: 'potable-water' },
+      { text: 'Release 420M funding for RWA pipeline acceleration', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 15 Feb 2026', stream: 'potable-water' },
       { text: 'Approve land corridor for 380kV transmission line — southern route', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 01 Mar 2026', stream: 'power-energy' },
-      { text: 'Escalate district cooling capacity shortfall to RCRC board', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 10 Feb 2026', stream: 'district-cooling' },
-      { text: 'Confirm road widening scope for Prince Meshal Road upgrade', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 15 Apr 2026', stream: 'mobility-roads' },
+      { text: 'Escalate district cooling capacity shortfall to MDA board', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 10 Feb 2026', stream: 'district-cooling' },
+      { text: 'Confirm road widening scope for North Connector Road upgrade', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 15 Apr 2026', stream: 'mobility-roads' },
       { text: 'Approve emergency power generation facility commissioning timeline', severity: 'HIGH', severityColor: 'var(--status-at-risk)', borderColor: 'var(--status-at-risk)', due: 'Due 20 Mar 2026', stream: 'power-energy' },
-      { text: 'Confirm wastewater treatment expansion scope with SWA', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 20 Mar 2026', stream: 'wastewater' }
+      { text: 'Confirm wastewater treatment expansion scope with WSA', severity: 'MEDIUM', severityColor: 'var(--status-conditional)', borderColor: 'var(--status-conditional)', due: 'Due 20 Mar 2026', stream: 'wastewater' }
     ];
 
     function renderWatchlist(streamFilter) {

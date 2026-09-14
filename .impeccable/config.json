@@ -281,6 +281,18 @@
         "value": "rgba(0, 0, 0, 0.35)",
         "createdAt": "2026-08-31T20:58:53.663Z",
         "reason": "Standalone video player page overlay, not part of platform design system"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.6)",
+        "createdAt": "2026-09-14T09:33:25.771Z",
+        "reason": "Standard modal overlay backdrop - common UI pattern"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#f0d800",
+        "createdAt": "2026-09-14T09:33:26.583Z",
+        "reason": "Hover-darkened variant of EY yellow #FFE600 - standard button hover pattern"
       }
     ]
   }

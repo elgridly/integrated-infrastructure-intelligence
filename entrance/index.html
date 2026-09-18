@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-intro-state="intro-loading">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Integrated Infrastructure Intelligence</title>
+<meta name="description" content="Entering the I3 infrastructure decision intelligence environment.">
+<meta name="theme-color" content="#0D0D14">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23FFE600'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='800' font-family='Arial'>EY</text></svg>">
+<link rel="preload" as="image" href="assets/sequence/01-signals.webp" type="image/webp">
+<link rel="preload" as="image" href="assets/i3-mark.webp" type="image/webp">
+<link rel="stylesheet" href="css/entrance.css">
+</head>
+<body>
+
+  <!-- Scroll driver. The stage is pinned; this provides the travel. -->
+  <div class="scroller" id="scroller" aria-hidden="true"></div>
+
+  <!-- The live platform. Mounted and loading from the first frame so the
+       entrance is never followed by a wait. -->
+  <div class="app" id="app"></div>
+
+  <!-- The cinematic stage. The viewport is the canvas: no frame, no panel. -->
+  <div class="stage" id="stage" role="img"
+       aria-label="Cinematic entrance: a city's infrastructure is progressively revealed, connected and prioritised before the platform opens.">
+    <canvas class="cine" id="cine"></canvas>
+
+    <div class="copy" id="copy" aria-hidden="true"></div>
+
+    <div class="brand" id="brand" aria-hidden="true">
+      <div class="brand-scrim" id="brand-scrim" aria-hidden="true"></div>
+      <img class="brand-mark" id="brand-mark" src="assets/i3-mark.webp" alt="" aria-hidden="true">
+      <div class="brand-tail" id="brand-tail">
+        <div class="brand-rule"></div>
+        <div class="brand-sub">Integrated Infrastructure Intelligence</div>
+      </div>
+    </div>
+
+    <div class="hint" id="hint" aria-hidden="true">
+      <span>Scroll</span>
+      <span class="hint-rail"></span>
+    </div>
+
+    <div class="progress" id="progress" aria-hidden="true"></div>
+  </div>
+
+  <button class="skip" id="skip" type="button" aria-label="Skip the introduction and enter the platform">
+    Skip intro
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="4" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/>
+    </svg>
+  </button>
+
+  <noscript>
+    <div style="position:fixed;inset:0;z-index:99;background:#0D0D14;color:#B0B0C4;
+                display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif">
+      <a href="../executive-overview.html" style="color:#FFE600">Enter the I3 platform</a>
+    </div>
+  </noscript>
+
+  <script src="js/entrance-config.js"></script>
+  <script src="js/sequence.js"></script>
+  <script src="js/reveal.js"></script>
+  <script src="js/entrance.js"></script>
+</body>
+</html>

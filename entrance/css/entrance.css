@@ -1,0 +1,165 @@
+/* =============================================================================
+ * I3 CINEMATIC ENTRANCE
+ * -----------------------------------------------------------------------------
+ * The viewport IS the canvas. No frames, no panels, no cards, no borders.
+ * Tokens and type are taken from the live platform and are not redefined here.
+ * ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0D0D14;
+  --bg-deep: #08080E;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B0B0C4;
+  --ey-yellow: #FFE600;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+body { overflow-x: hidden; }
+
+/* Scroll driver. Only the full experience needs travel. */
+.scroller { height: 100vh; width: 1px; pointer-events: none; }
+
+/* --- Live platform, mounted from the first frame -------------------------- */
+.app {
+  position: fixed; inset: 0; z-index: 1;
+  opacity: 0; transform-origin: 50% 46%;
+  will-change: opacity, transform, filter;
+  pointer-events: none;
+}
+.app-frame { width: 100%; height: 100%; border: 0; display: block; background: var(--bg-primary); }
+[data-intro-state="intro-complete"] .app {
+  opacity: 1 !important; filter: none !important; transform: none !important; pointer-events: auto;
+}
+[data-intro-mode="off"] .app { opacity: 1; pointer-events: auto; }
+
+/* --- Cinematic stage ------------------------------------------------------- */
+.stage { position: fixed; inset: 0; z-index: 2; background: var(--bg-primary); will-change: opacity; }
+[data-intro-mode="off"] .stage { display: none; }
+.cine { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Vignette and horizon lift, kept on the compositor rather than the canvas. */
+.stage::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 120% 85% at 50% 52%, transparent 38%, rgba(4,6,12,0.42) 100%),
+    linear-gradient(to bottom, rgba(6,8,16,0.30) 0%, transparent 22%, transparent 74%, rgba(4,6,12,0.40) 100%);
+}
+
+/* --- Loading: the opening darkness is the cover, not a spinner ------------- */
+.progress {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px; z-index: 6; opacity: 0;
+  background: linear-gradient(90deg, rgba(155,208,255,0), rgba(155,208,255,0.55));
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .25s linear, opacity .5s ease .2s;
+}
+[data-intro-state="intro-loading"] .progress { opacity: .7; }
+
+/* --- Typography ------------------------------------------------------------ */
+.copy {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+}
+.copy-line {
+  opacity: 0;
+  font-size: clamp(15px, 2.1vw, 26px);
+  font-weight: 300;
+  letter-spacing: 0.42em; text-indent: 0.42em;
+  color: rgba(255,255,255,0.93);
+  text-shadow: 0 1px 12px rgba(4,7,14,0.78), 0 2px 44px rgba(0,0,0,0.60);
+  white-space: nowrap;
+  will-change: opacity, transform, filter;
+}
+
+/* --- I3 mark: resolves, then travels toward where it lives in the app ------ */
+.brand {
+  position: absolute; left: 50%; top: 50%; z-index: 5;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  opacity: 0; pointer-events: none; text-align: center;
+  will-change: opacity, transform;
+}
+/* A soft scrim so the mark holds over the brightest part of the city
+   without putting a panel or a card on screen. */
+.brand-scrim {
+  position: absolute; left: 50%; top: 50%;
+  width: 150%; height: 340%; transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(6,9,18,0.50) 0%, rgba(6,9,18,0.26) 42%, transparent 72%);
+  pointer-events: none; z-index: -1;
+}
+.brand-mark {
+  display: block; margin: 0 auto;
+  width: clamp(62px, 7.0vw, 92px); height: auto;
+  filter: drop-shadow(0 4px 26px rgba(4,7,14,0.55)) drop-shadow(0 8px 54px rgba(90,160,235,0.30));
+}
+.brand-tail { will-change: opacity, transform; }
+.brand-rule {
+  width: 52px; height: 1px; margin: 18px auto 14px;
+  background: linear-gradient(90deg, transparent, rgba(255,230,0,0.85), transparent);
+}
+.brand-sub {
+  font-size: clamp(9px, 0.94vw, 12px); font-weight: 400;
+  letter-spacing: 0.34em; text-indent: 0.34em;
+  color: rgba(255,255,255,0.86); white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(4,7,14,0.80);
+}
+
+/* --- Skip: present throughout, never shouting ----------------------------- */
+.skip {
+  position: fixed; right: 26px; bottom: 24px; z-index: 7;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 9px 15px; border-radius: 999px;
+  background: rgba(10,12,20,0.42);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.78);
+  font: 500 10.5px/1 'Inter', sans-serif;
+  letter-spacing: 0.17em; text-transform: uppercase; cursor: pointer;
+  backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+  transition: opacity .4s ease, color .2s ease, border-color .2s ease, background .2s ease;
+}
+.skip:hover { color: #fff; border-color: rgba(255,255,255,0.32); background: rgba(16,20,32,0.62); }
+.skip:focus-visible { outline: 2px solid var(--ey-yellow); outline-offset: 3px; }
+.skip.is-gone { opacity: 0 !important; pointer-events: none; }
+.skip svg { width: 11px; height: 11px; }
+[data-intro-state="intro-complete"] .skip { display: none; }
+[data-intro-mode="off"] .skip { display: none; }
+
+/* --- Scroll affordance, first moment only --------------------------------- */
+.hint {
+  position: fixed; left: 50%; bottom: 30px; z-index: 6; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+  color: rgba(255,255,255,0.40);
+  font: 400 9.5px/1 'Inter', sans-serif; letter-spacing: 0.30em; text-transform: uppercase;
+  pointer-events: none; opacity: 0; transition: opacity .7s ease;
+}
+.hint-rail { width: 1px; height: 30px; background: linear-gradient(to bottom, rgba(255,255,255,0.32), transparent); }
+[data-intro-mode="short"] .hint, [data-intro-mode="reduced"] .hint, [data-intro-mode="off"] .hint { display: none; }
+
+/* --- Responsive ------------------------------------------------------------ */
+@media (max-width: 760px) {
+  .copy-line { letter-spacing: 0.26em; text-indent: 0.26em; font-size: 13px; }
+  .brand-sub { letter-spacing: 0.20em; text-indent: 0.20em; font-size: 8.5px; }
+  .skip { right: 14px; bottom: 16px; padding: 8px 13px; font-size: 10px; }
+  .hint { bottom: 20px; }
+}
+@media (max-width: 400px) {
+  .copy-line { white-space: normal; text-align: center; max-width: 84vw; line-height: 1.7; }
+}
+
+/* --- Reduced motion --------------------------------------------------------
+   Accessibility over spectacle: a composed still, the mark, a short dissolve.
+   No scroll journey, no travelling boundary, no pulses. */
+@media (prefers-reduced-motion: reduce) {
+  .copy-line, .stage, .app { transition: none !important; }
+  .skip { transition: opacity .2s linear; }
+}
